@@ -1,2 +1,2 @@
 # staruml-istd
-StartUML Extensie Gidz iStandaarden
+StartUML Extensie Gidz iStandaarden 
