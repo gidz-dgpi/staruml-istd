@@ -1,0 +1,29 @@
+{
+    "name": "gidz-dgpi.staruml-istd",
+    "title": "StarUML iStd Extension",
+    "description": "Import en Export van iStandaard Modellen.",
+    "homepage": "https://gitlab.com/gidz-dgpi/dgpi-explo/staruml-istd",
+    "issues": "https://gitlab.com/gidz-dgpi/dgpi-explo/staruml-istd/-/issues",
+    "keywords": [
+        "uml",
+        "json",
+        "xsd"
+    ],
+    "version": "0.0.1",
+    "author": {
+        "name": "Onnno Haldar",
+        "email": "onno.haldar@gmail.com"
+    },
+    "license": "MIT",
+    "engines": {
+        "staruml": ">=3.0.0"
+    },
+    "scripts": {
+        "test:mac:import": "/Applications/StarUML.app/Contents/MacOS/StarUML exec testset/iWMO.mdj -c istd:bericht:import -a testset/WMO301.xsd",
+        "test:mac:export": "/Applications/StarUML.app/Contents/MacOS/StarUML exec testset/iWMO.mdj -c istd:json:export -a testset/iWMO-export.json",
+        "test:win:export": "C:\\Program Files\\StarUML\\StarUML.exe exec testset/iWMO.mdj -c istd:json:export -a testset\\iWMO-export.json"
+    },
+    "dependencies": {
+        "xml-js": "^1.6.11"
+    }
+}

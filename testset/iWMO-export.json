@@ -1,0 +1,428 @@
+{
+	"@context": {
+		"schema": "https://schema.org",
+		"uml": "https://www.omg.org/spec/UML/2.5.1#",
+		"xmi": "https://www.omg.org/spec/UML/20161101/UML.xmi#",
+		"istd": "https://www.istandaarden.nl/over-istandaarden/istandaarden/begrippenlijst#",
+		"model": "https://www.istandaarden.nl/",
+		"name": "schema:name",
+		"version": "schema:version",
+		"multiplicity": "uml:Multiplicity",
+		"aggregation": "uml:Aggregation",
+		"isID": "xmi:isID",
+		"type": "uml:Type",
+		"parent": {
+			"@id": "uml:End1",
+			"@type": "uml:AssociationEnd"
+		},
+		"child": {
+			"@id": "uml:End2",
+			"@type": "uml:AssociationEnd"
+		},
+		"berichten": {
+			"@id": "istd:berichtspecificaties",
+			"@type": "uml:Package",
+			"@container": "@list"
+		},
+		"klassen": {
+			"@id": "istd:berichtklassen",
+			"@type": "uml:Package",
+			"@container": "@list"
+		},
+		"elementen": {
+			"@id": "istd:berichtelementen",
+			"@type": "uml:Attributes",
+			"@container": "@list"
+		},
+		"relaties": {
+			"@id": "istd:relaties",
+			"@type": "uml:Associations",
+			"@container": "@list"
+		}
+	},
+	"@id": "model:iWMO/3.2",
+	"@type": "istd:informatiemodel",
+	"name": "iWMO",
+	"version": "3.2",
+	"berichten": [
+		{
+			"@id": "model:iWMO/3.2/berichten/WMO301",
+			"@type": "uml:Package",
+			"name": "WMO301",
+			"klassen": [
+				{
+					"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Root",
+					"@type": "uml:Class",
+					"name": "Root",
+					"elementen": [],
+					"relaties": [
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/relaties/Header",
+							"@type": "uml:Association",
+							"name": "Header",
+							"parent": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Root",
+								"aggregation": "shared",
+								"multiplicity": ""
+							},
+							"child": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Header",
+								"aggregation": "none",
+								"multiplicity": "1"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/relaties/Client",
+							"@type": "uml:Association",
+							"name": "Client",
+							"parent": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Root",
+								"aggregation": "shared",
+								"multiplicity": ""
+							},
+							"child": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client",
+								"aggregation": "none",
+								"multiplicity": "1"
+							}
+						}
+					]
+				},
+				{
+					"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client",
+					"@type": "uml:Class",
+					"name": "Client",
+					"elementen": [
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client/elementen/Bsn",
+							"@type": "uml:Property",
+							"name": "Bsn",
+							"type": {
+								"name": "LDT_BurgerServicenummer"
+							},
+							"isID": true
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client/elementen/Geboortedatum",
+							"@type": "uml:Property",
+							"name": "Geboortedatum",
+							"type": {
+								"name": "CDT_Geboortedatum"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client/elementen/Geslacht",
+							"@type": "uml:Property",
+							"name": "Geslacht",
+							"type": {
+								"name": "LDT_Geslacht"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client/elementen/Naam",
+							"@type": "uml:Property",
+							"name": "Naam",
+							"type": {
+								"name": "CDT_VolledigeNaam"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client/elementen/Communicatie",
+							"@type": "uml:Property",
+							"name": "Communicatie",
+							"type": {
+								"name": "CDT_Communicatie"
+							},
+							"multiplicity": "0..1"
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client/elementen/JuridischeStatus",
+							"@type": "uml:Property",
+							"name": "JuridischeStatus",
+							"type": {
+								"name": "LDT_JuridischeStatus"
+							},
+							"multiplicity": "0..1"
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client/elementen/WettelijkeVertegenwoordiging",
+							"@type": "uml:Property",
+							"name": "WettelijkeVertegenwoordiging",
+							"type": {
+								"name": "LDT_WettelijkeVertegenwoordiging"
+							},
+							"multiplicity": "0..1"
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client/elementen/Commentaar",
+							"@type": "uml:Property",
+							"name": "Commentaar",
+							"type": {
+								"name": "LDT_Commentaar"
+							},
+							"multiplicity": "0..1"
+						}
+					],
+					"relaties": [
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/relaties/ToegewezenProducten",
+							"@type": "uml:Association",
+							"name": "ToegewezenProducten",
+							"parent": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client",
+								"aggregation": "shared",
+								"multiplicity": ""
+							},
+							"child": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/ToegewezenProduct",
+								"aggregation": "none",
+								"multiplicity": "1..*"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/relaties/Relaties",
+							"@type": "uml:Association",
+							"name": "Relaties",
+							"parent": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client",
+								"aggregation": "shared",
+								"multiplicity": ""
+							},
+							"child": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Relatie",
+								"aggregation": "none",
+								"multiplicity": "0..*"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/relaties/Contactgegevens",
+							"@type": "uml:Association",
+							"name": "Contactgegevens",
+							"parent": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Client",
+								"aggregation": "shared",
+								"multiplicity": ""
+							},
+							"child": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Contact",
+								"aggregation": "none",
+								"multiplicity": "1..*"
+							}
+						}
+					]
+				},
+				{
+					"@id": "model:iWMO/3.2/berichten/WMO301/klassen/ToegewezenProduct",
+					"@type": "uml:Class",
+					"name": "ToegewezenProduct",
+					"elementen": [],
+					"relaties": []
+				},
+				{
+					"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Header",
+					"@type": "uml:Class",
+					"name": "Header",
+					"elementen": [
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Header/elementen/BerichtCode",
+							"@type": "uml:Property",
+							"name": "BerichtCode",
+							"type": {
+								"name": "LDT_BerichtCode"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Header/elementen/BerichtVersie",
+							"@type": "uml:Property",
+							"name": "BerichtVersie",
+							"type": {
+								"name": "LDT_BerichtVersie"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Header/elementen/BerichtSubversie",
+							"@type": "uml:Property",
+							"name": "BerichtSubversie",
+							"type": {
+								"name": "LDT_BerichtSubversie"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Header/elementen/Afzender",
+							"@type": "uml:Property",
+							"name": "Afzender",
+							"type": {
+								"name": "LDT_Gemeente"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Header/elementen/Ontvanger",
+							"@type": "uml:Property",
+							"name": "Ontvanger",
+							"type": {
+								"name": "LDT_AgbCode"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Header/elementen/BerichtIdentificatie",
+							"@type": "uml:Property",
+							"name": "BerichtIdentificatie",
+							"type": {
+								"name": "CDT_BerichtIdentificatie"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Header/elementen/XsdVersie",
+							"@type": "uml:Property",
+							"name": "XsdVersie",
+							"type": {
+								"name": "CDT_XsdVersie"
+							}
+						}
+					],
+					"relaties": []
+				},
+				{
+					"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Relatie",
+					"@type": "uml:Class",
+					"name": "Relatie",
+					"elementen": [
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Relatie/elementen/Nummer",
+							"@type": "uml:Property",
+							"name": "Nummer",
+							"type": {
+								"name": "LDT_Persoonsid"
+							}
+						}
+					],
+					"relaties": [
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO301/relaties/Contact",
+							"@type": "uml:Association",
+							"name": "Contact",
+							"parent": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Relatie",
+								"aggregation": "shared",
+								"multiplicity": ""
+							},
+							"child": {
+								"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Contact",
+								"aggregation": "none",
+								"multiplicity": "1"
+							}
+						}
+					]
+				},
+				{
+					"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Contact",
+					"@type": "uml:Class",
+					"name": "Contact",
+					"elementen": [],
+					"relaties": []
+				},
+				{
+					"@id": "model:iWMO/3.2/berichten/WMO301/klassen/Test",
+					"@type": "uml:Class",
+					"name": "Test",
+					"elementen": [],
+					"relaties": []
+				}
+			]
+		},
+		{
+			"@id": "model:iWMO/3.2/berichten/WMO305",
+			"@type": "uml:Package",
+			"name": "WMO305",
+			"klassen": [
+				{
+					"@id": "model:iWMO/3.2/berichten/WMO305/klassen/Root",
+					"@type": "uml:Class",
+					"name": "Root",
+					"elementen": [],
+					"relaties": [
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO305/relaties/Header",
+							"@type": "uml:Association",
+							"name": "Header",
+							"parent": {
+								"@id": "model:iWMO/3.2/berichten/WMO305/klassen/Root",
+								"aggregation": "shared",
+								"multiplicity": ""
+							},
+							"child": {
+								"@id": "model:iWMO/3.2/berichten/WMO305/klassen/Header",
+								"aggregation": "none",
+								"multiplicity": "1"
+							}
+						}
+					]
+				},
+				{
+					"@id": "model:iWMO/3.2/berichten/WMO305/klassen/Header",
+					"@type": "uml:Class",
+					"name": "Header",
+					"elementen": [
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO305/klassen/Header/elementen/BerichtCode",
+							"@type": "uml:Property",
+							"name": "BerichtCode",
+							"type": {
+								"name": "LDT_BerichtCode"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO305/klassen/Header/elementen/BerichtVersie",
+							"@type": "uml:Property",
+							"name": "BerichtVersie",
+							"type": {
+								"name": "LDT_BerichtVersie"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO305/klassen/Header/elementen/BerichtSubversie",
+							"@type": "uml:Property",
+							"name": "BerichtSubversie",
+							"type": {
+								"name": "LDT_BerichtSubversie"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO305/klassen/Header/elementen/Afzender",
+							"@type": "uml:Property",
+							"name": "Afzender",
+							"type": {
+								"name": "LDT_Gemeente"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO305/klassen/Header/elementen/Ontvanger",
+							"@type": "uml:Property",
+							"name": "Ontvanger",
+							"type": {
+								"name": "LDT_AgbCode"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO305/klassen/Header/elementen/BerichtIdentificatie",
+							"@type": "uml:Property",
+							"name": "BerichtIdentificatie",
+							"type": {
+								"name": "CDT_BerichtIdentificatie"
+							}
+						},
+						{
+							"@id": "model:iWMO/3.2/berichten/WMO305/klassen/Header/elementen/XsdVersie",
+							"@type": "uml:Property",
+							"name": "XsdVersie",
+							"type": {
+								"name": "CDT_XsdVersie"
+							}
+						}
+					],
+					"relaties": []
+				}
+			]
+		}
+	]
+}

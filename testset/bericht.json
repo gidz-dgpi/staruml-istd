@@ -1,0 +1,1502 @@
+{
+	"declaration": {
+		"attributes": {
+			"version": "1.0",
+			"encoding": "UTF-8"
+		}
+	},
+	"elements": [
+		{
+			"type": "element",
+			"name": "xs:schema",
+			"attributes": {
+				"xmlns:xs": "http://www.w3.org/2001/XMLSchema",
+				"xmlns:iwmo": "http://www.istandaarden.nl/iwmo/3_2/basisschema/schema",
+				"xmlns:wmo301": "http://www.istandaarden.nl/iwmo/3_2/wmo301/schema",
+				"targetNamespace": "http://www.istandaarden.nl/iwmo/3_2/wmo301/schema",
+				"elementFormDefault": "qualified"
+			},
+			"elements": [
+				{
+					"type": "element",
+					"name": "xs:import",
+					"attributes": {
+						"namespace": "http://www.istandaarden.nl/iwmo/3_2/basisschema/schema",
+						"schemaLocation": "basisschema.xsd"
+					}
+				},
+				{
+					"type": "element",
+					"name": "xs:annotation",
+					"elements": [
+						{
+							"type": "element",
+							"name": "xs:appinfo",
+							"elements": [
+								{
+									"type": "element",
+									"name": "iwmo:standaard",
+									"elements": [
+										{
+											"type": "text",
+											"text": "iwmo"
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "iwmo:bericht",
+									"elements": [
+										{
+											"type": "text",
+											"text": "wmo301"
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "iwmo:release",
+									"elements": [
+										{
+											"type": "text",
+											"text": "3.2"
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "iwmo:BerichtXsdVersie",
+									"elements": [
+										{
+											"type": "text",
+											"text": "1.0.0"
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "iwmo:BerichtXsdMinVersie",
+									"elements": [
+										{
+											"type": "text",
+											"text": "1.0.0"
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "iwmo:BerichtXsdMaxVersie",
+									"elements": [
+										{
+											"type": "text",
+											"text": "1.0.0"
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "iwmo:BasisschemaXsdVersie",
+									"elements": [
+										{
+											"type": "text",
+											"text": "1.0.0"
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "iwmo:BasisschemaXsdMinVersie",
+									"elements": [
+										{
+											"type": "text",
+											"text": "1.0.0"
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "iwmo:BasisschemaXsdMaxVersie",
+									"elements": [
+										{
+											"type": "text",
+											"text": "1.0.0"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "element",
+					"name": "xs:element",
+					"attributes": {
+						"name": "Bericht",
+						"type": "wmo301:Root"
+					}
+				},
+				{
+					"type": "element",
+					"name": "xs:complexType",
+					"attributes": {
+						"name": "Root"
+					},
+					"elements": [
+						{
+							"type": "element",
+							"name": "xs:annotation",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:documentation",
+									"elements": [
+										{
+											"type": "text",
+											"text": "Bericht voor de toewijzing van Wmo-ondersteuning aan een aanbieder."
+										}
+									]
+								}
+							]
+						},
+						{
+							"type": "element",
+							"name": "xs:sequence",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Header",
+										"type": "wmo301:Header"
+									}
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Client",
+										"type": "wmo301:Client"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "element",
+					"name": "xs:complexType",
+					"attributes": {
+						"name": "Header"
+					},
+					"elements": [
+						{
+							"type": "element",
+							"name": "xs:sequence",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "BerichtCode"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Code ter identificatie van een soort bericht."
+														}
+													]
+												}
+											]
+										},
+										{
+											"type": "element",
+											"name": "xs:simpleType",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:restriction",
+													"attributes": {
+														"base": "iwmo:LDT_BerichtCode"
+													},
+													"elements": [
+														{
+															"type": "element",
+															"name": "xs:pattern",
+															"attributes": {
+																"value": "414"
+															}
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "BerichtVersie"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Volgnummer van de formele uitgifte van een major release van een iStandaard."
+														}
+													]
+												}
+											]
+										},
+										{
+											"type": "element",
+											"name": "xs:simpleType",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:restriction",
+													"attributes": {
+														"base": "iwmo:LDT_BerichtVersie"
+													},
+													"elements": [
+														{
+															"type": "element",
+															"name": "xs:pattern",
+															"attributes": {
+																"value": "3"
+															}
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "BerichtSubversie"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Volgnummer van de formele uitgifte van een minor release van een iStandaard."
+														}
+													]
+												}
+											]
+										},
+										{
+											"type": "element",
+											"name": "xs:simpleType",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:restriction",
+													"attributes": {
+														"base": "iwmo:LDT_BerichtSubversie"
+													},
+													"elements": [
+														{
+															"type": "element",
+															"name": "xs:pattern",
+															"attributes": {
+																"value": "2"
+															}
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Afzender",
+										"type": "iwmo:LDT_Gemeente"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Identificatie van een gemeente die betrokken is bij de uitvoering van zorg of ondersteuning."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Ontvanger",
+										"type": "iwmo:LDT_AgbCode"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Identificerende code van een aanbieder van zorg of ondersteuning."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "BerichtIdentificatie",
+										"type": "iwmo:CDT_BerichtIdentificatie"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Naam of nummer en dagtekening ter identificatie van een totale aanlevering."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "XsdVersie",
+										"type": "iwmo:CDT_XsdVersie"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het heenbericht."
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "element",
+					"name": "xs:complexType",
+					"attributes": {
+						"name": "Client"
+					},
+					"elements": [
+						{
+							"type": "element",
+							"name": "xs:annotation",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:documentation",
+									"elements": [
+										{
+											"type": "text",
+											"text": "Persoonsgegevens van de client."
+										}
+									]
+								}
+							]
+						},
+						{
+							"type": "element",
+							"name": "xs:sequence",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Bsn",
+										"type": "iwmo:LDT_BurgerServicenummer"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Een door de overheid toegekend identificerend nummer in het kader van het vereenvoudigen van het contact tussen overheid en burgers en het verminderen van de administratieve lasten."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Geboortedatum",
+										"type": "iwmo:CDT_Geboortedatum"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Datum waarop een natuurlijk persoon geboren is."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Geslacht",
+										"type": "iwmo:LDT_Geslacht"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "De sekse van een persoon, zoals bij geboorte formeel vastgesteld of nadien formeel gewijzigd."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Naam",
+										"type": "iwmo:CDT_VolledigeNaam"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Volledige naam van een natuurlijk persoon, aangeduid als Geslachtsnaam, eventueel Partnernaam, Voornamen en/of Voorletters en NaamGebruik."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Communicatie",
+										"type": "iwmo:CDT_Communicatie",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Aanduiding over bijzondere vorm van communicatie die gebruikt dient te worden."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "JuridischeStatus",
+										"type": "iwmo:LDT_JuridischeStatus",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Juridische situatie die voor de client van toepassing is op het moment van indicatiestelling."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "WettelijkeVertegenwoordiging",
+										"type": "iwmo:LDT_WettelijkeVertegenwoordiging",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Wettelijke vertegenwoordiging die voor de client van toepassing is op het moment van beoordeling."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Commentaar",
+										"type": "iwmo:LDT_Commentaar",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Vrije tekst (bijvoorbeeld toelichting) in een bericht."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Relaties",
+										"type": "wmo301:Relaties",
+										"minOccurs": "0"
+									}
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Contactgegevens",
+										"type": "wmo301:Contactgegevens"
+									}
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "ToegewezenProducten",
+										"type": "wmo301:ToegewezenProducten"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "element",
+					"name": "xs:complexType",
+					"attributes": {
+						"name": "Relaties"
+					},
+					"elements": [
+						{
+							"type": "element",
+							"name": "xs:sequence",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Relatie",
+										"type": "wmo301:Relatie",
+										"maxOccurs": "unbounded"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "element",
+					"name": "xs:complexType",
+					"attributes": {
+						"name": "Relatie"
+					},
+					"elements": [
+						{
+							"type": "element",
+							"name": "xs:annotation",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:documentation",
+									"elements": [
+										{
+											"type": "text",
+											"text": "Persoonsgegevens van de relatie van de client."
+										}
+									]
+								}
+							]
+						},
+						{
+							"type": "element",
+							"name": "xs:sequence",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Nummer",
+										"type": "iwmo:LDT_Persoonsid"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Identificerend nummer van de relatie van een client."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Volgorde",
+										"type": "iwmo:LDT_RelatieVolgorde",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Aanduiding van de prioriteit van de contactpersoon."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Soort",
+										"type": "iwmo:LDT_SoortRelatie"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "De soort relatie die een persoon ten opzichte van de client heeft."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Geboortedatum",
+										"type": "iwmo:CDT_Geboortedatum",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Datum waarop een natuurlijk persoon geboren is."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Geslacht",
+										"type": "iwmo:LDT_Geslacht",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "De sekse van een persoon, zoals bij geboorte formeel vastgesteld of nadien formeel gewijzigd."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Naam",
+										"type": "iwmo:CDT_VolledigeNaam"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Volledige naam van een natuurlijk persoon, aangeduid als Geslachtsnaam, eventueel Partnernaam, Voornamen en/of Voorletters en NaamGebruik."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Contact",
+										"type": "wmo301:Contact"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "element",
+					"name": "xs:complexType",
+					"attributes": {
+						"name": "Contact"
+					},
+					"elements": [
+						{
+							"type": "element",
+							"name": "xs:annotation",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:documentation",
+									"elements": [
+										{
+											"type": "text",
+											"text": "Gegevens voor de aanduiding van het adres van de client of relatie."
+										}
+									]
+								}
+							]
+						},
+						{
+							"type": "element",
+							"name": "xs:sequence",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Soort",
+										"type": "iwmo:LDT_AdresSoort"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Nadere typering van het adres."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Adres",
+										"type": "iwmo:CDT_Adres",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Adres van de client of relatie van de client."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Organisatie",
+										"type": "iwmo:LDT_Organisatienaam",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "De naam van een organisatie waar de client of relatie van de client verblijft."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Telefoon",
+										"type": "iwmo:CDT_Telefoonnummers",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "De telefoonnummers waarop de client of relatie van de client te bereiken is."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Emailadres",
+										"type": "iwmo:LDT_Emailadres",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Het e-mailadres van de client of relatie van de client."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Periode",
+										"type": "iwmo:CDT_OpenPeriode",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Begindatum en/of een einddatum van het verblijf van de client of relatie van de client op een tijdelijk adres."
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "element",
+					"name": "xs:complexType",
+					"attributes": {
+						"name": "Contactgegevens"
+					},
+					"elements": [
+						{
+							"type": "element",
+							"name": "xs:sequence",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Contact",
+										"type": "wmo301:Contact",
+										"maxOccurs": "unbounded"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "element",
+					"name": "xs:complexType",
+					"attributes": {
+						"name": "ToegewezenProducten"
+					},
+					"elements": [
+						{
+							"type": "element",
+							"name": "xs:sequence",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "ToegewezenProduct",
+										"type": "wmo301:ToegewezenProduct",
+										"maxOccurs": "unbounded"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "element",
+					"name": "xs:complexType",
+					"attributes": {
+						"name": "ToegewezenProduct"
+					},
+					"elements": [
+						{
+							"type": "element",
+							"name": "xs:annotation",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:documentation",
+									"elements": [
+										{
+											"type": "text",
+											"text": "Gegevens over een product dat de gemeente toewijst aan een aanbieder."
+										}
+									]
+								}
+							]
+						},
+						{
+							"type": "element",
+							"name": "xs:sequence",
+							"elements": [
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "ToewijzingNummer",
+										"type": "iwmo:LDT_Nummer"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Identificerend nummer van de opdracht om een zorg - of ondersteuningsproduct te leveren, zoals vastgesteld door de gemeente."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "ReferentieAanbieder",
+										"type": "iwmo:LDT_Referentie",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Naam of nummer die als referentie kan worden meegegeven."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Product",
+										"type": "iwmo:CDT_Product",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Gecodeerde omschrijving van een product, dienst of resultaat ten behoeve van het leveren van ondersteuning aan een client."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Toewijzingsdatum",
+										"type": "iwmo:LDT_Datum"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "De datum waarop de gemeente de toewijzing van de zorg aan de zorgaanbieder definitief heeft vastgesteld."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Toewijzingstijd",
+										"type": "iwmo:LDT_Tijd"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Het tijdstip waarop de gemeente de toewijzing van de zorg aan de zorgaanbieder definitief heeft vastgesteld."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Ingangsdatum",
+										"type": "iwmo:LDT_Datum"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "De datum waarop de toegewezen product voor de eerste keer geleverd dient te worden."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Einddatum",
+										"type": "iwmo:LDT_Datum",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "De datum waarop de toegewezen product voor de laatste keer geleverd dient te worden."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "RedenWijziging",
+										"type": "iwmo:LDT_RedenWijziging",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "De reden waarom een toewijzing wordt gewijzigd."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Omvang",
+										"type": "iwmo:CDT_Omvang",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Aanduiding van de omvang van de te leveren of geleverde ondersteuning, uitgedrukt in Volume, Eenheid en Frequentie."
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Budget",
+										"type": "iwmo:LDT_Budget",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Aanduiding van het toegewezen budget"
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "element",
+									"name": "xs:element",
+									"attributes": {
+										"name": "Commentaar",
+										"type": "iwmo:LDT_Commentaar",
+										"minOccurs": "0"
+									},
+									"elements": [
+										{
+											"type": "element",
+											"name": "xs:annotation",
+											"elements": [
+												{
+													"type": "element",
+													"name": "xs:documentation",
+													"elements": [
+														{
+															"type": "text",
+															"text": "Vrije tekst (bijvoorbeeld toelichting) in een bericht."
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
