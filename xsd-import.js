@@ -19,6 +19,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
     const xsAppinfo = xsAnnotation.elements.find((element) => element.name == 'xs:appinfo')
     const berichtInfo = xsAppinfo.elements[1]
     const berichtInfoElement = berichtInfo.elements[0]
+
     const berichtNaam = berichtInfoElement.text.toUpperCase()
     const berichtPkg = app.factory.createModel({ 
         id: 'UMLPackage', 
@@ -27,7 +28,15 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             elem.name = berichtNaam
         } 
     })
-
+    
+    const xsComplexTypes = xsSchema.elements.find((element) => element.name == 'xs:complexType')
+    const berichtClass = app.factory.createModel({ 
+        id: 'UMLClass', 
+        parent: berichtPkg,
+        modelInitializer: elem => {
+            elem.name = xsComplexTypes.attributes.name
+        } 
+    })
 
 }
 
