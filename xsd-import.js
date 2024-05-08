@@ -29,15 +29,17 @@ function importBerichtKlassen(berichtenPkg, bericht) {
         } 
     })
     
-    const xsComplexTypes = xsSchema.elements.find((element) => element.name == 'xs:complexType')
-    const berichtClass = app.factory.createModel({ 
-        id: 'UMLClass', 
-        parent: berichtPkg,
-        modelInitializer: elem => {
-            elem.name = xsComplexTypes.attributes.name
-        } 
-    })
-
+    const xsComplexTypes = xsSchema.elements.filter((element) => element.name == 'xs:complexType')
+    xsComplexTypes.forEach(xsComplexType => {
+        const berichtClass = app.factory.createModel({ 
+            id: 'UMLClass', 
+            parent: berichtPkg,
+            modelInitializer: elem => {
+                elem.name = xsComplexType.attributes.name
+            } 
+        })    
+    });
+    
 }
 
 
