@@ -15,6 +15,11 @@ const JSON_FILE_FILTERS = [
     { name: 'All Files', extensions: ['*'] }
 ]
 
+const XSD_FILE_FILTERS = [
+    { name: 'XSD Files', extensions: ['xsd'] },
+    { name: 'All Files', extensions: ['*'] }
+]
+
 function _handleIstdJsonExport(fullPath) {
     if (fullPath) {
         try {
@@ -24,7 +29,7 @@ function _handleIstdJsonExport(fullPath) {
         }
     } else {
         var _filename = app.project.getProject().name
-        var filename = app.dialogs.showSaveDialog('Export Project As JSON', _filename + '.json', JSON_FILE_FILTERS)
+        var filename = app.dialogs.showSaveDialog('Export Berichtmodel As JSON', _filename + '.json', JSON_FILE_FILTERS)
         if (filename) {
             try {
                 jsonWriter.saveToFile(filename)
@@ -44,7 +49,7 @@ function _handleIstdBerichtImport(fullPath) {
         }
     } else {
         var _filename = app.project.getProject().name
-        var filename = app.dialogs.showSaveDialog('Export Project As JSON', _filename + '.json', JSON_FILE_FILTERS)
+        var filename = app.dialogs.showOpenDialog('Import Bericht As XSD', _filename + '.json', XSD_FILE_FILTERS)
         if (filename) {
             try {
                 xsdImport.importBerichtXsdFile(filename)
