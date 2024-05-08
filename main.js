@@ -22,6 +22,16 @@ function _handleIstdJsonExport(fullPath) {
         } catch (err) {
             console.error(err)
         }
+    } else {
+        var _filename = app.project.getProject().name
+        var filename = app.dialogs.showSaveDialog('Export Project As JSON', _filename + '.json', JSON_FILE_FILTERS)
+        if (filename) {
+            try {
+                jsonWriter.saveToFile(filename)
+            } catch (err) {
+                console.error(err)
+            }
+        }
     }
 }
 
@@ -31,6 +41,16 @@ function _handleIstdBerichtImport(fullPath) {
             xsdImport.importBerichtXsdFile(fullPath)
         } catch (err) {
             console.error(err)
+        }
+    } else {
+        var _filename = app.project.getProject().name
+        var filename = app.dialogs.showSaveDialog('Export Project As JSON', _filename + '.json', JSON_FILE_FILTERS)
+        if (filename) {
+            try {
+                xsdImport.importBerichtXsdFile(filename)
+            } catch (err) {
+                console.error(err)
+            }
         }
     }
 }

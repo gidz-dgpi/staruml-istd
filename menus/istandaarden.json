@@ -1,0 +1,15 @@
+{
+    "menu": [
+      {
+        "id": "istd",
+        "label": "iStandaarden",
+        "submenu": [
+          {
+            "label": "JSON-Export",
+            "id": "istd.json.export",
+            "command": "istd:json:export"
+          }
+        ]
+      }
+    ]
+  }
