@@ -15,7 +15,7 @@ function importBerichtXsdFile(xsdFile) {
         try {
             const xsdObj = convert.xml2js(xsdStr)
             try {
-                fs.writeFileSync('testset/bericht.json', JSON.stringify(xsdObj, null, '\t'))
+                fs.writeFileSync('/Users/theonno/Downloads/bericht.json', JSON.stringify(xsdObj, null, '\t'))
             } catch (err) {
                 console.error(err);
             }
@@ -27,7 +27,5 @@ function importBerichtXsdFile(xsdFile) {
     }
 
 }
-
-importBerichtXsdFile('testset/WMO301.xsd')
 
 exports.importBerichtXsdFile = importBerichtXsdFile

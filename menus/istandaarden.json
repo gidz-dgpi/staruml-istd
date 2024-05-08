@@ -5,9 +5,14 @@
         "label": "iStandaarden",
         "submenu": [
           {
-            "label": "JSON-Export",
+            "label": "Model-JSON Export",
             "id": "istd.json.export",
             "command": "istd:json:export"
+          },
+          {
+            "label": "Bericht-XSD Import",
+            "id": "istd.json.export",
+            "command": "istd:bericht:import"
           }
         ]
       }

@@ -40,6 +40,7 @@ function _handleIstdJsonExport(fullPath) {
     }
 }
 
+
 function _handleIstdBerichtImport(fullPath) {
     if (fullPath) {
         try {
@@ -48,12 +49,12 @@ function _handleIstdBerichtImport(fullPath) {
             console.error(err)
         }
     } else {
-        var _filename = app.project.getProject().name
-        var filename = app.dialogs.showOpenDialog('Import Bericht As XSD', _filename + '.json', XSD_FILE_FILTERS)
-        if (filename) {
+        var files = app.dialogs.showOpenDialog('Selecteer een Bericht (.xsd)', null, XSD_FILE_FILTERS)
+        if (files && files.length > 0) {
             try {
-                xsdImport.importBerichtXsdFile(filename)
+                xsdImport.importBerichtXsdFile(files[0])
             } catch (err) {
+                app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
                 console.error(err)
             }
         }
