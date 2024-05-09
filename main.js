@@ -15,6 +15,11 @@ const JSON_FILE_FILTERS = [
     { name: 'All Files', extensions: ['*'] }
 ]
 
+const XSD_FILE_FILTERS = [
+    { name: 'XSD Files', extensions: ['xsd'] },
+    { name: 'All Files', extensions: ['*'] }
+]
+
 function _handleIstdJsonExport(fullPath) {
     if (fullPath) {
         try {
@@ -22,8 +27,19 @@ function _handleIstdJsonExport(fullPath) {
         } catch (err) {
             console.error(err)
         }
+    } else {
+        var _filename = app.project.getProject().name
+        var filename = app.dialogs.showSaveDialog('Export Berichtmodel As JSON', _filename + '.json', JSON_FILE_FILTERS)
+        if (filename) {
+            try {
+                jsonWriter.saveToFile(filename)
+            } catch (err) {
+                console.error(err)
+            }
+        }
     }
 }
+
 
 function _handleIstdBerichtImport(fullPath) {
     if (fullPath) {
@@ -31,6 +47,16 @@ function _handleIstdBerichtImport(fullPath) {
             xsdImport.importBerichtXsdFile(fullPath)
         } catch (err) {
             console.error(err)
+        }
+    } else {
+        var files = app.dialogs.showOpenDialog('Selecteer een Bericht (.xsd)', null, XSD_FILE_FILTERS)
+        if (files && files.length > 0) {
+            try {
+                xsdImport.importBerichtXsdFile(files[0])
+            } catch (err) {
+                app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
+                console.error(err)
+            }
         }
     }
 }

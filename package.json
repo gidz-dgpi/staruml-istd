@@ -19,6 +19,7 @@
         "staruml": ">=3.0.0"
     },
     "scripts": {
+        "test:mac:import:empty": "/Applications/StarUML.app/Contents/MacOS/StarUML exec testset/empty.mdj -c istd:bericht:import -a testset/WMO301.xsd",
         "test:mac:import": "/Applications/StarUML.app/Contents/MacOS/StarUML exec testset/iWMO.mdj -c istd:bericht:import -a testset/WMO301.xsd",
         "test:mac:export": "/Applications/StarUML.app/Contents/MacOS/StarUML exec testset/iWMO.mdj -c istd:json:export -a testset/iWMO-export.json",
         "test:win:export": "C:\\Program Files\\StarUML\\StarUML.exe exec testset/iWMO.mdj -c istd:json:export -a testset\\iWMO-export.json"
