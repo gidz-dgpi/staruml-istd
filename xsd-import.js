@@ -7,6 +7,11 @@
 
 const fs = require('fs')
 const convert = require('xml-js');
+const utils = require('./dgpi-utils')
+
+const BERICHTEN_PACKAGE = {
+    name: 'Berichten'
+}
 
 /**
  * 
@@ -27,40 +32,29 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 
     // Get Name from XSD Bericht Info Data and lookup any existing Bericht Package
     const berichtNaam = berichtInfoElement.text.toUpperCase()
-    var berichtIndex = -1
-    var i = 0
-    var berichtPkgTest = berichtenPkg.ownedElements.find(element => (element.name == berichtNaam) && (element instanceof type.UMLPackage))
-    console.log(berichtPkgTest)
-//    var berichtPkg;
+    var berichtPkg = utils.getUMLPackagElementByName(berichtenPkg.ownedElements, berichtNaam)
 
-//    if (berichtIndex == -1) {
+    if (berichtPkg == undefined) {
         // Bericht Package doesn't exist
-        // Create Bericht Package
-        const berichtPkg = app.factory.createModel({
+        // Create Bericht Package with Classes
+        berichtPkg = app.factory.createModel({
             id: 'UMLPackage',
             parent: berichtenPkg,
             modelInitializer: elem => {
                 elem.name = berichtNaam
             }
         })
-//    } else {
-        // Bericht Package does exits
-        // Get Bericht Package Reference
-//        berichtPkg = berichtPkg.ownedElements[berichtIndex]
-//   }
-
-    console.log(berichtPkg);
-
-    const xsComplexTypes = xsSchema.elements.filter((element) => element.name == 'xs:complexType')
-    xsComplexTypes.forEach(xsComplexType => {
-        const berichtClass = app.factory.createModel({
-            id: 'UMLClass',
-            parent: berichtPkg,
-            modelInitializer: elem => {
-                elem.name = xsComplexType.attributes.name
-            }
-        })
-    });
+        const xsComplexTypes = xsSchema.elements.filter((element) => element.name == 'xs:complexType')
+        xsComplexTypes.forEach(xsComplexType => {
+            const berichtClass = app.factory.createModel({
+                id: 'UMLClass',
+                parent: berichtPkg,
+                modelInitializer: elem => {
+                    elem.name = xsComplexType.attributes.name
+                }
+            })
+        });
+    }
 
 }
 
@@ -72,13 +66,21 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 function importBericht(bericht) {
     try {
         const project = app.repository.select('@Project')[0]
-        const berichtenPkg = app.factory.createModel({
-            id: 'UMLPackage',
-            parent: project,
-            modelInitializer: elem => {
-                elem.name = 'Berichten'
-            }
-        })
+        //var berichtenPkg = project.ownedElements.find(element => (element.name == BERICHTEN_PACKAGE.name) && (element instanceof type.UMLPackage))
+        var berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, BERICHTEN_PACKAGE.name)
+
+        if (berichtenPkg == undefined) {
+            // Berichten Package doesn't exist
+            // Create Berichten Package
+            berichtenPkg = app.factory.createModel({
+                id: 'UMLPackage',
+                parent: project,
+                modelInitializer: elem => {
+                    elem.name = BERICHTEN_PACKAGE.name
+                }
+            })
+        }
+
         importBerichtKlassen(berichtenPkg, bericht)
 
     } catch (err) {
