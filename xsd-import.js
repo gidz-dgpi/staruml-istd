@@ -68,7 +68,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                 var elemType = xsElement.attributes.type
                 if (elemType == undefined) {
                     // Restriction on a SimpleType Defined
-                    console.log(xsElement.attributes)
+                    console.log(xsElement.elements)
                 } else {
                     console.log(elemType)
                     if (elemType.startsWith(relationPre)) {
