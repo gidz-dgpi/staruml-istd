@@ -13,6 +13,11 @@ const BERICHTEN_PACKAGE = {
     name: 'Berichten'
 }
 
+function importBerichtKlasseElementen(berichtClass, xsSequence) {
+
+
+}
+
 /**
  * 
  * Import Bericht Klassen from bericht
@@ -44,7 +49,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                 elem.name = berichtNaam
             }
         })
-        const xsComplexTypes = xsSchema.elements.filter((element) => element.name == 'xs:complexType')
+        const xsComplexTypes = xsSchema.elements.filter(element => element.name == 'xs:complexType')
         xsComplexTypes.forEach(xsComplexType => {
             const berichtClass = app.factory.createModel({
                 id: 'UMLClass',
@@ -53,7 +58,29 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                     elem.name = xsComplexType.attributes.name
                 }
             })
-        });
+            const xsSequence = xsComplexType.elements.find(element => element.name == 'xs:sequence')
+            const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
+            const relationPre = berichtNaam.toLowerCase() + ':'
+
+            xsElements.forEach(xsElement => {
+                const elemName = xsElement.attributes.name
+                console.log(elemName)
+                var elemType = xsElement.attributes.type
+                if (elemType == undefined) {
+                    // Restriction on a SimpleType Defined
+                    console.log(xsElement.attributes)
+                } else {
+                    console.log(elemType)
+                    if (elemType.startsWith(relationPre)) {
+                        console.log('Association')
+                    } else {
+                        console.log('Attribute')
+                    }
+                }
+                
+            })
+
+        })
     }
 
 }
