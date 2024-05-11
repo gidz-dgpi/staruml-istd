@@ -13,6 +13,22 @@ const BERICHTEN_PACKAGE = {
     name: 'Berichten'
 }
 
+function addBerichtClassAttribute(berichtClass, elemName, elemType) {
+    return app.factory.createModel({
+        id: 'UMLAttribute',
+        parent: berichtClass,
+        field: 'attributes',
+        modelInitializer: elem => {
+            elem.name = elemName
+            elem.type = elemType
+        }
+    })
+}
+
+function getDataType(typeValue) {
+    return typeValue.split(':')[1]
+}
+
 function importBerichtKlasseElementen(berichtClass, xsSequence) {
 
 
@@ -28,9 +44,15 @@ function importBerichtKlasseElementen(berichtClass, xsSequence) {
 function importBerichtKlassen(berichtenPkg, bericht) {
     // Get XSD Schema Data
     const xsSchema = bericht.elements.find((element) => element.name == 'xs:schema')
-    const xsAnnotation = xsSchema.elements.find((element) => element.name == 'xs:annotation')
+    const xsAnnotation = xsSchema.elements.find(element => element.name == 'xs:annotation')
     // Get AppInfo Data
-    const xsAppinfo = xsAnnotation.elements.find((element) => element.name == 'xs:appinfo')
+    const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
+    // Get Standaard info Data
+    const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
+    const standaardInfoElement = standaardInfo.elements[0]
+    // Get standaard name
+    const standaardName = standaardInfoElement.text
+    console.log(standaardName)
     // Get Bericht Info Data
     const berichtInfo = xsAppinfo.elements[1]
     const berichtInfoElement = berichtInfo.elements[0]
@@ -68,13 +90,21 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                 var elemType = xsElement.attributes.type
                 if (elemType == undefined) {
                     // Restriction on a SimpleType Defined
-                    console.log(xsElement.elements)
+                    const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
+                    const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction') 
+                    console.log(xsRestriction.attributes.base)
+                    const elemType = getDataType(xsRestriction.attributes.base)
+                    const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
+                    console.log(berichtClassAttribute)
                 } else {
                     console.log(elemType)
                     if (elemType.startsWith(relationPre)) {
-                        console.log('Association')
+                        //console.log('Association')
                     } else {
                         console.log('Attribute')
+                        const elemType = getDataType(xsElement.attributes.type)
+                        const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
+                        console.log(berichtClassAttribute)
                     }
                 }
                 
