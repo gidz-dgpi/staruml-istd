@@ -7,39 +7,112 @@
 
 const fs = require('fs')
 const convert = require('xml-js');
+const utils = require('./dgpi-utils')
+
+const BERICHTEN_PACKAGE = {
+    name: 'Berichten'
+}
+
+function addBerichtClassAttribute(berichtClass, elemName, elemType) {
+    return app.factory.createModel({
+        id: 'UMLAttribute',
+        parent: berichtClass,
+        field: 'attributes',
+        modelInitializer: elem => {
+            elem.name = elemName
+            elem.type = elemType
+        }
+    })
+}
+
+function getDataType(typeValue) {
+    return typeValue.split(':')[1]
+}
+
+function importBerichtKlasseElementen(berichtClass, xsSequence) {
+
+
+}
 
 /**
  * 
- * @param {UMLPackage} berichtenPkg 
- * @param {Object} bericht 
+ * Import Bericht Klassen from bericht
+ * 
+ * @param {UMLPackage} berichtenPkg - StarUML UMLPackage Model Object
+ * @param {Object} bericht - XSD-import Object
  */
 function importBerichtKlassen(berichtenPkg, bericht) {
+    // Get XSD Schema Data
     const xsSchema = bericht.elements.find((element) => element.name == 'xs:schema')
-    const xsAnnotation = xsSchema.elements.find((element) => element.name == 'xs:annotation')
-    const xsAppinfo = xsAnnotation.elements.find((element) => element.name == 'xs:appinfo')
+    const xsAnnotation = xsSchema.elements.find(element => element.name == 'xs:annotation')
+    // Get AppInfo Data
+    const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
+    // Get Standaard info Data
+    const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
+    const standaardInfoElement = standaardInfo.elements[0]
+    // Get standaard name
+    const standaardName = standaardInfoElement.text
+    console.log(standaardName)
+    // Get Bericht Info Data
     const berichtInfo = xsAppinfo.elements[1]
     const berichtInfoElement = berichtInfo.elements[0]
 
+    // Get Name from XSD Bericht Info Data and lookup any existing Bericht Package
     const berichtNaam = berichtInfoElement.text.toUpperCase()
-    const berichtPkg = app.factory.createModel({ 
-        id: 'UMLPackage', 
-        parent: berichtenPkg,
-        modelInitializer: elem => {
-            elem.name = berichtNaam
-        } 
-    })
-    
-    const xsComplexTypes = xsSchema.elements.filter((element) => element.name == 'xs:complexType')
-    xsComplexTypes.forEach(xsComplexType => {
-        const berichtClass = app.factory.createModel({ 
-            id: 'UMLClass', 
-            parent: berichtPkg,
+    var berichtPkg = utils.getUMLPackagElementByName(berichtenPkg.ownedElements, berichtNaam)
+
+    if (berichtPkg == undefined) {
+        // Bericht Package doesn't exist
+        // Create Bericht Package with Classes
+        berichtPkg = app.factory.createModel({
+            id: 'UMLPackage',
+            parent: berichtenPkg,
             modelInitializer: elem => {
-                elem.name = xsComplexType.attributes.name
-            } 
-        })    
-    });
-    
+                elem.name = berichtNaam
+            }
+        })
+        const xsComplexTypes = xsSchema.elements.filter(element => element.name == 'xs:complexType')
+        xsComplexTypes.forEach(xsComplexType => {
+            const berichtClass = app.factory.createModel({
+                id: 'UMLClass',
+                parent: berichtPkg,
+                modelInitializer: elem => {
+                    elem.name = xsComplexType.attributes.name
+                }
+            })
+            const xsSequence = xsComplexType.elements.find(element => element.name == 'xs:sequence')
+            const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
+            const relationPre = berichtNaam.toLowerCase() + ':'
+
+            xsElements.forEach(xsElement => {
+                const elemName = xsElement.attributes.name
+                console.log(elemName)
+                var elemType = xsElement.attributes.type
+                if (elemType == undefined) {
+                    // Restriction on a SimpleType Defined
+                    const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
+                    const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction') 
+                    console.log(xsRestriction.attributes.base)
+                    const elemType = getDataType(xsRestriction.attributes.base)
+                    const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
+                    console.log(berichtClassAttribute)
+                } else {
+                    console.log(elemType)
+                    if (elemType.startsWith(relationPre)) {
+                        //console.log('Association')
+                    } else {
+                        console.log('Attribute')
+                        const elemType = getDataType(xsElement.attributes.type)
+                        const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
+                        console.log(berichtClassAttribute)
+                    }
+                }
+                
+            })
+
+        })
+    }
+
 }
 
 
@@ -50,15 +123,23 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 function importBericht(bericht) {
     try {
         const project = app.repository.select('@Project')[0]
-        const berichtenPkg = app.factory.createModel({ 
-            id: 'UMLPackage', 
-            parent: project,
-            modelInitializer: elem => {
-                elem.name = 'Berichten'
-            } 
-        })
+        //var berichtenPkg = project.ownedElements.find(element => (element.name == BERICHTEN_PACKAGE.name) && (element instanceof type.UMLPackage))
+        var berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, BERICHTEN_PACKAGE.name)
+
+        if (berichtenPkg == undefined) {
+            // Berichten Package doesn't exist
+            // Create Berichten Package
+            berichtenPkg = app.factory.createModel({
+                id: 'UMLPackage',
+                parent: project,
+                modelInitializer: elem => {
+                    elem.name = BERICHTEN_PACKAGE.name
+                }
+            })
+        }
+
         importBerichtKlassen(berichtenPkg, bericht)
-        
+
     } catch (err) {
         fs.writeFileSync('testset/error.json', err.message)
         console.error(err);

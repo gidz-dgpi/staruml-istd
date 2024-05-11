@@ -17,7 +17,7 @@ const istd = require('./istd-json-export')
  * @param {string} filename
  * @return {$.Promise}
  */
-function saveToFile (filename) {
+function saveToFile(filename) {
   try {
     // Build intermediate JSON representations
     var root = app.project.getProject()
