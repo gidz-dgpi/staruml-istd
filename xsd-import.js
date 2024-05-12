@@ -96,10 +96,12 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             }
         })
         const complexElems = xsSchema.elements.filter(element => element.name == 'xs:complexType')
+        const relationElems = []
 
         complexElems.forEach(complexElem => {
             const complexElemName = complexElem.attributes.name
             const berichtClass = addBerichtClass(berichtPkg, complexElemName)
+//            const relationClassElem = relationElems.find(complexElemName)
 
             const xsSequence = complexElem.elements.find(element => element.name == 'xs:sequence')
             const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
@@ -112,17 +114,21 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                     // Restriction on a SimpleType Defined
                     const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
                     const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
-                    console.log(xsRestriction.attributes.base)
                     const elemType = getDataType(xsRestriction.attributes.base)
                     const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
                     //console.log(berichtClassAttribute)
                 } else {
-                    console.log(elemType)
+                    
                     if (elemType.startsWith(relationPre)) {
                         console.log('Association')
-                        console.log(xsElement)
+                        //console.log(xsElement)
                         const relationElem = complexElems.find(element => element.attributes.name == complexElemName)
-                        console.log(relationElem)
+                        
+                        if (relationElem) {
+                            relationElems.push(complexElemName)
+                            console.log(relationElems)
+                        }
+
                     } else {
                         //console.log('Attribute')
                         const elemType = getDataType(xsElement.attributes.type)
