@@ -41,6 +41,7 @@ function getDataType(typeValue) {
     return typeValue.split(':')[1]
 }
 
+
 /**
  * 
  * @param {Object} complexElem 
@@ -119,7 +120,8 @@ function importBerichtKlassen(berichtenPkg, bericht) {
         const relationElems = []
         const relationClasses = []
 
-        complexElems.forEach(complexElem => {
+        for (let i = 0; i < complexElems.length; i++) {
+            const complexElem = complexElems[i]
 
             if (isRelationClass(complexElem, relationPre)) {
                 console.log('relationClasses')
@@ -130,9 +132,10 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                 const berichtClass = addBerichtClass(berichtPkg, complexElemName)
                 const xsSequence = complexElem.elements.find(element => element.name == 'xs:sequence')
                 const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
-                xsElements.forEach(xsElement => {
+
+                for (let j = 0; j < xsElements.length; j++) {
+                    const xsElement = xsElements[j]
                     const elemName = xsElement.attributes.name
-                    //console.log(elemName)
                     var elemType = xsElement.attributes.type
 
                     if (elemType == undefined) {
@@ -141,12 +144,10 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                         const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
                         const elemType = getDataType(xsRestriction.attributes.base)
                         const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
-                        //console.log(berichtClassAttribute)
                     } else {
 
                         if (elemType.startsWith(relationPre)) {
                             console.log('Association')
-                            //console.log(xsElement)
                             const relationElem = complexElems.find(element => element.attributes.name == complexElemName)
 
                             if (relationElem) {
@@ -158,15 +159,12 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                             //console.log('Attribute')
                             const elemType = getDataType(xsElement.attributes.type)
                             const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
-                            //console.log(berichtClassAttribute)
                         }
                     }
-
-                })
+                }
 
             }
-
-        })
+        }
 
     }
 }
