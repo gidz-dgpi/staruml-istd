@@ -145,14 +145,10 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                     } else {
 
                         if (elemType.startsWith(relationPre)) {
-                            const relationElem = complexElems.find(element => element.attributes.name == complexElemName)
-
-                            if (relationElem) {
-                                relationElems.push({
-                                    parentClass: berichtClass,
-                                    element: xsElement
-                                })
-                            }
+                            relationElems.push({
+                                parentClass: berichtClass,
+                                element: xsElement
+                            })
 
                         } else {
                             //console.log('Attribute')
@@ -172,7 +168,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 
         for (let i = 0; i < relationElems.length; i++) {
             const relationElem = relationElems[i]
-            
+
 
         }
 
