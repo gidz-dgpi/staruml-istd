@@ -170,6 +170,13 @@ function importBerichtKlassen(berichtenPkg, bericht) {
         console.log('relationClasses')
         console.log(relationClasses)
 
+        for (let i = 0; i < relationElems.length; i++) {
+            const relationElem = relationElems[i]
+            
+
+        }
+
+
 
     }
 }
