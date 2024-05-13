@@ -42,6 +42,26 @@ function getDataType(typeValue) {
 }
 
 /**
+ * 
+ * @param {Object} complexElem 
+ * @param {String} relationPre 
+ * @returns {Boolean}
+ */
+function isRelationClass(complexElem, relationPre) {
+    var retVal = false
+
+    if (complexElem.elements.length == 1) {
+
+        if (complexElem.elements[0].elements.length == 1) {
+            retVal = complexElem.elements[0].elements[0].attributes.type.startsWith(relationPre)
+        }
+
+    }
+
+    return retVal
+}
+
+/**
  * Add UMLClass for BerichtClass to BerichtPackage
  * @param {UMLPackage} berichtPkg 
  * @param {String} berichtClassName
@@ -97,103 +117,112 @@ function importBerichtKlassen(berichtenPkg, bericht) {
         })
         const complexElems = xsSchema.elements.filter(element => element.name == 'xs:complexType')
         const relationElems = []
+        const relationClasses = []
 
         complexElems.forEach(complexElem => {
-            const complexElemName = complexElem.attributes.name
-            const berichtClass = addBerichtClass(berichtPkg, complexElemName)
-//            const relationClassElem = relationElems.find(complexElemName)
 
-            const xsSequence = complexElem.elements.find(element => element.name == 'xs:sequence')
-            const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
-            xsElements.forEach(xsElement => {
-                const elemName = xsElement.attributes.name
-                //console.log(elemName)
-                var elemType = xsElement.attributes.type
+            if (isRelationClass(complexElem, relationPre)) {
+                console.log('relationClasses')
+                relationClasses.push(complexElem)
+                console.log(relationClasses)
+            } else {
+                const complexElemName = complexElem.attributes.name
+                const berichtClass = addBerichtClass(berichtPkg, complexElemName)
+                const xsSequence = complexElem.elements.find(element => element.name == 'xs:sequence')
+                const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
+                xsElements.forEach(xsElement => {
+                    const elemName = xsElement.attributes.name
+                    //console.log(elemName)
+                    var elemType = xsElement.attributes.type
 
-                if (elemType == undefined) {
-                    // Restriction on a SimpleType Defined
-                    const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
-                    const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
-                    const elemType = getDataType(xsRestriction.attributes.base)
-                    const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
-                    //console.log(berichtClassAttribute)
-                } else {
-                    
-                    if (elemType.startsWith(relationPre)) {
-                        console.log('Association')
-                        //console.log(xsElement)
-                        const relationElem = complexElems.find(element => element.attributes.name == complexElemName)
-                        
-                        if (relationElem) {
-                            relationElems.push(complexElemName)
-                            console.log(relationElems)
-                        }
-
-                    } else {
-                        //console.log('Attribute')
-                        const elemType = getDataType(xsElement.attributes.type)
+                    if (elemType == undefined) {
+                        // Restriction on a SimpleType Defined
+                        const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
+                        const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
+                        const elemType = getDataType(xsRestriction.attributes.base)
                         const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
                         //console.log(berichtClassAttribute)
-                    }
-                }
+                    } else {
 
-            })
+                        if (elemType.startsWith(relationPre)) {
+                            console.log('Association')
+                            //console.log(xsElement)
+                            const relationElem = complexElems.find(element => element.attributes.name == complexElemName)
+
+                            if (relationElem) {
+                                relationElems.push(xsElement)
+                                console.log(relationElems)
+                            }
+
+                        } else {
+                            //console.log('Attribute')
+                            const elemType = getDataType(xsElement.attributes.type)
+                            const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
+                            //console.log(berichtClassAttribute)
+                        }
+                    }
+
+                })
+
+            }
+
         })
+
     }
 }
 
 
-    /**
-     * Import iStandaard Bericht from bericht-Object
-     * @param {Object} bericht 
-     */
-    function importBericht(bericht) {
-        try {
-            const project = app.repository.select('@Project')[0]
-            //var berichtenPkg = project.ownedElements.find(element => (element.name == BERICHTEN_PACKAGE.name) && (element instanceof type.UMLPackage))
-            var berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, BERICHTEN_PACKAGE.name)
+/**
+ * Import iStandaard Bericht from bericht-Object
+ * @param {Object} bericht 
+ */
+function importBericht(bericht) {
+    try {
+        const project = app.repository.select('@Project')[0]
+        //var berichtenPkg = project.ownedElements.find(element => (element.name == BERICHTEN_PACKAGE.name) && (element instanceof type.UMLPackage))
+        var berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, BERICHTEN_PACKAGE.name)
 
-            if (berichtenPkg == undefined) {
-                // Berichten Package doesn't exist
-                // Create Berichten Package
-                berichtenPkg = app.factory.createModel({
-                    id: 'UMLPackage',
-                    parent: project,
-                    modelInitializer: elem => {
-                        elem.name = BERICHTEN_PACKAGE.name
-                    }
-                })
-            }
-
-            importBerichtKlassen(berichtenPkg, bericht)
-
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    /**
-     * Import XSD File of a iStandaard Bericht
-     * @param {String} xsdFile 
-     */
-    function importBerichtXsdFile(xsdFile) {
-
-        try {
-            const xsdStr = fs.readFileSync(xsdFile, 'utf8');
-            try {
-                const bericht = convert.xml2js(xsdStr)
-                try {
-                    importBericht(bericht)
-                } catch (err) {
-                    console.error(err);
+        if (berichtenPkg == undefined) {
+            // Berichten Package doesn't exist
+            // Create Berichten Package
+            berichtenPkg = app.factory.createModel({
+                id: 'UMLPackage',
+                parent: project,
+                modelInitializer: elem => {
+                    elem.name = BERICHTEN_PACKAGE.name
                 }
+            })
+        }
+
+        importBerichtKlassen(berichtenPkg, bericht)
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+/**
+ * Import XSD File of a iStandaard Bericht
+ * @param {String} xsdFile 
+ */
+function importBerichtXsdFile(xsdFile) {
+
+    try {
+        const xsdStr = fs.readFileSync(xsdFile, 'utf8');
+        try {
+            const bericht = convert.xml2js(xsdStr)
+            try {
+                importBericht(bericht)
             } catch (err) {
                 console.error(err);
             }
         } catch (err) {
             console.error(err);
         }
-
+    } catch (err) {
+        console.error(err);
     }
 
-    exports.importBerichtXsdFile = importBerichtXsdFile
+}
+
+exports.importBerichtXsdFile = importBerichtXsdFile
