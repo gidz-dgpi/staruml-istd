@@ -124,9 +124,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             const complexElem = complexElems[i]
 
             if (isRelationClass(complexElem, relationPre)) {
-                console.log('relationClasses')
                 relationClasses.push(complexElem)
-                console.log(relationClasses)
             } else {
                 const complexElemName = complexElem.attributes.name
                 const berichtClass = addBerichtClass(berichtPkg, complexElemName)
@@ -147,12 +145,13 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                     } else {
 
                         if (elemType.startsWith(relationPre)) {
-                            console.log('Association')
                             const relationElem = complexElems.find(element => element.attributes.name == complexElemName)
 
                             if (relationElem) {
-                                relationElems.push(xsElement)
-                                console.log(relationElems)
+                                relationElems.push({
+                                    parentClass: berichtClass,
+                                    element: xsElement
+                                })
                             }
 
                         } else {
@@ -165,6 +164,12 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 
             }
         }
+
+        console.log('relationElems')
+        console.log(relationElems)
+        console.log('relationClasses')
+        console.log(relationClasses)
+
 
     }
 }
