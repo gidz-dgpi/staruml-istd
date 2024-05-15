@@ -184,6 +184,12 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 
             console.log('childClass')
             console.log(childClass)
+            const associationElement = app.factory.createModel({
+                id: 'UMLAssociation',
+                parent: relationElem.parentClass,
+                field: 'ownedElements'
+            })
+            console.log(associationElement)
 
 
         }
