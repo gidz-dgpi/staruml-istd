@@ -169,17 +169,21 @@ function importBerichtKlassen(berichtenPkg, bericht) {
         for (let i = 0; i < relationElems.length; i++) {
             const relationElem = relationElems[i]
             const relationElemName = relationElem.element.attributes.name
+            var associationName = relationElemName
             console.log(relationElem)
             // lookup direct relation ChildClass reference
-            const childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
+            var childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
+            var relationClass = undefined
 
-            if (childClass) {
-                console.log('childClass Found!')
-                
-            } else {
-                console.log('childClass Not Foud!')
-                
+            if (!childClass) {
+                relationClass = relationClasses.find(element => element.attributes.name == relationElemName)
+                associationName = relationClass.attributes.name
+                const childClassName = relationClass.elements[0].elements[0].attributes.name
+                childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, childClassName)
             }
+
+            console.log('childClass')
+            console.log(childClass)
 
 
         }
