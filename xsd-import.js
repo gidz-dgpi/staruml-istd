@@ -168,6 +168,18 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 
         for (let i = 0; i < relationElems.length; i++) {
             const relationElem = relationElems[i]
+            const relationElemName = relationElem.element.attributes.name
+            console.log(relationElem)
+            // lookup direct relation ChildClass reference
+            const childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
+
+            if (childClass) {
+                console.log('childClass Found!')
+                
+            } else {
+                console.log('childClass Not Foud!')
+                
+            }
 
 
         }
@@ -185,7 +197,6 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 function importBericht(bericht) {
     try {
         const project = app.repository.select('@Project')[0]
-        //var berichtenPkg = project.ownedElements.find(element => (element.name == BERICHTEN_PACKAGE.name) && (element instanceof type.UMLPackage))
         var berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, BERICHTEN_PACKAGE.name)
 
         if (berichtenPkg == undefined) {
