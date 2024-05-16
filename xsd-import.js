@@ -166,6 +166,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             const relationElem = relationElems[i]
             const relationElemName = relationElem.element.attributes.name
             var associationName = relationElemName
+            const parentClass = relationElem.parentClass
             console.log(relationElem)
             // lookup direct relation ChildClass reference
             var childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
@@ -178,14 +179,17 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                 childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, childClassName)
             }
 
+            console.log('parentClass')
+            console.log(parentClass)
             console.log('childClass')
             console.log(childClass)
+
             const associationId = app.repository.generateGuid()
             const associationElem = {
                 _type: 'UMLAssociation',
                 _id: associationId,
                 _parent: {
-                    $ref: relationElem.parentClass._id
+                    $ref: parentClass._id
                 },
                 name: associationName,
                 end1: {
@@ -195,7 +199,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                         $ref: associationId
                     },
                     reference: {
-                        $ref: relationElem.parentClass._id
+                        $ref: parentClass._id
                     },
                     aggregation: 'shared'
                 },
@@ -211,7 +215,9 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                     multiplicity: '1'
                 }
             }
-            app.project.importFromJson(relationElem.parentClass, associationElem)
+            const associationMemeber = app.project.importFromJson(parentClass, associationElem)
+            console.log('associationMemeber')
+            console.log(associationMemeber)
 
         }
 
