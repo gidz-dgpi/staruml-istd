@@ -86,7 +86,7 @@ function addBerichtClass(berichtPkg, berichtClassName) {
  * @param {String} associationName 
  * @returns {UMLAssociation}
  */
-function addBerichtClassAssociation(parentClass, childClass, associationName) {
+function addBerichtClassAssociation(parentClass, childClass, associationName, childMultiplicity) {
     const associationId = app.repository.generateGuid()
     const associationElem = {
         _type: 'UMLAssociation',
@@ -115,7 +115,7 @@ function addBerichtClassAssociation(parentClass, childClass, associationName) {
             reference: {
                 $ref: childClass._id
             },
-            multiplicity: '1'
+            multiplicity: childMultiplicity
         }
     }
     return app.project.importFromJson(parentClass, associationElem)
@@ -211,17 +211,34 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             const parentClass = relationElem.parentClass
             console.log('relationElem')
             console.log(relationElem)
-            // lookup direct relation ChildClass reference
+            // Lookup direct relation ChildClass reference
             var childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
-            var relationClass = undefined
+            var childMultiplicity = '1'
+            const childMinOccurs = relationElem.element.attributes.minOccurs ? relationElem.element.attributes.minOccurs : '1'
+            console.log('childMinOccurs')
+            console.log(childMinOccurs)
 
             if (!childClass) {
-                relationClass = relationClasses.find(element => element.attributes.name == relationElemName)
+                // Lookup for indirect relation using a Relation Class
+                const relationClass = relationClasses.find(element => element.attributes.name == relationElemName)
                 associationName = relationClass.attributes.name
-                const childClassName = relationClass.elements[0].elements[0].attributes.name
+                const childClassAttributes = relationClass.elements[0].elements[0].attributes
+                const childClassName = childClassAttributes.name
                 childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, childClassName)
                 console.log('relationClass')
                 console.log(relationClass)
+                const childMaxOccurs = childClassAttributes.maxOccurs ? childClassAttributes.maxOccurs : '1'
+                console.log('childMaxOccurs')
+                console.log(childMaxOccurs)
+
+                if (childMaxOccurs == 'unbounded') {
+                    childMultiplicity = childMinOccurs + '..' + '*'
+                } else {
+                    childMultiplicity = childMinOccurs + '..' + childMaxOccurs
+                }
+
+            } else if (childMultiplicity == '0') {
+                childMultiplicity = childMinOccurs + '..' + '*'
             }
 
             console.log('parentClass')
@@ -229,9 +246,9 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             console.log('childClass')
             console.log(childClass)
 
-            const associationMemeber = addBerichtClassAssociation(parentClass, childClass, associationName)
-            console.log('associationMemeber')
-            console.log(associationMemeber)
+            const associationMember = addBerichtClassAssociation(parentClass, childClass, associationName, childMultiplicity)
+            console.log('associationMember')
+            console.log(associationMember)
 
         }
 
