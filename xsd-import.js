@@ -13,6 +13,13 @@ const BERICHTEN_PACKAGE = {
     name: 'Berichten'
 }
 
+/**
+ * Add UMLAttribute for Berichtelement to BerichtClass
+ * @param {UMLClass} berichtClass 
+ * @param {String} elemName 
+ * @param {String} elemType 
+ * @returns {UMLAttribute}
+ */
 function addBerichtClassAttribute(berichtClass, elemName, elemType) {
     return app.factory.createModel({
         id: 'UMLAttribute',
@@ -25,13 +32,93 @@ function addBerichtClassAttribute(berichtClass, elemName, elemType) {
     })
 }
 
+/**
+ * Get DataType from element type value
+ * @param {String} typeValue 
+ * @returns {String}
+ */
 function getDataType(typeValue) {
     return typeValue.split(':')[1]
 }
 
-function importBerichtKlasseElementen(berichtClass, xsSequence) {
 
+/**
+ * 
+ * @param {Object} complexElem 
+ * @param {String} relationPre 
+ * @returns {Boolean}
+ */
+function isRelationClass(complexElem, relationPre) {
+    var retVal = false
 
+    if (complexElem.elements.length == 1) {
+
+        if (complexElem.elements[0].elements.length == 1) {
+            retVal = complexElem.elements[0].elements[0].attributes.type.startsWith(relationPre)
+        }
+
+    }
+
+    return retVal
+}
+
+/**
+ * Add UMLClass for BerichtClass to BerichtPackage
+ * @param {UMLPackage} berichtPkg 
+ * @param {String} berichtClassName
+ * @returns {UMLClass}
+ */
+function addBerichtClass(berichtPkg, berichtClassName) {
+    return app.factory.createModel({
+        id: 'UMLClass',
+        parent: berichtPkg,
+        modelInitializer: elem => {
+            elem.name = berichtClassName
+        }
+    })
+}
+
+/**
+ * Add UMLAssociation to a BerichtClass
+ * @param {UMLClass} parentClass 
+ * @param {UMLClass} childClass 
+ * @param {String} associationName 
+ * @param {String} childMultiplicity 
+ * @returns {UMLAssociation}
+ */
+function addBerichtClassAssociation(parentClass, childClass, associationName, childMultiplicity) {
+    const associationId = app.repository.generateGuid()
+    const associationElem = {
+        _type: 'UMLAssociation',
+        _id: associationId,
+        _parent: {
+            $ref: parentClass._id
+        },
+        name: associationName,
+        end1: {
+            _type: 'UMLAssociationEnd',
+            _id: app.repository.generateGuid(),
+            _parent: {
+                $ref: associationId
+            },
+            reference: {
+                $ref: parentClass._id
+            },
+            aggregation: 'shared'
+        },
+        end2: {
+            _type: 'UMLAssociationEnd',
+            _id: app.repository.generateGuid(),
+            _parent: {
+                $ref: associationId
+            },
+            reference: {
+                $ref: childClass._id
+            },
+            multiplicity: childMultiplicity
+        }
+    }
+    return app.project.importFromJson(parentClass, associationElem)
 }
 
 /**
@@ -58,8 +145,9 @@ function importBerichtKlassen(berichtenPkg, bericht) {
     const berichtInfoElement = berichtInfo.elements[0]
 
     // Get Name from XSD Bericht Info Data and lookup any existing Bericht Package
-    const berichtNaam = berichtInfoElement.text.toUpperCase()
-    var berichtPkg = utils.getUMLPackagElementByName(berichtenPkg.ownedElements, berichtNaam)
+    const berichtName = berichtInfoElement.text.toUpperCase()
+    const relationPre = berichtName.toLowerCase() + ':'
+    var berichtPkg = utils.getUMLPackagElementByName(berichtenPkg.ownedElements, berichtName)
 
     if (berichtPkg == undefined) {
         // Bericht Package doesn't exist
@@ -68,51 +156,89 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             id: 'UMLPackage',
             parent: berichtenPkg,
             modelInitializer: elem => {
-                elem.name = berichtNaam
+                elem.name = berichtName
             }
         })
-        const xsComplexTypes = xsSchema.elements.filter(element => element.name == 'xs:complexType')
-        xsComplexTypes.forEach(xsComplexType => {
-            const berichtClass = app.factory.createModel({
-                id: 'UMLClass',
-                parent: berichtPkg,
-                modelInitializer: elem => {
-                    elem.name = xsComplexType.attributes.name
-                }
-            })
-            const xsSequence = xsComplexType.elements.find(element => element.name == 'xs:sequence')
-            const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
-            const relationPre = berichtNaam.toLowerCase() + ':'
+        const complexElems = xsSchema.elements.filter(element => element.name == 'xs:complexType')
+        const relationElems = []
+        const relationClasses = []
 
-            xsElements.forEach(xsElement => {
-                const elemName = xsElement.attributes.name
-                console.log(elemName)
-                var elemType = xsElement.attributes.type
-                if (elemType == undefined) {
-                    // Restriction on a SimpleType Defined
-                    const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
-                    const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction') 
-                    console.log(xsRestriction.attributes.base)
-                    const elemType = getDataType(xsRestriction.attributes.base)
-                    const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
-                    console.log(berichtClassAttribute)
-                } else {
-                    console.log(elemType)
-                    if (elemType.startsWith(relationPre)) {
-                        //console.log('Association')
-                    } else {
-                        console.log('Attribute')
-                        const elemType = getDataType(xsElement.attributes.type)
+        for (let i = 0; i < complexElems.length; i++) {
+            const complexElem = complexElems[i]
+
+            if (isRelationClass(complexElem, relationPre)) {
+                relationClasses.push(complexElem)
+            } else {
+                const complexElemName = complexElem.attributes.name
+                const berichtClass = addBerichtClass(berichtPkg, complexElemName)
+                const xsSequence = complexElem.elements.find(element => element.name == 'xs:sequence')
+                const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
+
+                for (let j = 0; j < xsElements.length; j++) {
+                    const xsElement = xsElements[j]
+                    const elemName = xsElement.attributes.name
+                    var elemType = xsElement.attributes.type
+
+                    if (elemType == undefined) {
+                        // Restriction on a SimpleType Defined
+                        const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
+                        const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
+                        const elemType = getDataType(xsRestriction.attributes.base)
                         const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
-                        console.log(berichtClassAttribute)
+                    } else {
+
+                        if (elemType.startsWith(relationPre)) {
+                            relationElems.push({
+                                parentClass: berichtClass,
+                                element: xsElement
+                            })
+
+                        } else {
+                            //console.log('Attribute')
+                            const elemType = getDataType(xsElement.attributes.type)
+                            const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
+                        }
                     }
                 }
-                
-            })
 
-        })
+            }
+        }
+
+        for (let i = 0; i < relationElems.length; i++) {
+            const relationElem = relationElems[i]
+            const relationElemName = relationElem.element.attributes.name
+            var associationName = relationElemName
+            const parentClass = relationElem.parentClass
+            // Lookup direct relation ChildClass reference
+            var childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
+            var childMultiplicity = '1'
+            const childMinOccurs = relationElem.element.attributes.minOccurs ? relationElem.element.attributes.minOccurs : '1'
+
+            if (!childClass) {
+                // Lookup for indirect relation using a Relation Class
+                const relationClass = relationClasses.find(element => element.attributes.name == relationElemName)
+                associationName = relationClass.attributes.name
+                const childClassAttributes = relationClass.elements[0].elements[0].attributes
+                const childClassName = childClassAttributes.name
+                childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, childClassName)
+                const childMaxOccurs = childClassAttributes.maxOccurs ? childClassAttributes.maxOccurs : '1'
+
+                if (childMaxOccurs == 'unbounded') {
+                    childMultiplicity = childMinOccurs + '..' + '*'
+                } else {
+                    childMultiplicity = childMinOccurs + '..' + childMaxOccurs
+                }
+
+            } else if (childMinOccurs == '0') {
+                childMultiplicity = childMinOccurs + '..' + '1'
+            }
+
+            const associationMember = addBerichtClassAssociation(parentClass, childClass, associationName, childMultiplicity)
+        }
+
+
+
     }
-
 }
 
 
@@ -122,8 +248,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
  */
 function importBericht(bericht) {
     try {
-        const project = app.repository.select('@Project')[0]
-        //var berichtenPkg = project.ownedElements.find(element => (element.name == BERICHTEN_PACKAGE.name) && (element instanceof type.UMLPackage))
+        const project = app.project.getProject()
         var berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, BERICHTEN_PACKAGE.name)
 
         if (berichtenPkg == undefined) {
@@ -139,9 +264,7 @@ function importBericht(bericht) {
         }
 
         importBerichtKlassen(berichtenPkg, bericht)
-
     } catch (err) {
-        fs.writeFileSync('testset/error.json', err.message)
         console.error(err);
     }
 }
