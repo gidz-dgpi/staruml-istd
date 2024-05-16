@@ -80,6 +80,48 @@ function addBerichtClass(berichtPkg, berichtClassName) {
 }
 
 /**
+ * Add UMLAssociation to a BerichtClass
+ * @param {UMLClass} parentClass 
+ * @param {UMLClass} childClass 
+ * @param {String} associationName 
+ * @returns {UMLAssociation}
+ */
+function addBerichtClassAssociation(parentClass, childClass, associationName) {
+    const associationId = app.repository.generateGuid()
+    const associationElem = {
+        _type: 'UMLAssociation',
+        _id: associationId,
+        _parent: {
+            $ref: parentClass._id
+        },
+        name: associationName,
+        end1: {
+            _type: 'UMLAssociationEnd',
+            _id: app.repository.generateGuid(),
+            _parent: {
+                $ref: associationId
+            },
+            reference: {
+                $ref: parentClass._id
+            },
+            aggregation: 'shared'
+        },
+        end2: {
+            _type: 'UMLAssociationEnd',
+            _id: app.repository.generateGuid(),
+            _parent: {
+                $ref: associationId
+            },
+            reference: {
+                $ref: childClass._id
+            },
+            multiplicity: '1'
+        }
+    }
+    return app.project.importFromJson(parentClass, associationElem)
+}
+
+/**
  * 
  * Import Bericht Klassen from bericht
  * 
@@ -167,6 +209,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             const relationElemName = relationElem.element.attributes.name
             var associationName = relationElemName
             const parentClass = relationElem.parentClass
+            console.log('relationElem')
             console.log(relationElem)
             // lookup direct relation ChildClass reference
             var childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
@@ -177,6 +220,8 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                 associationName = relationClass.attributes.name
                 const childClassName = relationClass.elements[0].elements[0].attributes.name
                 childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, childClassName)
+                console.log('relationClass')
+                console.log(relationClass)
             }
 
             console.log('parentClass')
@@ -184,38 +229,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             console.log('childClass')
             console.log(childClass)
 
-            const associationId = app.repository.generateGuid()
-            const associationElem = {
-                _type: 'UMLAssociation',
-                _id: associationId,
-                _parent: {
-                    $ref: parentClass._id
-                },
-                name: associationName,
-                end1: {
-                    _type: 'UMLAssociationEnd',
-                    _id: app.repository.generateGuid(),
-                    _parent: {
-                        $ref: associationId
-                    },
-                    reference: {
-                        $ref: parentClass._id
-                    },
-                    aggregation: 'shared'
-                },
-                end2: {
-                    _type: 'UMLAssociationEnd',
-                    _id: app.repository.generateGuid(),
-                    _parent: {
-                        $ref: associationId
-                    },
-                    reference: {
-                        $ref: childClass._id
-                    },
-                    multiplicity: '1'
-                }
-            }
-            const associationMemeber = app.project.importFromJson(parentClass, associationElem)
+            const associationMemeber = addBerichtClassAssociation(parentClass, childClass, associationName)
             console.log('associationMemeber')
             console.log(associationMemeber)
 
