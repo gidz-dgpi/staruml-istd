@@ -213,7 +213,6 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             var childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
             var childMultiplicity = '1'
             const childMinOccurs = relationElem.element.attributes.minOccurs ? relationElem.element.attributes.minOccurs : '1'
-            console.log(associationName + ' childMinOccurs = ' + childMinOccurs)
 
             if (!childClass) {
                 // Lookup for indirect relation using a Relation Class
