@@ -8,6 +8,7 @@
 const fs = require('fs')
 const convert = require('xml-js');
 const utils = require('./dgpi-utils')
+const mapping = require('./xsd-mapping')
 
 const BERICHTEN_PACKAGE = {
     name: 'Berichten'
@@ -161,11 +162,6 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             }
         }
 
-        console.log('relationElems')
-        console.log(relationElems)
-        console.log('relationClasses')
-        console.log(relationClasses)
-
         for (let i = 0; i < relationElems.length; i++) {
             const relationElem = relationElems[i]
             const relationElemName = relationElem.element.attributes.name
@@ -184,13 +180,38 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 
             console.log('childClass')
             console.log(childClass)
-            const associationElement = app.factory.createModel({
-                id: 'UMLAssociation',
-                parent: relationElem.parentClass,
-                field: 'ownedElements'
-            })
-            console.log(associationElement)
-
+            const associationId = app.repository.generateGuid()
+            const associationElem = {
+                _type: 'UMLAssociation',
+                _id: associationId,
+                _parent: {
+                    $ref: relationElem.parentClass._id
+                },
+                name: associationName,
+                end1: {
+                    _type: 'UMLAssociationEnd',
+                    _id: app.repository.generateGuid(),
+                    _parent: {
+                        $ref: associationId
+                    },
+                    reference: {
+                        $ref: relationElem.parentClass._id
+                    },
+                    aggregation: 'shared'
+                },
+                end2: {
+                    _type: 'UMLAssociationEnd',
+                    _id: app.repository.generateGuid(),
+                    _parent: {
+                        $ref: associationId
+                    },
+                    reference: {
+                        $ref: childClass._id
+                    },
+                    multiplicity: '1'
+                }
+            }
+            app.project.importFromJson(relationElem.parentClass, associationElem)
 
         }
 
@@ -206,7 +227,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
  */
 function importBericht(bericht) {
     try {
-        const project = app.repository.select('@Project')[0]
+        const project = app.project.getProject()
         var berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, BERICHTEN_PACKAGE.name)
 
         if (berichtenPkg == undefined) {
@@ -222,7 +243,6 @@ function importBericht(bericht) {
         }
 
         importBerichtKlassen(berichtenPkg, bericht)
-
     } catch (err) {
         console.error(err);
     }
