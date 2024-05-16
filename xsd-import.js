@@ -8,7 +8,6 @@
 const fs = require('fs')
 const convert = require('xml-js');
 const utils = require('./dgpi-utils')
-const mapping = require('./xsd-mapping')
 
 const BERICHTEN_PACKAGE = {
     name: 'Berichten'
@@ -84,6 +83,7 @@ function addBerichtClass(berichtPkg, berichtClassName) {
  * @param {UMLClass} parentClass 
  * @param {UMLClass} childClass 
  * @param {String} associationName 
+ * @param {String} childMultiplicity 
  * @returns {UMLAssociation}
  */
 function addBerichtClassAssociation(parentClass, childClass, associationName, childMultiplicity) {
@@ -209,14 +209,11 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             const relationElemName = relationElem.element.attributes.name
             var associationName = relationElemName
             const parentClass = relationElem.parentClass
-            console.log('relationElem')
-            console.log(relationElem)
             // Lookup direct relation ChildClass reference
             var childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
             var childMultiplicity = '1'
             const childMinOccurs = relationElem.element.attributes.minOccurs ? relationElem.element.attributes.minOccurs : '1'
-            console.log('childMinOccurs')
-            console.log(childMinOccurs)
+            console.log(associationName + ' childMinOccurs = ' + childMinOccurs)
 
             if (!childClass) {
                 // Lookup for indirect relation using a Relation Class
@@ -225,11 +222,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                 const childClassAttributes = relationClass.elements[0].elements[0].attributes
                 const childClassName = childClassAttributes.name
                 childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, childClassName)
-                console.log('relationClass')
-                console.log(relationClass)
                 const childMaxOccurs = childClassAttributes.maxOccurs ? childClassAttributes.maxOccurs : '1'
-                console.log('childMaxOccurs')
-                console.log(childMaxOccurs)
 
                 if (childMaxOccurs == 'unbounded') {
                     childMultiplicity = childMinOccurs + '..' + '*'
@@ -237,19 +230,11 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                     childMultiplicity = childMinOccurs + '..' + childMaxOccurs
                 }
 
-            } else if (childMultiplicity == '0') {
-                childMultiplicity = childMinOccurs + '..' + '*'
+            } else if (childMinOccurs == '0') {
+                childMultiplicity = childMinOccurs + '..' + '1'
             }
 
-            console.log('parentClass')
-            console.log(parentClass)
-            console.log('childClass')
-            console.log(childClass)
-
             const associationMember = addBerichtClassAssociation(parentClass, childClass, associationName, childMultiplicity)
-            console.log('associationMember')
-            console.log(associationMember)
-
         }
 
 
