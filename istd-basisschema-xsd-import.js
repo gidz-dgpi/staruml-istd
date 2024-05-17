@@ -13,6 +13,19 @@ const GEGEVENS_MODEL_PACKAGE = {
     name: 'Gegevens'
 }
 
+
+function addSimpleType(gegevensModelPkg, simpleType) {
+    console.log('simpleType')
+    console.log(simpleType)
+
+}
+
+function addComplexType(gegevensModelPkg, complexType) {
+    console.log('complexType')
+    console.log(complexType)
+
+}
+
 /**
  * Importeer Basisschema XSD Elementen als UML-DataTypen 
  * @param {UMLPackage} gegevensModelPkg 
@@ -20,8 +33,8 @@ const GEGEVENS_MODEL_PACKAGE = {
  */
 function importDataTypen(gegevensModelPkg, basisSchema) {
     const modelElements = basisSchema.elements[0].elements
-    console.log('modelElements')
-    console.log(modelElements)
+    //console.log('modelElements')
+    //console.log(modelElements)
     const xsAnnotation = modelElements.find(element => element.name == 'xs:annotation')
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
     const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
@@ -29,13 +42,16 @@ function importDataTypen(gegevensModelPkg, basisSchema) {
     const standaardName = standaardInfoElement.text
     console.log('standaard = ' + standaardName)
 
-    const xsSimpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
-    console.log('xsSimpleTypes')
-    console.log(xsSimpleTypes)
+    const simpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
+    for (let i = 0; i < simpleTypes.length; i++) {
+        addSimpleType(gegevensModelPkg, simpleTypes[i])
+    }
 
-
-    console.log('gegevensModelPkg')
-    console.log(gegevensModelPkg)
+    const complexTypes = modelElements.filter(element => element.name == 'xs:complexType')
+    for (let i = 0; i < complexTypes.length; i++) {
+        addComplexType(gegevensModelPkg, complexTypes[i])
+    }
+    
 }
 
 /**
