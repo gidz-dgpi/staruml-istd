@@ -13,8 +13,18 @@ const GEGEVENS_MODEL_PACKAGE = {
     name: 'Gegevens'
 }
 
+/**
+ * Importeer Basisschema XSD Elementen als UML-DataTypen 
+ * @param {UMLPackage} gegevensModelPkg 
+ * @param {XSDObject} basisSchema 
+ */
+function importDataTypen(gegevensModelPkg, basisSchema) {
+    console.log('basisSchema')
+    console.log(basisSchema)
 
-
+    console.log('gegevensModelPkg')
+    console.log(gegevensModelPkg)
+}
 
 /**
  * Import iStandaard Bericht from bericht-Object
@@ -23,7 +33,7 @@ const GEGEVENS_MODEL_PACKAGE = {
 function importGegevensModel(basisSchema) {
     try {
         const project = app.project.getProject()
-        berichtenPkg = app.factory.createModel({
+        gegevensModelPkg = app.factory.createModel({
             id: 'UMLPackage',
             parent: project,
             modelInitializer: elem => {
@@ -31,7 +41,7 @@ function importGegevensModel(basisSchema) {
             }
         })
 
-        //import(berichtenPkg, bericht)
+        importDataTypen(gegevensModelPkg, basisSchema)
     } catch (err) {
         console.error(err);
     }

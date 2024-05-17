@@ -11,8 +11,13 @@
           },
           {
             "label": "Bericht-XSD Import",
-            "id": "istd.json.export",
+            "id": "istd.bericht.xsd.import",
             "command": "istd:bericht:import"
+          },
+          {
+            "label": "Basisschema-XSD Import",
+            "id": "istd.basisschema.xsd.import",
+            "command": "istd:basisschema:import"
           }
         ]
       }
