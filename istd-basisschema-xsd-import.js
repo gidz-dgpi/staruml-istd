@@ -14,10 +14,26 @@ const GEGEVENS_MODEL_PACKAGE = {
 }
 
 
+/**
+ * Add a UML DataType as a iStandaard Simple Type
+ * @param {UMLPackage} gegevensModelPkg 
+ * @param {XSDObject} simpleType 
+ * @returns {UMLDataType}
+ */
 function addSimpleType(gegevensModelPkg, simpleType) {
     console.log('simpleType')
     console.log(simpleType)
-
+    const dataTypeId = app.repository.generateGuid()
+    const dataTypeName = simpleType.attributes.name
+    const dataTypeElem = {
+        _type: 'UMLDataType',
+        _id: dataTypeId,
+        _parent: {
+            $ref: gegevensModelPkg._id
+        },
+        name: dataTypeName
+    }
+    return app.project.importFromJson(gegevensModelPkg, dataTypeElem)
 }
 
 function addComplexType(gegevensModelPkg, complexType) {
@@ -35,7 +51,7 @@ function importDataTypen(gegevensModelPkg, basisSchema) {
     const modelElements = basisSchema.elements[0].elements
     //console.log('modelElements')
     //console.log(modelElements)
-    const xsAnnotation = modelElements.find(element => element.name == 'xs:annotation')
+    const xsAnnotation = utils.getXsAnnotation(modelElements)
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
     const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
     const standaardInfoElement = standaardInfo.elements[0]

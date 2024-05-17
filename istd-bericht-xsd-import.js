@@ -131,7 +131,7 @@ function addBerichtClassAssociation(parentClass, childClass, associationName, ch
 function importBerichtKlassen(berichtenPkg, bericht) {
     // Get XSD Schema Data
     const xsSchema = bericht.elements.find((element) => element.name == 'xs:schema')
-    const xsAnnotation = xsSchema.elements.find(element => element.name == 'xs:annotation')
+    const xsAnnotation = utils.getXsAnnotation(xsSchema.elements)
     // Get AppInfo Data
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
     // Get Standaard info Data

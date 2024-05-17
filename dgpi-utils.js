@@ -18,5 +18,15 @@ function getUMLClassElementByName(elements, name) {
     return elements.find(element => (element.name == name) && (element instanceof type.UMLClass))
 }
 
+/**
+ * Get the XS Annotation Element
+ * @param {Array} elements 
+ * @returns {XSDObject}
+ */
+function getXsAnnotation(elements) {
+    return elements.find(element => element.name == 'xs:annotation')
+}
+
 exports.getUMLPackagElementByName = getUMLPackagElementByName
 exports.getUMLClassElementByName = getUMLClassElementByName
+exports.getXsAnnotation = getXsAnnotation
