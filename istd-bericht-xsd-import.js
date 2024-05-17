@@ -18,9 +18,10 @@ const BERICHTEN_PACKAGE = {
  * @param {UMLClass} berichtClass 
  * @param {String} elemName 
  * @param {String} elemType 
+ * @param {String | undefined} elemDocumentation 
  * @returns {UMLAttribute}
  */
-function addBerichtClassAttribute(berichtClass, elemName, elemType) {
+function addBerichtClassAttribute(berichtClass, elemName, elemType, elemDocumentation) {
     return app.factory.createModel({
         id: 'UMLAttribute',
         parent: berichtClass,
@@ -28,6 +29,7 @@ function addBerichtClassAttribute(berichtClass, elemName, elemType) {
         modelInitializer: elem => {
             elem.name = elemName
             elem.type = elemType
+            elem.documentation = elemDocumentation
         }
     })
 }
@@ -66,14 +68,16 @@ function isRelationClass(complexElem, relationPre) {
  * Add UMLClass for BerichtClass to BerichtPackage
  * @param {UMLPackage} berichtPkg 
  * @param {String} berichtClassName
+ * @param {String | undefined} berichtClassDocumentation
  * @returns {UMLClass}
  */
-function addBerichtClass(berichtPkg, berichtClassName) {
+function addBerichtClass(berichtPkg, berichtClassName, berichtClassDocumentation) {
     return app.factory.createModel({
         id: 'UMLClass',
         parent: berichtPkg,
         modelInitializer: elem => {
             elem.name = berichtClassName
+            elem.documentation = berichtClassDocumentation
         }
     })
 }
@@ -170,7 +174,8 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                 relationClasses.push(complexElem)
             } else {
                 const complexElemName = complexElem.attributes.name
-                const berichtClass = addBerichtClass(berichtPkg, complexElemName)
+                const complexElemDocumentation = utils.getXsAnnotationDocumentationText(complexElem.elements)
+                const berichtClass = addBerichtClass(berichtPkg, complexElemName, complexElemDocumentation)
                 const xsSequence = complexElem.elements.find(element => element.name == 'xs:sequence')
                 const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
 
@@ -182,9 +187,11 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                     if (elemType == undefined) {
                         // Restriction on a SimpleType Defined
                         const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
+                        console.log(xsSimpleType)
                         const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
                         const elemType = getDataType(xsRestriction.attributes.base)
-                        const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
+                        const elemDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
+                        const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType, elemDocumentation)
                     } else {
 
                         if (elemType.startsWith(relationPre)) {
@@ -196,7 +203,8 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                         } else {
                             //console.log('Attribute')
                             const elemType = getDataType(xsElement.attributes.type)
-                            const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
+                            const elemDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
+                            const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType, elemDocumentation)
                         }
                     }
                 }
