@@ -19,8 +19,20 @@ const GEGEVENS_MODEL_PACKAGE = {
  * @param {XSDObject} basisSchema 
  */
 function importDataTypen(gegevensModelPkg, basisSchema) {
-    console.log('basisSchema')
-    console.log(basisSchema)
+    const modelElements = basisSchema.elements[0].elements
+    console.log('modelElements')
+    console.log(modelElements)
+    const xsAnnotation = modelElements.find(element => element.name == 'xs:annotation')
+    const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
+    const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
+    const standaardInfoElement = standaardInfo.elements[0]
+    const standaardName = standaardInfoElement.text
+    console.log('standaard = ' + standaardName)
+
+    const xsSimpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
+    console.log('xsSimpleTypes')
+    console.log(xsSimpleTypes)
+
 
     console.log('gegevensModelPkg')
     console.log(gegevensModelPkg)
