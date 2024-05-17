@@ -25,13 +25,15 @@ function addSimpleType(gegevensModelPkg, simpleType) {
     console.log(simpleType)
     const dataTypeId = app.repository.generateGuid()
     const dataTypeName = simpleType.attributes.name
+    const dataTypeDocumentation = utils.getXsAnnotationDocumentationText(simpleType.elements)
     const dataTypeElem = {
         _type: 'UMLDataType',
         _id: dataTypeId,
         _parent: {
             $ref: gegevensModelPkg._id
         },
-        name: dataTypeName
+        name: dataTypeName,
+        documentation: dataTypeDocumentation
     }
     return app.project.importFromJson(gegevensModelPkg, dataTypeElem)
 }
