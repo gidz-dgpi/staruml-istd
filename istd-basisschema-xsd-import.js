@@ -8,6 +8,7 @@
 const fs = require('fs')
 const convert = require('xml-js');
 const utils = require('./dgpi-utils')
+const primitiveTypes = require('./istd-primitive-types')
 
 const GEGEVENS_MODEL_PACKAGE = {
     name: 'Gegevens'
@@ -49,7 +50,7 @@ function addComplexType(gegevensModelPkg, complexType) {
  * @param {UMLPackage} gegevensModelPkg 
  * @param {XSDObject} basisSchema 
  */
-function importDataTypen(gegevensModelPkg, basisSchema) {
+function importDataTypes(gegevensModelPkg, basisSchema) {
     const modelElements = basisSchema.elements[0].elements
     //console.log('modelElements')
     //console.log(modelElements)
@@ -87,7 +88,8 @@ function importGegevensModel(basisSchema) {
             }
         })
 
-        importDataTypen(gegevensModelPkg, basisSchema)
+        primitiveTypes.init(project)
+        importDataTypes(gegevensModelPkg, basisSchema)
     } catch (err) {
         console.error(err);
     }
