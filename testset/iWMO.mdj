@@ -5499,6 +5499,25 @@
 					]
 				}
 			]
+		},
+		{
+			"_type": "UMLPackage",
+			"_id": "AAAAAAGPjC1mSwXGYjc=",
+			"_parent": {
+				"$ref": "AAAAAAFElm5XMFNoGY0="
+			},
+			"name": "Codelijsten",
+			"ownedElements": [
+				{
+					"_type": "UMLEnumeration",
+					"_id": "AAAAAAGPjC2ndwYAs54=",
+					"_parent": {
+						"$ref": "AAAAAAGPjC1mSwXGYjc="
+					},
+					"name": "Enumeration1",
+					"documentation": "Test"
+				}
+			]
 		}
 	],
 	"documentation": "Model ter evaluatie StarUML XMI-output naar PlantUML-weergaves",

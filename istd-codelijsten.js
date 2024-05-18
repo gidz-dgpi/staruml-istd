@@ -41,6 +41,8 @@ function getCodelijstId(standaardId, xsRestriction) {
                 console.log(codeLijstId)
                 const codeLijstDocumentation = codeLijstTextParts[1].trim()
                 console.log(codeLijstDocumentation)
+                const codelijstElem = app.repository.select('@UMLEnumeration[name=' + codeLijstId + ']')
+                console.log(codelijstElem)
             }
 
         }
