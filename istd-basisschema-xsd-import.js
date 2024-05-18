@@ -39,11 +39,12 @@ function buildUMLDependency(sourceId, targetId) {
 
 /**
  * Add a UML DataType as a iStandaard Simple Type
+ * @param {String} standaardId
  * @param {UMLPackage} gegevensModelPkg 
  * @param {XSDObject} simpleType 
  * @returns {UMLDataType}
  */
-function addSimpleType(gegevensModelPkg, simpleType) {
+function addSimpleType(standaardId, gegevensModelPkg, simpleType) {
     console.log('simpleType')
     console.log(simpleType)
     const dataTypeId = app.repository.generateGuid()
@@ -53,6 +54,26 @@ function addSimpleType(gegevensModelPkg, simpleType) {
     const primitiveTypeId = primitiveTypes.getTypeId(xsRestriction.attributes.base)
     const dataTypeElements = []
     dataTypeElements.push(buildUMLDependency(dataTypeId, primitiveTypeId))
+    const xsRestrictionAnnotation = utils.getXsAnnotation(xsRestriction.elements)
+    if (xsRestrictionAnnotation) {
+        const xsAppInfo = xsRestrictionAnnotation.elements.find(element => element.name == 'xs:appinfo')
+
+        if (xsAppInfo) {
+            const codelijstId = standaardId + ':codelijstNaam'
+            const codeLijst = xsAppInfo.elements.find(element => element.name == codelijstId)
+            const codeLijstTextObject = codeLijst.elements.find(element => element.type == 'text')
+
+            if (codeLijstTextObject) {
+                const codeLijstTextParts = codeLijstTextObject.text.split(':')
+                const codeLijstId = codeLijstTextParts[0].trim()
+                console.log(codeLijstId)
+                const codeLijstDocumentation = codeLijstTextParts[1].trim()
+                console.log(codeLijstDocumentation)
+            }
+
+        }
+
+    }
     const dataTypeElem = {
         _type: 'UMLDataType',
         _id: dataTypeId,
@@ -66,7 +87,7 @@ function addSimpleType(gegevensModelPkg, simpleType) {
     return app.project.importFromJson(gegevensModelPkg, dataTypeElem)
 }
 
-function addComplexType(gegevensModelPkg, complexType) {
+function addComplexType(standaardId, gegevensModelPkg, complexType) {
     console.log('complexType')
     console.log(complexType)
 
@@ -85,17 +106,17 @@ function importDataTypes(gegevensModelPkg, basisSchema) {
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
     const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
     const standaardInfoElement = standaardInfo.elements[0]
-    const standaardName = standaardInfoElement.text
-    console.log('standaard = ' + standaardName)
+    const standaardId = standaardInfoElement.text
+    console.log('standaardId = ' + standaardId)
 
     const simpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
     for (let i = 0; i < simpleTypes.length; i++) {
-        addSimpleType(gegevensModelPkg, simpleTypes[i])
+        addSimpleType(standaardId, gegevensModelPkg, simpleTypes[i])
     }
 
     const complexTypes = modelElements.filter(element => element.name == 'xs:complexType')
     for (let i = 0; i < complexTypes.length; i++) {
-        addComplexType(gegevensModelPkg, complexTypes[i])
+        addComplexType(standaardId, gegevensModelPkg, complexTypes[i])
     }
     
 }
