@@ -52,7 +52,7 @@ function init(root) {
 }
 
 /**
- * Get the UML Primitive Type for the XS Base
+ * Get the UML Primitive Type Id for the XS Base
  * @param {String} xsBase 
  * @returns {String | undefined}
  */

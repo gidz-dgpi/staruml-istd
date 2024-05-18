@@ -9,6 +9,7 @@ const fs = require('fs')
 const convert = require('xml-js');
 const utils = require('./dgpi-utils')
 const primitiveTypes = require('./istd-primitive-types')
+const codelijsten = require('./istd-codelijsten')
 
 const GEGEVENS_MODEL_PACKAGE = {
     name: 'Gegevens',
@@ -54,26 +55,7 @@ function addSimpleType(standaardId, gegevensModelPkg, simpleType) {
     const primitiveTypeId = primitiveTypes.getTypeId(xsRestriction.attributes.base)
     const dataTypeElements = []
     dataTypeElements.push(buildUMLDependency(dataTypeId, primitiveTypeId))
-    const xsRestrictionAnnotation = utils.getXsAnnotation(xsRestriction.elements)
-    if (xsRestrictionAnnotation) {
-        const xsAppInfo = xsRestrictionAnnotation.elements.find(element => element.name == 'xs:appinfo')
-
-        if (xsAppInfo) {
-            const codelijstId = standaardId + ':codelijstNaam'
-            const codeLijst = xsAppInfo.elements.find(element => element.name == codelijstId)
-            const codeLijstTextObject = codeLijst.elements.find(element => element.type == 'text')
-
-            if (codeLijstTextObject) {
-                const codeLijstTextParts = codeLijstTextObject.text.split(':')
-                const codeLijstId = codeLijstTextParts[0].trim()
-                console.log(codeLijstId)
-                const codeLijstDocumentation = codeLijstTextParts[1].trim()
-                console.log(codeLijstDocumentation)
-            }
-
-        }
-
-    }
+    const codelijstId = codelijsten.getCodelijstId(standaardId, xsRestriction)
     const dataTypeElem = {
         _type: 'UMLDataType',
         _id: dataTypeId,
@@ -129,6 +111,7 @@ function importGegevensModel(basisSchema) {
     try {
         const project = app.project.getProject()
         primitiveTypes.init(project)
+        codelijsten.init(project)
         gegevensModelPkg = app.factory.createModel({
             id: 'UMLPackage',
             parent: project,
