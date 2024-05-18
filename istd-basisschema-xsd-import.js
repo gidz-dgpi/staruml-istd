@@ -11,9 +11,31 @@ const utils = require('./dgpi-utils')
 const primitiveTypes = require('./istd-primitive-types')
 
 const GEGEVENS_MODEL_PACKAGE = {
-    name: 'Gegevens'
+    name: 'Gegevens',
+    documentation: 'Datatypen voor iStandaarden (CDT = Complextype en LDT = Simpletype)'
 }
 
+/**
+ * Build a UMLDependency Object Element To Import
+ * @param {String} sourceId 
+ * @param {String} targetId 
+ * @returns {Object}
+ */
+function buildUMLDependency(sourceId, targetId) {
+    return {
+        _type: 'UMLDependency',
+        _id: app.repository.generateGuid(),
+        _parent: {
+            $ref: sourceId
+        },
+        source: {
+            $ref: sourceId
+        },
+        target: {
+            $ref: targetId
+        }
+    }
+}
 
 /**
  * Add a UML DataType as a iStandaard Simple Type
@@ -27,6 +49,10 @@ function addSimpleType(gegevensModelPkg, simpleType) {
     const dataTypeId = app.repository.generateGuid()
     const dataTypeName = simpleType.attributes.name
     const dataTypeDocumentation = utils.getXsAnnotationDocumentationText(simpleType.elements)
+    const xsRestriction = utils.getXsRestriction(simpleType.elements)
+    const primitiveTypeId = primitiveTypes.getTypeId(xsRestriction.attributes.base)
+    const dataTypeElements = []
+    dataTypeElements.push(buildUMLDependency(dataTypeId, primitiveTypeId))
     const dataTypeElem = {
         _type: 'UMLDataType',
         _id: dataTypeId,
@@ -34,7 +60,8 @@ function addSimpleType(gegevensModelPkg, simpleType) {
             $ref: gegevensModelPkg._id
         },
         name: dataTypeName,
-        documentation: dataTypeDocumentation
+        documentation: dataTypeDocumentation,
+        ownedElements: dataTypeElements
     }
     return app.project.importFromJson(gegevensModelPkg, dataTypeElem)
 }
@@ -80,15 +107,16 @@ function importDataTypes(gegevensModelPkg, basisSchema) {
 function importGegevensModel(basisSchema) {
     try {
         const project = app.project.getProject()
+        primitiveTypes.init(project)
         gegevensModelPkg = app.factory.createModel({
             id: 'UMLPackage',
             parent: project,
             modelInitializer: elem => {
                 elem.name = GEGEVENS_MODEL_PACKAGE.name
+                elem.documentation = GEGEVENS_MODEL_PACKAGE.documentation
             }
         })
 
-        primitiveTypes.init(project)
         importDataTypes(gegevensModelPkg, basisSchema)
     } catch (err) {
         console.error(err);

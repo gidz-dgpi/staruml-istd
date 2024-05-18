@@ -53,7 +53,17 @@ function getXsAnnotationDocumentationText(elements) {
     return xsDocumentationText
 }
 
+/**
+ * Get the XS Restriction Element
+ * @param {Array} elements 
+ * @returns {XSDObject | undefined}
+ */
+function getXsRestriction(elements) {
+    return elements.find(element => element.name == 'xs:restriction')
+}
+
 exports.getUMLPackagElementByName = getUMLPackagElementByName
 exports.getUMLClassElementByName = getUMLClassElementByName
 exports.getXsAnnotation = getXsAnnotation
 exports.getXsAnnotationDocumentationText = getXsAnnotationDocumentationText
+exports.getXsRestriction = getXsRestriction
