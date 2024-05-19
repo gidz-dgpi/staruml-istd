@@ -56,7 +56,12 @@ function addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleType
     const primitiveTypeId = primitiveTypes.getTypeId(xsRestriction.attributes.base)
     const dataTypeElements = []
     dataTypeElements.push(buildUMLDependency(dataTypeId, primitiveTypeId))
+
     const codelijstId = codelijsten.getCodelijstId(codelijstenPkg, standaardId, xsRestriction)
+    if (codelijstId) {
+        dataTypeElements.push(buildUMLDependency(dataTypeId, codelijstId))
+    }
+
     const dataTypeElem = {
         _type: 'UMLDataType',
         _id: dataTypeId,
