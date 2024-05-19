@@ -113,7 +113,8 @@ function addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexTy
             $ref: gegevensModelPkg._id
         },
         name: dataTypeName,
-        documentation: dataTypeDocumentation
+        documentation: dataTypeDocumentation,
+        attributes: []
     }
     return app.project.importFromJson(gegevensModelPkg, dataTypeElem) 
 }
@@ -127,6 +128,10 @@ function addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexTy
  * @returns {UMLDataType}
  */
 function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId, complexType) {
+    const dataTypeName = complexType.attributes.name 
+    const complexDataType = gegevensModelPkg.ownedElements.filter(element => element._type = 'UMLDataType' && element.name == dataTypeName)
+    const dataTypeId = complexDataType._id
+    console.log(complexDataType)
     const dataTypeAttributes = []
 
     const seqElems = complexType.elements.find(element => element.name == 'xs:sequence').elements
@@ -142,7 +147,8 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
         
         dataTypeAttributes.push(buildDataTypeAttribute(dataTypeId, attrName, attrDocumentation))
     }
-    console.log(dataTypeAttributes)    
+    console.log(dataTypeAttributes)
+    app.project.importFromJson(complexDataType, dataTypeAttributes)
 
 }
 
@@ -172,6 +178,9 @@ function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
     const complexTypes = modelElements.filter(element => element.name == 'xs:complexType')
     for (let i = 0; i < complexTypes.length; i++) {
         addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexTypes[i])
+    }
+    for (let i = 0; i < complexTypes.length; i++) {
+        addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId, complexTypes[i])
     }
     
 }
