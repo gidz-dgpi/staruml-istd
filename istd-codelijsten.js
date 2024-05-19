@@ -41,9 +41,7 @@ function getCodelijstId(codelijstenPkg, standaardId, xsRestriction) {
             if (codeLijstTextObject) {
                 const codeLijstTextParts = codeLijstTextObject.text.split(':')
                 const codeLijstName = codeLijstTextParts[0].trim()
-                console.log(codeLijstName)
                 const codeLijstDocumentation = codeLijstTextParts[1].trim()
-                console.log(codeLijstDocumentation)
                 var codelijst = codelijstenPkg.ownedElements.find(element => element.name == codeLijstName)
 
                 if (codelijst) {

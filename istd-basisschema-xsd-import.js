@@ -47,8 +47,8 @@ function buildUMLDependency(sourceId, targetId) {
  * @returns {UMLDataType}
  */
 function addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleType) {
-    console.log('simpleType')
-    console.log(simpleType)
+    //console.log('simpleType')
+    //console.log(simpleType)
     const dataTypeId = app.repository.generateGuid()
     const dataTypeName = simpleType.attributes.name
     const dataTypeDocumentation = utils.getXsAnnotationDocumentationText(simpleType.elements)
@@ -72,7 +72,26 @@ function addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleType
         documentation: dataTypeDocumentation,
         ownedElements: dataTypeElements
     }
-    return app.project.importFromJson(gegevensModelPkg, dataTypeElem)
+    return app.project.importFromJson(gegevensModelPkg, dataTypeElem) 
+}
+
+/**
+ * Build a UMLAttribute Object to Import
+ * @param {UMLClass} berichtClass 
+ * @param {String} elemName 
+ * @param {String | undefined} elemDocumentation 
+ * @returns {UMLAttributeObject}
+ */
+function buildDataTypeAttribute(dataTypeId, attrName, attrDocumentation) {
+    return {
+        _type: 'UMLAttribute',
+        _id: app.repository.generateGuid(),
+        _parent: {
+            $ref: dataTypeId
+        },
+        name: attrName,
+        documentation: attrDocumentation
+    }
 }
 
 /**
@@ -84,8 +103,26 @@ function addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleType
  * @returns {UMLDataType}
  */
 function addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexType) {
-    console.log('complexType')
-    console.log(complexType)
+    const dataTypeId = app.repository.generateGuid()
+    const dataTypeName = complexType.attributes.name
+    console.log(dataTypeName)
+    const dataTypeDocumentation = utils.getXsAnnotationDocumentationText(complexType.elements)
+    const dataTypeAttributes = []
+
+    const seqElems = complexType.elements.find(element => element.name == 'xs:sequence').elements
+    for (let i = 0; i < seqElems.length; i++) {
+        const seqElem = seqElems[i]
+        console.log(seqElem)
+        const attrName = seqElem.attributes.name
+
+        var attrDocumentation = undefined
+        if (seqElem.elements) {
+            attrDocumentation = utils.getXsAnnotationDocumentationText(seqElem.elements)
+        }
+        
+        dataTypeAttributes.push(buildDataTypeAttribute(dataTypeId, attrName, attrDocumentation))
+    }
+    console.log(dataTypeAttributes)    
 
 }
 
