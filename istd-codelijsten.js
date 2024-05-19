@@ -1,9 +1,11 @@
 const utils = require('./dgpi-utils')
 const codelijstenPkgId = 'iStandaardCodelijsten'
+const codelijstenPkgName = 'Codelijsten'
 
 /**
  * Initialize iStandaard Codelijsten Package
  * @param {Project | UMLPackage} root 
+ * @returns {UMLPackage}
  */
 function init(root) {
     const codelijstenPkg = {
@@ -12,18 +14,19 @@ function init(root) {
         _parent: {
             $ref: root._id
         },
-        name: 'Codelijsten'
+        name: codelijstenPkgName
     }
-    app.project.importFromJson(root, codelijstenPkg)
+    return app.project.importFromJson(root, codelijstenPkg)
 }
 
 /**
  * Get the UML Codelijst Enumeration Id for the Standaard Simple type XS Restriction
+ * @param {UMLPackage} codelijstenPkg 
  * @param {String} standaardId 
  * @param {String} xsRestriction 
  * @returns {String | undefined}
  */
-function getCodelijstId(standaardId, xsRestriction) {
+function getCodelijstId(codelijstenPkg, standaardId, xsRestriction) {
     var codellijstId = undefined
     const xsRestrictionAnnotation = utils.getXsAnnotation(xsRestriction.elements)
 
@@ -31,23 +34,41 @@ function getCodelijstId(standaardId, xsRestriction) {
         const xsAppInfo = xsRestrictionAnnotation.elements.find(element => element.name == 'xs:appinfo')
 
         if (xsAppInfo) {
-            const codelijstId = standaardId + ':codelijstNaam'
-            const codeLijst = xsAppInfo.elements.find(element => element.name == codelijstId)
-            const codeLijstTextObject = codeLijst.elements.find(element => element.type == 'text')
+            const codelijstElemName = standaardId + ':codelijstNaam'
+            const codeLijstElem = xsAppInfo.elements.find(element => element.name == codelijstElemName)
+            const codeLijstTextObject = codeLijstElem.elements.find(element => element.type == 'text')
 
             if (codeLijstTextObject) {
                 const codeLijstTextParts = codeLijstTextObject.text.split(':')
-                const codeLijstId = codeLijstTextParts[0].trim()
-                console.log(codeLijstId)
+                const codeLijstName = codeLijstTextParts[0].trim()
+                console.log(codeLijstName)
                 const codeLijstDocumentation = codeLijstTextParts[1].trim()
                 console.log(codeLijstDocumentation)
-                const codelijstElem = app.repository.select('@UMLEnumeration[name=' + codeLijstId + ']')
-                console.log(codelijstElem)
+                var codelijst = codelijstenPkg.ownedElements.find(element => element.name == codeLijstName)
+
+                if (codelijst) {
+                    codellijstId = codelijst._id
+                } else {
+                    codellijstId = 'iStandaardCodelijst_' + standaardId + '_' + codeLijstName
+                    const codelijstEnum = {
+                        _type: 'UMLEnumeration',
+                        _id: codellijstId,
+                        _parent: {
+                            $ref: codelijstenPkg._id
+                        },
+                        name: codeLijstName,
+                        documentation: codeLijstDocumentation
+                    }
+                    app.project.importFromJson(codelijstenPkg, codelijstEnum)
+                }
+
             }
 
         }
 
     }
+
+    
     
     return codellijstId
 }

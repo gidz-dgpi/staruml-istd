@@ -37,6 +37,7 @@ const primitiveTypeElements = [
 /**
  * Initialize iStandaard Primitive Type Package
  * @param {Project | UMLPackage} root 
+ * @returns {UMLPackage}
  */
 function init(root) {
     const primitivePkg = {
@@ -48,7 +49,7 @@ function init(root) {
         name: 'Primitive Types',
         ownedElements: primitiveTypeElements
     }
-    app.project.importFromJson(root, primitivePkg)
+    return app.project.importFromJson(root, primitivePkg)
 }
 
 /**

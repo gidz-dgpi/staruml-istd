@@ -40,12 +40,13 @@ function buildUMLDependency(sourceId, targetId) {
 
 /**
  * Add a UML DataType as a iStandaard Simple Type
- * @param {String} standaardId
  * @param {UMLPackage} gegevensModelPkg 
+ * @param {UMLPackage} codelijstenPkg
+ * @param {String} standaardId
  * @param {XSDObject} simpleType 
  * @returns {UMLDataType}
  */
-function addSimpleType(standaardId, gegevensModelPkg, simpleType) {
+function addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleType) {
     console.log('simpleType')
     console.log(simpleType)
     const dataTypeId = app.repository.generateGuid()
@@ -55,7 +56,7 @@ function addSimpleType(standaardId, gegevensModelPkg, simpleType) {
     const primitiveTypeId = primitiveTypes.getTypeId(xsRestriction.attributes.base)
     const dataTypeElements = []
     dataTypeElements.push(buildUMLDependency(dataTypeId, primitiveTypeId))
-    const codelijstId = codelijsten.getCodelijstId(standaardId, xsRestriction)
+    const codelijstId = codelijsten.getCodelijstId(codelijstenPkg, standaardId, xsRestriction)
     const dataTypeElem = {
         _type: 'UMLDataType',
         _id: dataTypeId,
@@ -69,7 +70,15 @@ function addSimpleType(standaardId, gegevensModelPkg, simpleType) {
     return app.project.importFromJson(gegevensModelPkg, dataTypeElem)
 }
 
-function addComplexType(standaardId, gegevensModelPkg, complexType) {
+/**
+ * Add a UML DataType as a iStandaard Complex Type
+ * @param {UMLPackage} gegevensModelPkg 
+ * @param {UMLPackage} codelijstenPkg
+ * @param {String} standaardId
+ * @param {XSDObject} simpleType 
+ * @returns {UMLDataType}
+ */
+function addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexType) {
     console.log('complexType')
     console.log(complexType)
 
@@ -78,9 +87,11 @@ function addComplexType(standaardId, gegevensModelPkg, complexType) {
 /**
  * Importeer Basisschema XSD Elementen als UML-DataTypen 
  * @param {UMLPackage} gegevensModelPkg 
+ * @param {UMLPackage} primitiveTypePkg
+ * @param {UMLPackage} codelijstenPkg
  * @param {XSDObject} basisSchema 
  */
-function importDataTypes(gegevensModelPkg, basisSchema) {
+function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
     const modelElements = basisSchema.elements[0].elements
     //console.log('modelElements')
     //console.log(modelElements)
@@ -93,12 +104,12 @@ function importDataTypes(gegevensModelPkg, basisSchema) {
 
     const simpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
     for (let i = 0; i < simpleTypes.length; i++) {
-        addSimpleType(standaardId, gegevensModelPkg, simpleTypes[i])
+        addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleTypes[i])
     }
 
     const complexTypes = modelElements.filter(element => element.name == 'xs:complexType')
     for (let i = 0; i < complexTypes.length; i++) {
-        addComplexType(standaardId, gegevensModelPkg, complexTypes[i])
+        addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexTypes[i])
     }
     
 }
@@ -109,19 +120,19 @@ function importDataTypes(gegevensModelPkg, basisSchema) {
  */
 function importGegevensModel(basisSchema) {
     try {
-        const project = app.project.getProject()
-        primitiveTypes.init(project)
-        codelijsten.init(project)
+        const root = app.project.getProject()
+        const primitiveTypePkg = primitiveTypes.init(root)
+        const codelijstenPkg = codelijsten.init(root)
         gegevensModelPkg = app.factory.createModel({
             id: 'UMLPackage',
-            parent: project,
+            parent: root,
             modelInitializer: elem => {
                 elem.name = GEGEVENS_MODEL_PACKAGE.name
                 elem.documentation = GEGEVENS_MODEL_PACKAGE.documentation
             }
         })
 
-        importDataTypes(gegevensModelPkg, basisSchema)
+        importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema)
     } catch (err) {
         console.error(err);
     }
