@@ -14,35 +14,6 @@ const BERICHTEN_PACKAGE = {
 }
 
 /**
- * Add UMLAttribute for Berichtelement to BerichtClass
- * @param {UMLClass} berichtClass 
- * @param {String} elemName 
- * @param {String} elemType 
- * @returns {UMLAttribute}
- */
-function addBerichtClassAttribute(berichtClass, elemName, elemType) {
-    return app.factory.createModel({
-        id: 'UMLAttribute',
-        parent: berichtClass,
-        field: 'attributes',
-        modelInitializer: elem => {
-            elem.name = elemName
-            elem.type = elemType
-        }
-    })
-}
-
-/**
- * Get DataType from element type value
- * @param {String} typeValue 
- * @returns {String}
- */
-function getDataType(typeValue) {
-    return typeValue.split(':')[1]
-}
-
-
-/**
  * 
  * @param {Object} complexElem 
  * @param {String} relationPre 
@@ -66,14 +37,16 @@ function isRelationClass(complexElem, relationPre) {
  * Add UMLClass for BerichtClass to BerichtPackage
  * @param {UMLPackage} berichtPkg 
  * @param {String} berichtClassName
+ * @param {String | undefined} berichtClassDocumentation
  * @returns {UMLClass}
  */
-function addBerichtClass(berichtPkg, berichtClassName) {
+function addBerichtClass(berichtPkg, berichtClassName, berichtClassDocumentation) {
     return app.factory.createModel({
         id: 'UMLClass',
         parent: berichtPkg,
         modelInitializer: elem => {
             elem.name = berichtClassName
+            elem.documentation = berichtClassDocumentation
         }
     })
 }
@@ -131,7 +104,7 @@ function addBerichtClassAssociation(parentClass, childClass, associationName, ch
 function importBerichtKlassen(berichtenPkg, bericht) {
     // Get XSD Schema Data
     const xsSchema = bericht.elements.find((element) => element.name == 'xs:schema')
-    const xsAnnotation = xsSchema.elements.find(element => element.name == 'xs:annotation')
+    const xsAnnotation = utils.getXsAnnotation(xsSchema.elements)
     // Get AppInfo Data
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
     // Get Standaard info Data
@@ -170,7 +143,8 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                 relationClasses.push(complexElem)
             } else {
                 const complexElemName = complexElem.attributes.name
-                const berichtClass = addBerichtClass(berichtPkg, complexElemName)
+                const complexElemDocumentation = utils.getXsAnnotationDocumentationText(complexElem.elements)
+                const berichtClass = addBerichtClass(berichtPkg, complexElemName, complexElemDocumentation)
                 const xsSequence = complexElem.elements.find(element => element.name == 'xs:sequence')
                 const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
 
@@ -183,8 +157,9 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                         // Restriction on a SimpleType Defined
                         const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
                         const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
-                        const elemType = getDataType(xsRestriction.attributes.base)
-                        const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
+                        const elemTypeName = utils.getDataTypeName(xsRestriction.attributes.base)
+                        const elemDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
+                        const berichtClassAttribute = utils.addUMLAttribute(berichtClass, elemName, elemTypeName, elemDocumentation)
                     } else {
 
                         if (elemType.startsWith(relationPre)) {
@@ -195,8 +170,9 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 
                         } else {
                             //console.log('Attribute')
-                            const elemType = getDataType(xsElement.attributes.type)
-                            const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType)
+                            const elemTypeName = utils.getDataTypeName(xsElement.attributes.type)
+                            const elemDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
+                            const berichtClassAttribute = utils.addUMLAttribute(berichtClass, elemName, elemType, elemDocumentation)
                         }
                     }
                 }

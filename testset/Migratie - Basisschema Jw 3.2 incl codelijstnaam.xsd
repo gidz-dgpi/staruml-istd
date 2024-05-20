@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://www.istandaarden.nl/iwmo/3_2/basisschema/schema" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:iwmo="http://www.istandaarden.nl/iwmo/3_2/basisschema/schema">
+<xs:schema targetNamespace="http://www.istandaarden.nl/ijw/3_2/basisschema/schema" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ijw="http://www.istandaarden.nl/ijw/3_2/basisschema/schema">
 	<xs:annotation>
 		<xs:appinfo>
-			<iwmo:standaard>iwmo</iwmo:standaard>
-			<iwmo:bericht>basisschema</iwmo:bericht>
-			<iwmo:release>3.2</iwmo:release>
-			<iwmo:BasisschemaXsdVersie>1.0.0</iwmo:BasisschemaXsdVersie>
-			<iwmo:BasisschemaXsdMinVersie>1.0.0</iwmo:BasisschemaXsdMinVersie>
-			<iwmo:BasisschemaXsdMaxVersie>1.0.0</iwmo:BasisschemaXsdMaxVersie>
+			<ijw:standaard>ijw</ijw:standaard>
+			<ijw:bericht>basisschema</ijw:bericht>
+			<ijw:release>3.2</ijw:release>
+			<ijw:BasisschemaXsdVersie>1.0.0</ijw:BasisschemaXsdVersie>
+			<ijw:BasisschemaXsdMinVersie>1.0.0</ijw:BasisschemaXsdMinVersie>
+			<ijw:BasisschemaXsdMaxVersie>1.0.0</ijw:BasisschemaXsdMaxVersie>
 		</xs:appinfo>
 	</xs:annotation>
 	<xs:complexType name="CDT_Achternaam">
@@ -15,12 +15,12 @@
 			<xs:documentation>De achternaam van een natuurlijk persoon, aangeduid als Naam met Voorvoegsel.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Achternaam" type="iwmo:LDT_Naam">
+			<xs:element name="Achternaam" type="ijw:LDT_Naam">
 				<xs:annotation>
 					<xs:documentation>De achternaam van een persoon, indien nodig verkort weergegeven.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Voorvoegsel" type="iwmo:LDT_Voorvoegsel" minOccurs="0">
+			<xs:element name="Voorvoegsel" type="ijw:LDT_Voorvoegsel" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Verzameling van een of meer voorzetsels/lidwoorden, die aan het significante deel van de achternaam van een persoon vooraf gaat en daar een onderdeel van is.</xs:documentation>
 				</xs:annotation>
@@ -32,27 +32,27 @@
 			<xs:documentation>Gegevens voor de aanduiding van een adres.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Huis" type="iwmo:CDT_Huis" minOccurs="0">
+			<xs:element name="Huis" type="ijw:CDT_Huis" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Aanduiding van een specifiek huis in een straat, onderdeel van het adres.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Postcode" type="iwmo:LDT_Postcode" minOccurs="0">
+			<xs:element name="Postcode" type="ijw:LDT_Postcode" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Aanduiding van de (inter)nationale postcode. Dit veld is geschikt voor zowel de Nederlandse als niet-Nederlandse postcodes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Straatnaam" type="iwmo:LDT_Straatnaam" minOccurs="0">
+			<xs:element name="Straatnaam" type="ijw:LDT_Straatnaam" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>De officiele door de gemeente vastgestelde naam van een straat.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Plaatsnaam" type="iwmo:LDT_Plaatsnaam" minOccurs="0">
+			<xs:element name="Plaatsnaam" type="ijw:LDT_Plaatsnaam" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>De door de gemeente vastgestelde naam van een woonplaats.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LandCode" type="iwmo:LDT_LandCode" minOccurs="0">
+			<xs:element name="LandCode" type="ijw:LDT_LandCode" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Identificatie van een (historisch/actueel) land of gebiedsdeel.</xs:documentation>
 				</xs:annotation>
@@ -64,9 +64,9 @@
 			<xs:documentation>Samengesteld bedrag met DebetCredit indicatie.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Bedrag" type="iwmo:LDT_Bedrag">
+			<xs:element name="Bedrag" type="ijw:LDT_Bedrag">
 			</xs:element>
-			<xs:element name="DebetCredit" type="iwmo:LDT_DebetCredit">
+			<xs:element name="DebetCredit" type="ijw:LDT_DebetCredit">
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
@@ -75,12 +75,12 @@
 			<xs:documentation>Naam of nummer en dagtekening ter identificatie van een totale aanlevering.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Identificatie" type="iwmo:LDT_IdentificatieBericht">
+			<xs:element name="Identificatie" type="ijw:LDT_IdentificatieBericht">
 				<xs:annotation>
 					<xs:documentation>Naam of nummer, die ter identificatie aan een totale aanlevering kan worden meegegeven.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Dagtekening" type="iwmo:LDT_Datum">
+			<xs:element name="Dagtekening" type="ijw:LDT_Datum">
 				<xs:annotation>
 					<xs:documentation>De datum van verzending van het bericht.</xs:documentation>
 				</xs:annotation>
@@ -92,12 +92,12 @@
 			<xs:documentation>Aanduiding over bijzondere vorm van communicatie die gebruikt dient te worden.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Vorm" type="iwmo:LDT_Communicatievorm">
+			<xs:element name="Vorm" type="ijw:LDT_Communicatievorm">
 				<xs:annotation>
 					<xs:documentation>Gecodeerde aanduiding van de bijzondere vorm van communicatie die gebruikt dient te worden.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Taal" type="iwmo:LDT_Taal" minOccurs="0">
+			<xs:element name="Taal" type="ijw:LDT_Taal" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>De taal van de client waarin met de client wordt gecommuniceerd.</xs:documentation>
 				</xs:annotation>
@@ -109,12 +109,12 @@
 			<xs:documentation>Datum waarop een natuurlijk persoon geboren is.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Datum" type="iwmo:LDT_Datum">
+			<xs:element name="Datum" type="ijw:LDT_Datum">
 				<xs:annotation>
 					<xs:documentation>Datum waarop een persoon geboren is.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="DatumGebruik" type="iwmo:LDT_DatumGebruik" minOccurs="0">
+			<xs:element name="DatumGebruik" type="ijw:LDT_DatumGebruik" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Indicator die aangeeft welk deel van de voorafgaande datum gebruikt mag worden.</xs:documentation>
 				</xs:annotation>
@@ -126,12 +126,12 @@
 			<xs:documentation>Tijdsperiode met zowel begin- als einddatum</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Begindatum" type="iwmo:LDT_Datum">
+			<xs:element name="Begindatum" type="ijw:LDT_Datum">
 				<xs:annotation>
 					<xs:documentation>De begindatum van de periode.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Einddatum" type="iwmo:LDT_Datum">
+			<xs:element name="Einddatum" type="ijw:LDT_Datum">
 				<xs:annotation>
 					<xs:documentation>De einddatum van de periode.</xs:documentation>
 				</xs:annotation>
@@ -143,22 +143,22 @@
 			<xs:documentation>Aanduiding van een specifiek huis in een straat, onderdeel van het adres.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Huisnummer" type="iwmo:LDT_Huisnummer">
+			<xs:element name="Huisnummer" type="ijw:LDT_Huisnummer">
 				<xs:annotation>
 					<xs:documentation>De numerieke aanduiding zoals de gemeente die aan het object heeft toegekend.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Huisletter" type="iwmo:LDT_Huisletter" minOccurs="0">
+			<xs:element name="Huisletter" type="ijw:LDT_Huisletter" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Een alfabetisch teken achter het huisnummer zoals dit door het gemeentebestuur is toegekend.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="HuisnummerToevoeging" type="iwmo:LDT_HuisnummerToevoeging" minOccurs="0">
+			<xs:element name="HuisnummerToevoeging" type="ijw:LDT_HuisnummerToevoeging" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Die letters of tekens die noodzakelijk zijn om, naast huisnummer en -letter, de brievenbus te vinden.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AanduidingWoonadres" type="iwmo:LDT_AanduidingWoonadres" minOccurs="0">
+			<xs:element name="AanduidingWoonadres" type="ijw:LDT_AanduidingWoonadres" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>De aanduiding die wordt gebruikt voor adressen die niet zijn voorzien van de gebruikelijke straatnaam en huisnummeraanduidingen.</xs:documentation>
 				</xs:annotation>
@@ -170,17 +170,17 @@
 			<xs:documentation>Aanduiding van de omvang van de te leveren of geleverde ondersteuning, uitgedrukt in Volume, Eenheid en Frequentie.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Volume" type="iwmo:LDT_Volume">
+			<xs:element name="Volume" type="ijw:LDT_Volume">
 				<xs:annotation>
 					<xs:documentation>Aanduiding van de mate van zorg betreffende een product.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Eenheid" type="iwmo:LDT_Eenheid">
+			<xs:element name="Eenheid" type="ijw:LDT_Eenheid">
 				<xs:annotation>
 					<xs:documentation>Aanduiding van de eenheid waarin het volume is uitgedrukt.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Frequentie" type="iwmo:LDT_Frequentie">
+			<xs:element name="Frequentie" type="ijw:LDT_Frequentie">
 				<xs:annotation>
 					<xs:documentation>Aanduiding van de frequentie waarmee een ondersteuningsproduct geleverd wordt.</xs:documentation>
 				</xs:annotation>
@@ -192,12 +192,12 @@
 			<xs:documentation>Aanduiding van een tijdsperiode met een Begindatum en/of een Einddatum.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Begindatum" type="iwmo:LDT_Datum" minOccurs="0">
+			<xs:element name="Begindatum" type="ijw:LDT_Datum" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>De begindatum van de periode.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Einddatum" type="iwmo:LDT_Datum" minOccurs="0">
+			<xs:element name="Einddatum" type="ijw:LDT_Datum" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>De einddatum van de periode.</xs:documentation>
 				</xs:annotation>
@@ -209,26 +209,26 @@
 			<xs:documentation>Gecodeerde omschrijving van een product, dienst of resultaat ten behoeve van het leveren van ondersteuning aan een client. Product wordt uitgedrukt in een categorie en eventueel nader gespecificeerd met een specifieke productcode.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Categorie" type="iwmo:LDT_ProductCategorie">
+			<xs:element name="Categorie" type="ijw:LDT_ProductCategorie">
 				<xs:annotation>
-					<xs:documentation>Gecodeerde aanduiding van hoofdcategorieen van producten in het kader van de Wet maatschappelijke ondersteuning (Wmo).</xs:documentation>
+					<xs:documentation>Gecodeerde aanduiding van hoofdcategorieen van producten in het kader van de Jeugdwet.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Code" type="iwmo:LDT_ProductCode" minOccurs="0">
+			<xs:element name="Code" type="ijw:LDT_ProductCode" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Gecodeerde aanduiding van producten in het kader van de Wet maatschappelijke ondersteuning (Wmo).</xs:documentation>
+					<xs:documentation>Gecodeerde aanduiding van producten in het kader van de Jeugdwet.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="CDT_Referentie">
 		<xs:sequence>
-			<xs:element name="ReferentieNummer" type="iwmo:LDT_ReferentieNummer">
+			<xs:element name="ReferentieNummer" type="ijw:LDT_ReferentieNummer">
 				<xs:annotation>
 					<xs:documentation>Uniek referentienummer dat de zorgverlener heeft toegekend aan een detailregel van de declaratie.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="VorigReferentieNummer" type="iwmo:LDT_ReferentieNummer" minOccurs="0">
+			<xs:element name="VorigReferentieNummer" type="ijw:LDT_ReferentieNummer" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Uniek referentienummer dat de zorgverlener heeft toegekend aan een voorgaande detailregel, gerelateerd aan deze detailregel.</xs:documentation>
 				</xs:annotation>
@@ -240,12 +240,12 @@
 			<xs:documentation>Het telefoonnummer waarop de client of relatie van de client te bereiken is.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Telefoonnummer" type="iwmo:LDT_Telefoonnummer">
+			<xs:element name="Telefoonnummer" type="ijw:LDT_Telefoonnummer">
 				<xs:annotation>
 					<xs:documentation>Het telefoonnummer waarop de client of relatie van de client te bereiken is.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Landnummer" type="iwmo:LDT_Landnummer">
+			<xs:element name="Landnummer" type="ijw:LDT_Landnummer">
 				<xs:annotation>
 					<xs:documentation>Het telefoonnummer van een land, vanuit Nederland benaderd.</xs:documentation>
 				</xs:annotation>
@@ -257,12 +257,12 @@
 			<xs:documentation>De telefoonnummers waarop de client of relatie van de client te bereiken is.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Telefoon01" type="iwmo:CDT_Telefoon">
+			<xs:element name="Telefoon01" type="ijw:CDT_Telefoon">
 				<xs:annotation>
 					<xs:documentation>Het telefoonnummer waarop de client of relatie van de client te bereiken is.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Telefoon02" type="iwmo:CDT_Telefoon" minOccurs="0">
+			<xs:element name="Telefoon02" type="ijw:CDT_Telefoon" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Het telefoonnummer waarop de client of relatie van de client te bereiken is.</xs:documentation>
 				</xs:annotation>
@@ -274,12 +274,12 @@
 			<xs:documentation>Samengesteld totaal bedrag met DebetCredit indicatie.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="TotaalBedrag" type="iwmo:LDT_TotaalBedrag">
+			<xs:element name="TotaalBedrag" type="ijw:LDT_TotaalBedrag">
 				<xs:annotation>
 					<xs:documentation>Het bedrag dat in zijn totaliteit gedeclareerd of gefactureerd, toegekend of berekend is.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="DebetCredit" type="iwmo:LDT_DebetCredit">
+			<xs:element name="DebetCredit" type="ijw:LDT_DebetCredit">
 				<xs:annotation>
 					<xs:documentation>Indicatie of een bedrag/aantal debet of credit is.</xs:documentation>
 				</xs:annotation>
@@ -291,17 +291,17 @@
 			<xs:documentation>De naam van een natuurlijk persoon, aangeduid als Geslachtsnaam en eventueel Voornamen en/of Voorletters.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Geslachtsnaam" type="iwmo:CDT_Achternaam">
+			<xs:element name="Geslachtsnaam" type="ijw:CDT_Achternaam">
 				<xs:annotation>
 					<xs:documentation>Wettelijk vastgelegde achternaam die iemand bij de geboorte erft van de vader of moeder.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Voornamen" type="iwmo:LDT_Naam" minOccurs="0">
+			<xs:element name="Voornamen" type="ijw:LDT_Naam" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>De verzameling namen die, gescheiden door spaties, aan de geslachtsnaam voorafgaat.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Voorletters" type="iwmo:LDT_Voorletters" minOccurs="0">
+			<xs:element name="Voorletters" type="ijw:LDT_Voorletters" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>De verzameling van letters die wordt gevormd door de eerste letter van alle in volgorde voorkomende voornamen van een persoon.</xs:documentation>
 				</xs:annotation>
@@ -313,17 +313,17 @@
 			<xs:documentation>Gegevens over de persoon of instantie die een client heeft doorverwezen naar ondersteuning, aangeduid als Type en Naam of ZorgverlenerCode.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Type" type="iwmo:LDT_TypeVerwijzer">
+			<xs:element name="Type" type="ijw:LDT_TypeVerwijzer">
 				<xs:annotation>
 					<xs:documentation>Gecodeerde aanduiding van het type verwijzer.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Naam" type="iwmo:LDT_NaamVerwijzer" minOccurs="0">
+			<xs:element name="Naam" type="ijw:LDT_NaamVerwijzer" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Naam van de verwijzende persoon of instantie.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ZorgverlenerCode" type="iwmo:LDT_AgbCode" minOccurs="0">
+			<xs:element name="ZorgverlenerCode" type="ijw:LDT_AgbCode" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>De AGBcode van de zorgverlener.</xs:documentation>
 				</xs:annotation>
@@ -335,27 +335,27 @@
 			<xs:documentation>Volledige naam van een natuurlijk persoon, aangeduid als Geslachtsnaam, eventueel Partnernaam, Voornamen en/of Voorletters en NaamGebruik.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Geslachtsnaam" type="iwmo:CDT_Achternaam">
+			<xs:element name="Geslachtsnaam" type="ijw:CDT_Achternaam">
 				<xs:annotation>
 					<xs:documentation>Wettelijk vastgelegde achternaam die iemand bij de geboorte erft van de vader of moeder.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Partnernaam" type="iwmo:CDT_Achternaam" minOccurs="0">
+			<xs:element name="Partnernaam" type="ijw:CDT_Achternaam" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Na het voltrekken van een huwelijk of na een officiele partnerregistratie van de partner aangenomen familienaam.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Voornamen" type="iwmo:LDT_Naam" minOccurs="0">
+			<xs:element name="Voornamen" type="ijw:LDT_Naam" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>De verzameling namen die, gescheiden door spaties, aan de geslachtsnaam voorafgaat.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Voorletters" type="iwmo:LDT_Voorletters" minOccurs="0">
+			<xs:element name="Voorletters" type="ijw:LDT_Voorletters" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>De verzameling van letters die wordt gevormd door de eerste letter van alle in volgorde voorkomende voornamen van een persoon.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NaamGebruik" type="iwmo:LDT_NaamGebruik">
+			<xs:element name="NaamGebruik" type="ijw:LDT_NaamGebruik">
 				<xs:annotation>
 					<xs:documentation>Aanduiding naamgebruik (gecodeerd).</xs:documentation>
 				</xs:annotation>
@@ -364,9 +364,9 @@
 	</xs:complexType>
 	<xs:complexType name="CDT_XsdVersie">
 		<xs:sequence>
-			<xs:element name="BasisschemaXsdVersie" type="iwmo:LDT_Versie">
+			<xs:element name="BasisschemaXsdVersie" type="ijw:LDT_Versie">
 			</xs:element>
-			<xs:element name="BerichtXsdVersie" type="iwmo:LDT_Versie">
+			<xs:element name="BerichtXsdVersie" type="ijw:LDT_Versie">
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
@@ -375,6 +375,11 @@
 			<xs:documentation>De aanduiding die wordt gebruikt voor adressen die niet zijn voorzien van de gebruikelijke straatnaam en huisnummeraanduidingen.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>NUM061: Aanduiding woonadres</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="AB">
 				<xs:annotation>
 					<xs:documentation>Aan boord</xs:documentation>
@@ -403,6 +408,11 @@
 			<xs:documentation>Nadere typering van het adres.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>COD757: Soort adres</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="01">
 				<xs:annotation>
 					<xs:documentation>BRP-adres</xs:documentation>
@@ -505,6 +515,11 @@
 			<xs:documentation>Gecodeerde aanduiding van de bijzondere vorm van communicatie die gebruikt dient te worden.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>COD747: Communicatievorm</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="1">
 				<xs:annotation>
 					<xs:documentation>Tolk taal</xs:documentation>
@@ -536,6 +551,11 @@
 			<xs:documentation>Indicator die aangeeft welk deel van de voorafgaande datum gebruikt mag worden.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>COD170: Datumgebruik</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="1">
 				<xs:annotation>
 					<xs:documentation>dag onbekend; alleen maand en jaar gebruiken</xs:documentation>
@@ -556,6 +576,11 @@
 	</xs:simpleType>
 	<xs:simpleType name="LDT_DebetCredit">
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>COD043: Indicatie debet/credit</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="C">
 				<xs:annotation>
 					<xs:documentation>Creditbedrag en aantal</xs:documentation>
@@ -574,6 +599,11 @@
 			<xs:documentation>Aanduiding van de eenheid waarin de omvang van een ondersteuningsproduct is beschreven.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>WJ756: Eenheid</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="01">
 				<xs:annotation>
 					<xs:documentation>Minuut</xs:documentation>
@@ -627,6 +657,11 @@
 			<xs:documentation>Aanduiding van de frequentie waarmee een ondersteuningsproduct geleverd wordt.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>WMO757: Frequentie</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="1">
 				<xs:annotation>
 					<xs:documentation>Per dag</xs:documentation>
@@ -664,6 +699,11 @@
 			<xs:documentation>De sekse van een persoon, zoals bij geboorte formeel vastgesteld of nadien formeel gewijzigd.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>COD046: Geslacht</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="0">
 				<xs:annotation>
 					<xs:documentation>Onbekend</xs:documentation>
@@ -735,6 +775,11 @@
 			<xs:documentation>Codering voor ja of nee.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>COD260: Ja of nee</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="1">
 				<xs:annotation>
 					<xs:documentation>Ja</xs:documentation>
@@ -753,6 +798,11 @@
 			<xs:documentation>Juridische situatie die voor de client van toepassing is op het moment van beoordeling.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>WJ232: Juridische status</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="01">
 				<xs:annotation>
 					<xs:documentation>Rechterlijke machtiging (rm) voorlopig / voortgezette machtiging</xs:documentation>
@@ -796,6 +846,11 @@
 			<xs:documentation>Identificatie van een (historisch/actueel) land of gebiedsdeel.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>COD032: Land</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="AD">
 				<xs:annotation>
 					<xs:documentation>ANDORRA</xs:documentation>
@@ -2069,6 +2124,11 @@
 			<xs:documentation>Aanduiding naamgebruik (gecodeerd).</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>COD700: Naamgebruik</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="1">
 				<xs:annotation>
 					<xs:documentation>Eigen naam</xs:documentation>
@@ -2163,97 +2223,132 @@
 	</xs:simpleType>
 	<xs:simpleType name="LDT_ProductCategorie">
 		<xs:annotation>
-			<xs:documentation>Gecodeerde aanduiding van hoofdcategorieen van producten in het kader van de Wet maatschappelijke ondersteuning (Wmo).</xs:documentation>
+			<xs:documentation>Gecodeerde aanduiding van hoofdcategorieen van producten in het kader van de Jeugdwet.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="01">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>JZ020: Productcategorie</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
+			<xs:enumeration value="31">
 				<xs:annotation>
-					<xs:documentation>Hulp bij het huishouden</xs:documentation>
+					<xs:documentation>(2015) Zonder verblijf: uitgevoerd door wijk- of buurtteam</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="02">
+			<xs:enumeration value="32">
 				<xs:annotation>
-					<xs:documentation>Begeleiding</xs:documentation>
+					<xs:documentation>(2015) Zonder verblijf: ambulante jeugdhulp op locatie van de aanbieder</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="03">
+			<xs:enumeration value="33">
+				<xs:annotation>
+					<xs:documentation>(2015) Zonder verblijf: daghulp op locatie van de aanbieder</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34">
+				<xs:annotation>
+					<xs:documentation>(2015) Zonder verblijf: jeugdhulp in het netwerk van de jeugdige</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35">
+				<xs:annotation>
+					<xs:documentation>(2015) Met verblijf: pleegzorg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36">
+				<xs:annotation>
+					<xs:documentation>(2015) Met verblijf: gezinsgericht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37">
+				<xs:annotation>
+					<xs:documentation>(2015) Met verblijf: gesloten plaatsing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="38">
+				<xs:annotation>
+					<xs:documentation>(2015) Met verblijf: overig residentieel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40">
 				<xs:annotation>
 					<xs:documentation>Persoonlijke verzorging</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="04">
+			<xs:enumeration value="41">
 				<xs:annotation>
-					<xs:documentation>Kortdurend verblijf</xs:documentation>
+					<xs:documentation>Dagbehandeling</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="05">
-				<xs:annotation>
-					<xs:documentation>Woondiensten</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="06">
-				<xs:annotation>
-					<xs:documentation>Overige ondersteuning gericht op het individu of huishouden/gezin</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="07">
-				<xs:annotation>
-					<xs:documentation>Dagbesteding</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="08">
+			<xs:enumeration value="42">
 				<xs:annotation>
 					<xs:documentation>Vervoerdiensten</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="09">
+			<xs:enumeration value="43">
 				<xs:annotation>
-					<xs:documentation>Overige groepsgerichte ondersteuning</xs:documentation>
+					<xs:documentation>Jeugdhulp verblijf (incl. behandeling)</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="10">
+			<xs:enumeration value="44">
 				<xs:annotation>
-					<xs:documentation>Overige maatwerk arrangementen</xs:documentation>
+					<xs:documentation>Jeugdhulp verblijf (excl. behandeling)</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="11">
+			<xs:enumeration value="45">
 				<xs:annotation>
-					<xs:documentation>Rolstoelen</xs:documentation>
+					<xs:documentation>Jeugdhulp ambulant</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="12">
+			<xs:enumeration value="46">
 				<xs:annotation>
-					<xs:documentation>Vervoervoorzieningen</xs:documentation>
+					<xs:documentation>Jeugdhulp crisis</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="13">
+			<xs:enumeration value="47">
 				<xs:annotation>
-					<xs:documentation>Woonvoorzieningen</xs:documentation>
+					<xs:documentation>Jeugdreclassering</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="14">
+			<xs:enumeration value="48">
 				<xs:annotation>
-					<xs:documentation>Overige hulpmiddelen</xs:documentation>
+					<xs:documentation>Jeugdbescherming</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="15">
+			<xs:enumeration value="49">
 				<xs:annotation>
-					<xs:documentation>Beschermd wonen</xs:documentation>
+					<xs:documentation>Activiteiten in het preventief justitieel kader</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="16">
+			<xs:enumeration value="50">
 				<xs:annotation>
-					<xs:documentation>Opvang</xs:documentation>
+					<xs:documentation>Maatwerkarrangementen jeugd</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="17">
+			<xs:enumeration value="51">
 				<xs:annotation>
-					<xs:documentation>Spoedopvang</xs:documentation>
+					<xs:documentation>Generalistische basis-ggz</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="18">
+			<xs:enumeration value="52">
 				<xs:annotation>
-					<xs:documentation>Overige beschermd wonen en opvang</xs:documentation>
+					<xs:documentation>Specialistische ggz</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="53">
+				<xs:annotation>
+					<xs:documentation>Kindergeneeskunde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="54">
+				<xs:annotation>
+					<xs:documentation>Jeugd-ggz</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="55">
+				<xs:annotation>
+					<xs:documentation>Landelijk ingekochte zorg</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:maxLength value="2"/>
@@ -2274,6 +2369,11 @@
 			<xs:documentation>De reden van afwijzing van een verzoek.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>WJ759: Reden afwijzing verzoek</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="1">
 				<xs:annotation>
 					<xs:documentation>Geen wijziging, maar nieuwe aanvraag</xs:documentation>
@@ -2324,42 +2424,47 @@
 	</xs:simpleType>
 	<xs:simpleType name="LDT_RedenBeeindiging">
 		<xs:annotation>
-			<xs:documentation>De reden van beeindiging van Wmo ondersteuning bij een client.</xs:documentation>
+			<xs:documentation>De reden van beeindiging van de Jeugdhulp bij een client.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>JZ588: Reden beeindiging</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="02">
 				<xs:annotation>
 					<xs:documentation>Overlijden</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="19">
-				<xs:annotation>
-					<xs:documentation>Levering volgens plan beeindigd</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
 			<xs:enumeration value="20">
 				<xs:annotation>
-					<xs:documentation>Levering is tijdelijk beeindigd</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="21">
-				<xs:annotation>
-					<xs:documentation>Levering is eenzijdig door client beeindigd</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="22">
-				<xs:annotation>
-					<xs:documentation>Levering is eenzijdig door aanbieder beeindigd</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="23">
-				<xs:annotation>
-					<xs:documentation>Levering is in overeenstemming voortijdig beeindigd</xs:documentation>
+					<xs:documentation>Levering is tijdelijk beeindigd.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="31">
 				<xs:annotation>
-					<xs:documentation>Verhuizing naar een andere gemeente</xs:documentation>
+					<xs:documentation>Levering is volgens plan beeindigd.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32">
+				<xs:annotation>
+					<xs:documentation>Voortijdig afgesloten: eenzijdig door de client.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="33">
+				<xs:annotation>
+					<xs:documentation>Voortijdig afgesloten: eenzijdig door de aanbieder.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34">
+				<xs:annotation>
+					<xs:documentation>Voortijdig afgesloten: in overeenstemming.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35">
+				<xs:annotation>
+					<xs:documentation>Voortijdig afgesloten: wegens externe omstandigheden.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="36">
@@ -2390,6 +2495,11 @@
 			<xs:documentation>Reden waarom een verzoek wordt ingediend</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>WJ758: Reden verzoek</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="1">
 				<xs:annotation>
 					<xs:documentation>Verandering clientsituatie</xs:documentation>
@@ -2408,6 +2518,11 @@
 			<xs:documentation>De reden waarom een toewijzing wordt gewijzigd.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>JZ002: Reden wijziging toewijzing</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="01">
 				<xs:annotation>
 					<xs:documentation>Administratieve correctie (vervallen)</xs:documentation>
@@ -2475,7 +2590,7 @@
 			</xs:enumeration>
 			<xs:enumeration value="14">
 				<xs:annotation>
-					<xs:documentation>Administratieve correctie</xs:documentation>
+					<xs:documentation>Administratieve correctie </xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:maxLength value="2"/>
@@ -2511,6 +2626,11 @@
 			<xs:documentation>Melding in een iStandaarden-retourbericht. Het betreft een code die in een retourbericht het resultaat van de beoordeling van een (deel van een) ontvangen bericht weergeeft.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>WJ001: Retourcode</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="0001">
 				<xs:annotation>
 					<xs:documentation>Bericht is afgekeurd om technische redenen.</xs:documentation>
@@ -2814,6 +2934,11 @@
 			<xs:documentation>De soort relatie die een persoon ten opzichte van de client heeft.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>COD472: Soort relatie</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="03">
 				<xs:annotation>
 					<xs:documentation>Curator (juridisch)</xs:documentation>
@@ -2937,6 +3062,11 @@
 			<xs:documentation>Indicatie over de status van de informatie in de berichtklasse.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>COD467: Status aanlevering</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="1">
 				<xs:annotation>
 					<xs:documentation>Eerste aanlevering</xs:documentation>
@@ -3012,6 +3142,11 @@
 			<xs:documentation>Aanduiding van de aard van de verwijzer.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>COD327: Code verwijzer</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="01">
 				<xs:annotation>
 					<xs:documentation>Gemeente</xs:documentation>
@@ -3064,6 +3199,11 @@
 			<xs:documentation>Het antwoord op een verzoek </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>WJ760: Verzoek antwoord</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="1">
 				<xs:annotation>
 					<xs:documentation>Verzoek afgewezen</xs:documentation>
@@ -3111,6 +3251,11 @@
 			<xs:documentation>Wettelijke vertegenwoordiging die voor de client van toepassing is op het moment van beoordeling.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<ijw:codelijstNaam>WJ003: Wettelijke vertegenwoordiging</ijw:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
 			<xs:enumeration value="06">
 				<xs:annotation>
 					<xs:documentation>Voogdij</xs:documentation>

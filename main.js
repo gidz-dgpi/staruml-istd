@@ -8,7 +8,8 @@
  */
 
 const jsonWriter = require('./json-writer')
-const xsdImport = require('./xsd-import')
+const istdBerichtXsdImport = require('./istd-bericht-xsd-import')
+const istdBasisSchemaXsdImport = require('./istd-basisschema-xsd-import')
 
 const JSON_FILE_FILTERS = [
     { name: 'JSON Files', extensions: ['json'] },
@@ -44,7 +45,7 @@ function _handleIstdJsonExport(fullPath) {
 function _handleIstdBerichtImport(fullPath) {
     if (fullPath) {
         try {
-            xsdImport.importBerichtXsdFile(fullPath)
+            istdBerichtXsdImport.importBerichtXsdFile(fullPath)
         } catch (err) {
             console.error(err)
         }
@@ -52,7 +53,27 @@ function _handleIstdBerichtImport(fullPath) {
         var files = app.dialogs.showOpenDialog('Selecteer een Bericht (.xsd)', null, XSD_FILE_FILTERS)
         if (files && files.length > 0) {
             try {
-                xsdImport.importBerichtXsdFile(files[0])
+                istdBerichtXsdImport.importBerichtXsdFile(files[0])
+            } catch (err) {
+                app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
+                console.error(err)
+            }
+        }
+    }
+}
+
+function _handleIstdBasisSchemaImport(fullPath) {
+    if (fullPath) {
+        try {
+            istdBasisSchemaXsdImport.importBasisSchemaXsdFile(fullPath)
+        } catch (err) {
+            console.error(err)
+        }
+    } else {
+        var files = app.dialogs.showOpenDialog('Selecteer een Basisschema (.xsd)', null, XSD_FILE_FILTERS)
+        if (files && files.length > 0) {
+            try {
+                istdBasisSchemaXsdImport.importBasisSchemaXsdFile(files[0])
             } catch (err) {
                 app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
                 console.error(err)
@@ -64,6 +85,7 @@ function _handleIstdBerichtImport(fullPath) {
 function init() {
     app.commands.register('istd:json:export', _handleIstdJsonExport)
     app.commands.register('istd:bericht:import', _handleIstdBerichtImport)
+    app.commands.register('istd:basisschema:import', _handleIstdBasisSchemaImport)
 }
 
 exports.init = init
