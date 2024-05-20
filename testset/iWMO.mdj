@@ -882,7 +882,20 @@
 					"_parent": {
 						"$ref": "AAAAAAGL3fQueVQneLU="
 					},
-					"name": "CDT_Geboortedatum"
+					"name": "CDT_Geboortedatum",
+					"attributes": [
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGPlX9u/fak8OQ=",
+							"_parent": {
+								"$ref": "AAAAAAGL9oulo0cf4HI="
+							},
+							"name": "Attribute1",
+							"type": {
+								"$ref": "AAAAAAGL7CztXtlh9qo="
+							}
+						}
+					]
 				},
 				{
 					"_type": "UMLDataType",

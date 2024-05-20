@@ -107,7 +107,19 @@ function addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexTy
  */
 function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId, complexType) {
     const dataTypeName = complexType.attributes.name 
-    const complexDataType = gegevensModelPkg.ownedElements.filter(element => element._type = 'UMLDataType' && element.name == dataTypeName)
+    const complexDataType = gegevensModelPkg.ownedElements.find(element => element._type = 'UMLDataType' && element.name == dataTypeName)
+//    complexDataType['attributes'] = []
+/*
+    complexDataType.attributes.push({
+        _type: 'UMLAttribute',
+        _id: app.repository.generateGuid(),
+        _parent: {
+            $ref: complexDataType._id
+        },
+        name: 'AttributeTest',
+        type: 'aType'
+    })
+*/
     console.log(complexDataType)
 
     const seqElems = complexType.elements.find(element => element.name == 'xs:sequence').elements
@@ -115,13 +127,15 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
         const seqElem = seqElems[i]
         console.log(seqElem)
         const attrName = seqElem.attributes.name
+        const attrDataTypeName = utils.getDataTypeName(seqElem.attributes.type)
+        const attrDataType = gegevensModelPkg.ownedElements.find(element => element => element._type = 'UMLDataType' && element.name == attrDataTypeName)
 
         var attrDocumentation = undefined
         if (seqElem.elements) {
             attrDocumentation = utils.getXsAnnotationDocumentationText(seqElem.elements)
         }
         
-        //utils.addUMLAttribute(complexDataType, attrName, attrType, attrDocumentation)
+        utils.addUMLAttribute(complexDataType, attrName, attrDataType, attrDocumentation)
     }
 
 }

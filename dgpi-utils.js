@@ -66,7 +66,7 @@ function getXsRestriction(elements) {
  * Add UMLAttribute
  * @param {UMLClass | UMLDataType} parentClass 
  * @param {String} attrName 
- * @param {String | { $ref: String} } attrType 
+ * @param {String | UMLDataType } attrType 
  * @param {String | undefined} attrDocumentation 
  * @returns {UMLAttribute}
  */
