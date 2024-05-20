@@ -62,8 +62,30 @@ function getXsRestriction(elements) {
     return elements.find(element => element.name == 'xs:restriction')
 }
 
+/**
+ * Add UMLAttribute
+ * @param {UMLClass | UMLDataType} parentClass 
+ * @param {String} attrName 
+ * @param {String | { $ref: String} } attrType 
+ * @param {String | undefined} attrDocumentation 
+ * @returns {UMLAttribute}
+ */
+function addUMLAttribute(parentClass, attrName, attrType, attrDocumentation) {
+    return app.factory.createModel({
+        id: 'UMLAttribute',
+        parent: parentClass,
+        field: 'attributes',
+        modelInitializer: elem => {
+            elem.name = attrName
+            elem.type = attrType
+            elem.documentation = attrDocumentation
+        }
+    })
+}
+
 exports.getUMLPackagElementByName = getUMLPackagElementByName
 exports.getUMLClassElementByName = getUMLClassElementByName
 exports.getXsAnnotation = getXsAnnotation
 exports.getXsAnnotationDocumentationText = getXsAnnotationDocumentationText
 exports.getXsRestriction = getXsRestriction
+exports.addUMLAttribute = addUMLAttribute

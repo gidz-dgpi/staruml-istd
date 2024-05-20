@@ -14,27 +14,6 @@ const BERICHTEN_PACKAGE = {
 }
 
 /**
- * Add UMLAttribute for Berichtelement to BerichtClass
- * @param {UMLClass} berichtClass 
- * @param {String} elemName 
- * @param {String} elemType 
- * @param {String | undefined} elemDocumentation 
- * @returns {UMLAttribute}
- */
-function addBerichtClassAttribute(berichtClass, elemName, elemType, elemDocumentation) {
-    return app.factory.createModel({
-        id: 'UMLAttribute',
-        parent: berichtClass,
-        field: 'attributes',
-        modelInitializer: elem => {
-            elem.name = elemName
-            elem.type = elemType
-            elem.documentation = elemDocumentation
-        }
-    })
-}
-
-/**
  * Get DataType from element type value
  * @param {String} typeValue 
  * @returns {String}
@@ -191,7 +170,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                         const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
                         const elemType = getDataType(xsRestriction.attributes.base)
                         const elemDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
-                        const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType, elemDocumentation)
+                        const berichtClassAttribute = utils.addUMLAttribute(berichtClass, elemName, elemType, elemDocumentation)
                     } else {
 
                         if (elemType.startsWith(relationPre)) {
@@ -204,7 +183,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                             //console.log('Attribute')
                             const elemType = getDataType(xsElement.attributes.type)
                             const elemDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
-                            const berichtClassAttribute = addBerichtClassAttribute(berichtClass, elemName, elemType, elemDocumentation)
+                            const berichtClassAttribute = utils.addUMLAttribute(berichtClass, elemName, elemType, elemDocumentation)
                         }
                     }
                 }
