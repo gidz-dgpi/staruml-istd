@@ -83,9 +83,19 @@ function addUMLAttribute(parentClass, attrName, attrType, attrDocumentation) {
     })
 }
 
+/**
+ * Get DataType Name from element type value
+ * @param {String} typeValue 
+ * @returns {String}
+ */
+function getDataTypeName(typeValue) {
+    return typeValue.split(':')[1]
+}
+
 exports.getUMLPackagElementByName = getUMLPackagElementByName
 exports.getUMLClassElementByName = getUMLClassElementByName
 exports.getXsAnnotation = getXsAnnotation
 exports.getXsAnnotationDocumentationText = getXsAnnotationDocumentationText
 exports.getXsRestriction = getXsRestriction
 exports.addUMLAttribute = addUMLAttribute
+exports.getDataTypeName = getDataTypeName

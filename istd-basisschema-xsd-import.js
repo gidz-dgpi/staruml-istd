@@ -47,8 +47,6 @@ function buildUMLDependency(sourceId, targetId) {
  * @returns {UMLDataType}
  */
 function addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleType) {
-    //console.log('simpleType')
-    //console.log(simpleType)
     const dataTypeId = app.repository.generateGuid()
     const dataTypeName = simpleType.attributes.name
     const dataTypeDocumentation = utils.getXsAnnotationDocumentationText(simpleType.elements)
@@ -76,25 +74,6 @@ function addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleType
 }
 
 /**
- * Build a UMLAttribute Object to Import
- * @param {UMLClass} berichtClass 
- * @param {String} elemName 
- * @param {String | undefined} elemDocumentation 
- * @returns {UMLAttributeObject}
- */
-function buildDataTypeAttribute(dataTypeId, attrName, attrDocumentation) {
-    return {
-        _type: 'UMLAttribute',
-        _id: app.repository.generateGuid(),
-        _parent: {
-            $ref: dataTypeId
-        },
-        name: attrName,
-        documentation: attrDocumentation
-    }
-}
-
-/**
  * Add a UML DataType as a iStandaard Complex Type
  * @param {UMLPackage} gegevensModelPkg 
  * @param {UMLPackage} codelijstenPkg
@@ -113,8 +92,7 @@ function addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexTy
             $ref: gegevensModelPkg._id
         },
         name: dataTypeName,
-        documentation: dataTypeDocumentation,
-        attributes: []
+        documentation: dataTypeDocumentation
     }
     return app.project.importFromJson(gegevensModelPkg, dataTypeElem) 
 }
@@ -130,9 +108,7 @@ function addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexTy
 function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId, complexType) {
     const dataTypeName = complexType.attributes.name 
     const complexDataType = gegevensModelPkg.ownedElements.filter(element => element._type = 'UMLDataType' && element.name == dataTypeName)
-    const dataTypeId = complexDataType._id
     console.log(complexDataType)
-    const dataTypeAttributes = []
 
     const seqElems = complexType.elements.find(element => element.name == 'xs:sequence').elements
     for (let i = 0; i < seqElems.length; i++) {
@@ -145,10 +121,8 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
             attrDocumentation = utils.getXsAnnotationDocumentationText(seqElem.elements)
         }
         
-        dataTypeAttributes.push(buildDataTypeAttribute(dataTypeId, attrName, attrDocumentation))
+        //utils.addUMLAttribute(complexDataType, attrName, attrType, attrDocumentation)
     }
-    console.log(dataTypeAttributes)
-    app.project.importFromJson(complexDataType, dataTypeAttributes)
 
 }
 

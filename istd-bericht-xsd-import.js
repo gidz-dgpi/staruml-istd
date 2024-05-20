@@ -14,16 +14,6 @@ const BERICHTEN_PACKAGE = {
 }
 
 /**
- * Get DataType from element type value
- * @param {String} typeValue 
- * @returns {String}
- */
-function getDataType(typeValue) {
-    return typeValue.split(':')[1]
-}
-
-
-/**
  * 
  * @param {Object} complexElem 
  * @param {String} relationPre 
@@ -168,9 +158,9 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                         const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
                         console.log(xsSimpleType)
                         const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
-                        const elemType = getDataType(xsRestriction.attributes.base)
+                        const elemTypeName = utils.getDataTypeName(xsRestriction.attributes.base)
                         const elemDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
-                        const berichtClassAttribute = utils.addUMLAttribute(berichtClass, elemName, elemType, elemDocumentation)
+                        const berichtClassAttribute = utils.addUMLAttribute(berichtClass, elemName, elemTypeName, elemDocumentation)
                     } else {
 
                         if (elemType.startsWith(relationPre)) {
@@ -181,7 +171,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 
                         } else {
                             //console.log('Attribute')
-                            const elemType = getDataType(xsElement.attributes.type)
+                            const elemTypeName = utils.getDataTypeName(xsElement.attributes.type)
                             const elemDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
                             const berichtClassAttribute = utils.addUMLAttribute(berichtClass, elemName, elemType, elemDocumentation)
                         }
