@@ -156,7 +156,6 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                     if (elemType == undefined) {
                         // Restriction on a SimpleType Defined
                         const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
-                        console.log(xsSimpleType)
                         const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
                         const elemTypeName = utils.getDataTypeName(xsRestriction.attributes.base)
                         const elemDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
