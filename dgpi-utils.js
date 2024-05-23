@@ -96,7 +96,7 @@ function getDataTypeName(typeValue) {
 
 /**
  * Get UMLAttribute Muliplicity Value from XSD minOccurs-attribute 
- * @param {XSD-attributes} attributes 
+ * @param {XSDAttributes} attributes 
  * @returns {undefined | '0..1'}
  */
 function getUMLAttributeMultiplicity(attributes) {

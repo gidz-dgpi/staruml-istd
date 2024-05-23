@@ -170,7 +170,6 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                             })
 
                         } else {
-                            //console.log('Attribute')
                             const attrTypeName = utils.getDataTypeName(xsAttrType)
                             const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
                             const attrMultiplicity = utils.getUMLAttributeMultiplicity(xsElement.attributes)
@@ -179,6 +178,7 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                     }
                 }
 
+                app.modelExplorer.collapse(berichtClass)
             }
         }
 
@@ -212,10 +212,10 @@ function importBerichtKlassen(berichtenPkg, bericht) {
             }
 
             const associationMember = addBerichtClassAssociation(parentClass, childClass, associationName, childMultiplicity)
+            app.modelExplorer.collapse(parentClass)
         }
 
-
-
+        app.modelExplorer.collapse(berichtPkg)
     }
 }
 
