@@ -116,14 +116,14 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
         const attrName = seqElem.attributes.name
         const attrDataTypeName = utils.getDataTypeName(seqElem.attributes.type)
         const attrDataType = gegevensModelPkg.ownedElements.find(element => element._type = 'UMLDataType' && element.name == attrDataTypeName)
-        console.log(attrDataType)
+        const attrMultiplicity = utils.getUMLAttributeMultiplicity(seqElem.attributes)
 
         var attrDocumentation = undefined
         if (seqElem.elements) {
             attrDocumentation = utils.getXsAnnotationDocumentationText(seqElem.elements)
         }
         
-        utils.addUMLAttribute(complexDataType, attrName, attrDataType, attrDocumentation)
+        utils.addUMLAttribute(complexDataType, attrName, attrDataType, attrMultiplicity, attrDocumentation)
     }
 
 }
@@ -162,8 +162,8 @@ function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
 }
 
 /**
- * Import iStandaard Bericht from bericht-Object
- * @param {Object} bericht 
+ * Import iStandaard Gegevensmodel (incl. Codelijsten) from Basisschema XSD-Object
+ * @param {XSDObject} basisSchema 
  */
 function importGegevensModel(basisSchema) {
     try {
