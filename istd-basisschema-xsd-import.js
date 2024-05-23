@@ -141,7 +141,7 @@ function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
     const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
     const standaardInfoElement = standaardInfo.elements[0]
     const standaardId = standaardInfoElement.text
-    console.log('standaardId = ' + standaardId)
+    //console.log('standaardId = ' + standaardId)
 
     const simpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
     for (let i = 0; i < simpleTypes.length; i++) {
