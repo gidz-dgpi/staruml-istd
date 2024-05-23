@@ -180,6 +180,9 @@ function importGegevensModel(basisSchema) {
         })
 
         importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema)
+        app.modelExplorer.collapse(primitiveTypePkg)
+        app.modelExplorer.collapse(codelijstenPkg)
+        app.modelExplorer.collapse(gegevensModelPkg)
     } catch (err) {
         console.error(err);
     }

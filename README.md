@@ -1,5 +1,4 @@
 # JSON Export Extension
 
-Grotendeels gebaseerd op kopie van [XMI extension for StarUML](https://github.com/staruml/staruml-xmi) code.
-test
-
+Bronnen:
+- [StarUML-API v2.0.0](https://files.staruml.io/api-docs/2.0.0/api/index.html)

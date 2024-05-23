@@ -150,19 +150,20 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 
                 for (let j = 0; j < xsElements.length; j++) {
                     const xsElement = xsElements[j]
-                    const elemName = xsElement.attributes.name
-                    var elemType = xsElement.attributes.type
+                    const attrName = xsElement.attributes.name
+                    var xsAttrType = xsElement.attributes.type
 
-                    if (elemType == undefined) {
+                    if (xsAttrType == undefined) {
                         // Restriction on a SimpleType Defined
                         const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
                         const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
-                        const elemTypeName = utils.getDataTypeName(xsRestriction.attributes.base)
-                        const elemDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
-                        const berichtClassAttribute = utils.addUMLAttribute(berichtClass, elemName, elemTypeName, elemDocumentation)
+                        const attrTypeName = utils.getDataTypeName(xsRestriction.attributes.base)
+                        const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
+                        const attrMultiplicity = utils.getUMLAttributeMultiplicity(xsElement.attributes)
+                        const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrTypeName, attrMultiplicity, attrDocumentation)
                     } else {
 
-                        if (elemType.startsWith(relationPre)) {
+                        if (xsAttrType.startsWith(relationPre)) {
                             relationElems.push({
                                 parentClass: berichtClass,
                                 element: xsElement
@@ -170,9 +171,10 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 
                         } else {
                             //console.log('Attribute')
-                            const elemTypeName = utils.getDataTypeName(xsElement.attributes.type)
-                            const elemDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
-                            const berichtClassAttribute = utils.addUMLAttribute(berichtClass, elemName, elemType, elemDocumentation)
+                            const attrTypeName = utils.getDataTypeName(xsAttrType)
+                            const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
+                            const attrMultiplicity = utils.getUMLAttributeMultiplicity(xsElement.attributes)
+                            const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrTypeName, attrMultiplicity, attrDocumentation)
                         }
                     }
                 }
