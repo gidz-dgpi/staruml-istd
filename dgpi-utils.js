@@ -113,6 +113,16 @@ function getUMLAttributeMultiplicity(attributes) {
     return attrMultiplicity
 }
 
+/**
+ * Get UMLDataType from Gegevensmodel Package
+ * @param {UMLPackage} gegevensModelPkg 
+ * @param {String} attrDataTypeName 
+ * @returns {UMLDataType | undefined}
+ */
+function getUMLDataType(gegevensModelPkg, attrDataTypeName) {
+    return gegevensModelPkg.ownedElements.find(element => element._type = 'UMLDataType' && element.name == attrDataTypeName)
+}
+
 exports.getUMLPackagElementByName = getUMLPackagElementByName
 exports.getUMLClassElementByName = getUMLClassElementByName
 exports.getXsAnnotation = getXsAnnotation
@@ -121,3 +131,4 @@ exports.getXsRestriction = getXsRestriction
 exports.addUMLAttribute = addUMLAttribute
 exports.getDataTypeName = getDataTypeName
 exports.getUMLAttributeMultiplicity = getUMLAttributeMultiplicity
+exports.getUMLDataType = getUMLDataType

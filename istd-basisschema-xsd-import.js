@@ -7,14 +7,10 @@
 
 const fs = require('fs')
 const convert = require('xml-js');
+const globals = require('./istd-globals')
 const utils = require('./dgpi-utils')
 const primitiveTypes = require('./istd-primitive-types')
 const codelijsten = require('./istd-codelijsten')
-
-const GEGEVENS_MODEL_PACKAGE = {
-    name: 'Gegevens',
-    documentation: 'Datatypen voor iStandaarden (CDT = Complextype en LDT = Simpletype)'
-}
 
 /**
  * Build a UMLDependency Object Element To Import
@@ -114,8 +110,8 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
         const seqElem = seqElems[i]
         console.log(seqElem)
         const attrName = seqElem.attributes.name
-        const attrDataTypeName = utils.getDataTypeName(seqElem.attributes.type)
-        const attrDataType = gegevensModelPkg.ownedElements.find(element => element._type = 'UMLDataType' && element.name == attrDataTypeName)
+        const attrTypeName = utils.getDataTypeName(seqElem.attributes.type)
+        const attrType = utils.getUMLDataType(gegevensModelPkg, attrTypeName)
         const attrMultiplicity = utils.getUMLAttributeMultiplicity(seqElem.attributes)
 
         var attrDocumentation = undefined
@@ -123,9 +119,10 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
             attrDocumentation = utils.getXsAnnotationDocumentationText(seqElem.elements)
         }
         
-        utils.addUMLAttribute(complexDataType, attrName, attrDataType, attrMultiplicity, attrDocumentation)
+        utils.addUMLAttribute(complexDataType, attrName, attrType, attrMultiplicity, attrDocumentation)
     }
 
+    app.modelExplorer.collapse(complexDataType)
 }
 
 /**
@@ -174,8 +171,8 @@ function importGegevensModel(basisSchema) {
             id: 'UMLPackage',
             parent: root,
             modelInitializer: elem => {
-                elem.name = GEGEVENS_MODEL_PACKAGE.name
-                elem.documentation = GEGEVENS_MODEL_PACKAGE.documentation
+                elem.name = globals.GEGEVENS_MODEL_PACKAGE.name
+                elem.documentation = globals.GEGEVENS_MODEL_PACKAGE.documentation
             }
         })
 

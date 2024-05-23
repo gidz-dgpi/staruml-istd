@@ -7,6 +7,7 @@
 
 const fs = require('fs')
 const convert = require('xml-js');
+const globals = require('./istd-globals')
 const utils = require('./dgpi-utils')
 
 const BERICHTEN_PACKAGE = {
@@ -31,6 +32,22 @@ function isRelationClass(complexElem, relationPre) {
     }
 
     return retVal
+}
+
+/**
+ * Get UMLDataType from Gegevensmodel (when available)
+ * @param {UMLPackage | undefined} gegevensModelPkg 
+ * @param {String} attrTypeName 
+ * @returns {UMLDataType | undefined}
+ */
+function getBerichtClassAttrType(gegevensModelPkg, attrTypeName) {
+    var attrType = undefined
+
+    if (gegevensModelPkg) {
+        attrType = utils.getUMLDataType(gegevensModelPkg, attrTypeName)
+    }
+
+    return attrType
 }
 
 /**
@@ -97,11 +114,11 @@ function addBerichtClassAssociation(parentClass, childClass, associationName, ch
 /**
  * 
  * Import Bericht Klassen from bericht
- * 
- * @param {UMLPackage} berichtenPkg - StarUML UMLPackage Model Object
+ * @param {UMLPackage | undefined} gegevensModelPkg - StarUML UMLPackage Gegevensmodel Object (if available)
+ * @param {UMLPackage} berichtenPkg - StarUML UMLPackage Berichtmodel Object
  * @param {Object} bericht - XSD-import Object
  */
-function importBerichtKlassen(berichtenPkg, bericht) {
+function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
     // Get XSD Schema Data
     const xsSchema = bericht.elements.find((element) => element.name == 'xs:schema')
     const xsAnnotation = utils.getXsAnnotation(xsSchema.elements)
@@ -158,9 +175,10 @@ function importBerichtKlassen(berichtenPkg, bericht) {
                         const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
                         const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
                         const attrTypeName = utils.getDataTypeName(xsRestriction.attributes.base)
+                        const attrType = getBerichtClassAttrType(gegevensModelPkg, attrTypeName)
                         const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
                         const attrMultiplicity = utils.getUMLAttributeMultiplicity(xsElement.attributes)
-                        const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrTypeName, attrMultiplicity, attrDocumentation)
+                        const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrType, attrMultiplicity, attrDocumentation)
                     } else {
 
                         if (xsAttrType.startsWith(relationPre)) {
@@ -171,9 +189,10 @@ function importBerichtKlassen(berichtenPkg, bericht) {
 
                         } else {
                             const attrTypeName = utils.getDataTypeName(xsAttrType)
+                            const attrType = getBerichtClassAttrType(gegevensModelPkg, attrTypeName)
                             const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
                             const attrMultiplicity = utils.getUMLAttributeMultiplicity(xsElement.attributes)
-                            const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrTypeName, attrMultiplicity, attrDocumentation)
+                            const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrType, attrMultiplicity, attrDocumentation)
                         }
                     }
                 }
@@ -241,7 +260,8 @@ function importBericht(bericht) {
             })
         }
 
-        importBerichtKlassen(berichtenPkg, bericht)
+        var gegevensModelPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.GEGEVENS_MODEL_PACKAGE.name)
+        importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht)
     } catch (err) {
         console.error(err);
     }
