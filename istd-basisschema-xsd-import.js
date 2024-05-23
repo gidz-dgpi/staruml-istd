@@ -7,14 +7,10 @@
 
 const fs = require('fs')
 const convert = require('xml-js');
+const globals = require('./istd-globals')
 const utils = require('./dgpi-utils')
 const primitiveTypes = require('./istd-primitive-types')
 const codelijsten = require('./istd-codelijsten')
-
-const GEGEVENS_MODEL_PACKAGE = {
-    name: 'Gegevens',
-    documentation: 'Datatypen voor iStandaarden (CDT = Complextype en LDT = Simpletype)'
-}
 
 /**
  * Build a UMLDependency Object Element To Import
@@ -114,18 +110,19 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
         const seqElem = seqElems[i]
         console.log(seqElem)
         const attrName = seqElem.attributes.name
-        const attrDataTypeName = utils.getDataTypeName(seqElem.attributes.type)
-        const attrDataType = gegevensModelPkg.ownedElements.find(element => element._type = 'UMLDataType' && element.name == attrDataTypeName)
-        console.log(attrDataType)
+        const attrTypeName = utils.getDataTypeName(seqElem.attributes.type)
+        const attrType = utils.getUMLDataType(gegevensModelPkg, attrTypeName)
+        const attrMultiplicity = utils.getUMLAttributeMultiplicity(seqElem.attributes)
 
         var attrDocumentation = undefined
         if (seqElem.elements) {
             attrDocumentation = utils.getXsAnnotationDocumentationText(seqElem.elements)
         }
         
-        utils.addUMLAttribute(complexDataType, attrName, attrDataType, attrDocumentation)
+        utils.addUMLAttribute(complexDataType, attrName, attrType, attrMultiplicity, attrDocumentation)
     }
 
+    app.modelExplorer.collapse(complexDataType)
 }
 
 /**
@@ -144,7 +141,7 @@ function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
     const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
     const standaardInfoElement = standaardInfo.elements[0]
     const standaardId = standaardInfoElement.text
-    console.log('standaardId = ' + standaardId)
+    //console.log('standaardId = ' + standaardId)
 
     const simpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
     for (let i = 0; i < simpleTypes.length; i++) {
@@ -162,8 +159,8 @@ function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
 }
 
 /**
- * Import iStandaard Bericht from bericht-Object
- * @param {Object} bericht 
+ * Import iStandaard Gegevensmodel (incl. Codelijsten) from Basisschema XSD-Object
+ * @param {XSDObject} basisSchema 
  */
 function importGegevensModel(basisSchema) {
     try {
@@ -174,12 +171,15 @@ function importGegevensModel(basisSchema) {
             id: 'UMLPackage',
             parent: root,
             modelInitializer: elem => {
-                elem.name = GEGEVENS_MODEL_PACKAGE.name
-                elem.documentation = GEGEVENS_MODEL_PACKAGE.documentation
+                elem.name = globals.GEGEVENS_MODEL_PACKAGE.name
+                elem.documentation = globals.GEGEVENS_MODEL_PACKAGE.documentation
             }
         })
 
         importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema)
+        app.modelExplorer.collapse(primitiveTypePkg)
+        app.modelExplorer.collapse(codelijstenPkg)
+        app.modelExplorer.collapse(gegevensModelPkg)
     } catch (err) {
         console.error(err);
     }

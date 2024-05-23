@@ -66,11 +66,12 @@ function getXsRestriction(elements) {
  * Add UMLAttribute
  * @param {UMLClass | UMLDataType} parentClass 
  * @param {String} attrName 
- * @param {String | UMLDataType } attrType 
- * @param {String | undefined} attrDocumentation 
+ * @param {String | UMLDataType } attrType
+ * @param {undefined | '0..1'} attrMultiplicity
+ * @param {undefined | String} attrDocumentation 
  * @returns {UMLAttribute}
  */
-function addUMLAttribute(parentClass, attrName, attrType, attrDocumentation) {
+function addUMLAttribute(parentClass, attrName, attrType, attrMultiplicity, attrDocumentation) {
     return app.factory.createModel({
         id: 'UMLAttribute',
         parent: parentClass,
@@ -78,6 +79,7 @@ function addUMLAttribute(parentClass, attrName, attrType, attrDocumentation) {
         modelInitializer: elem => {
             elem.name = attrName
             elem.type = attrType
+            elem.multiplicity = attrMultiplicity
             elem.documentation = attrDocumentation
         }
     })
@@ -92,6 +94,35 @@ function getDataTypeName(typeValue) {
     return typeValue.split(':')[1]
 }
 
+/**
+ * Get UMLAttribute Muliplicity Value from XSD minOccurs-attribute 
+ * @param {XSDAttributes} attributes 
+ * @returns {undefined | '0..1'}
+ */
+function getUMLAttributeMultiplicity(attributes) {
+    var attrMultiplicity = undefined
+
+    if (attributes.minOccurs) {
+
+        if (attributes.minOccurs == '0') {
+            attrMultiplicity = '0..1'
+        }
+
+    }
+
+    return attrMultiplicity
+}
+
+/**
+ * Get UMLDataType from Gegevensmodel Package
+ * @param {UMLPackage} gegevensModelPkg 
+ * @param {String} attrDataTypeName 
+ * @returns {UMLDataType | undefined}
+ */
+function getUMLDataType(gegevensModelPkg, attrDataTypeName) {
+    return gegevensModelPkg.ownedElements.find(element => element._type = 'UMLDataType' && element.name == attrDataTypeName)
+}
+
 exports.getUMLPackagElementByName = getUMLPackagElementByName
 exports.getUMLClassElementByName = getUMLClassElementByName
 exports.getXsAnnotation = getXsAnnotation
@@ -99,3 +130,5 @@ exports.getXsAnnotationDocumentationText = getXsAnnotationDocumentationText
 exports.getXsRestriction = getXsRestriction
 exports.addUMLAttribute = addUMLAttribute
 exports.getDataTypeName = getDataTypeName
+exports.getUMLAttributeMultiplicity = getUMLAttributeMultiplicity
+exports.getUMLDataType = getUMLDataType
