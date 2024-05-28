@@ -45,7 +45,7 @@ function buildUMLDependency(sourceId, targetId) {
 function addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleType) {
     const dataTypeId = app.repository.generateGuid()
     const dataTypeName = simpleType.attributes.name
-    const dataTypeDocumentation = utils.getXsAnnotationDocumentationText(simpleType.elements)
+    const dataTypeDocumentation = utils.getXsAnnotationDocumentationText(simpleType)
     const xsRestriction = utils.getXsRestriction(simpleType.elements)
     const primitiveTypeId = primitiveTypes.getTypeId(xsRestriction.attributes.base)
     const dataTypeElements = []
@@ -80,7 +80,7 @@ function addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleType
 function addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexType) {
     const dataTypeId = app.repository.generateGuid()
     const dataTypeName = complexType.attributes.name
-    const dataTypeDocumentation = utils.getXsAnnotationDocumentationText(complexType.elements)
+    const dataTypeDocumentation = utils.getXsAnnotationDocumentationText(complexType)
     const dataTypeElem = {
         _type: 'UMLDataType',
         _id: dataTypeId,
@@ -108,17 +108,12 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
 
     for (let i = 0; i < seqElems.length; i++) {
         const seqElem = seqElems[i]
-        console.log(seqElem)
+        //console.log(seqElem)
         const attrName = seqElem.attributes.name
         const attrTypeName = utils.getDataTypeName(seqElem.attributes.type)
         const attrType = utils.getUMLDataType(gegevensModelPkg, attrTypeName)
         const attrMultiplicity = utils.getUMLAttributeMultiplicity(seqElem.attributes)
-
-        var attrDocumentation = undefined
-        if (seqElem.elements) {
-            attrDocumentation = utils.getXsAnnotationDocumentationText(seqElem.elements)
-        }
-        
+        const  attrDocumentation = utils.getXsAnnotationDocumentationText(seqElem)
         utils.addUMLAttribute(complexDataType, attrName, attrType, attrMultiplicity, attrDocumentation)
     }
 
@@ -133,10 +128,11 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
  * @param {XSDObject} basisSchema 
  */
 function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
-    const modelElements = basisSchema.elements[0].elements
+    const modelBase = basisSchema.elements[0]
+    const modelElements = modelBase.elements
     //console.log('modelElements')
     //console.log(modelElements)
-    const xsAnnotation = utils.getXsAnnotation(modelElements)
+    const xsAnnotation = utils.getXsAnnotation(modelBase)
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
     const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
     const standaardInfoElement = standaardInfo.elements[0]

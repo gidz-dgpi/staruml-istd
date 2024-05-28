@@ -117,7 +117,7 @@ function addBerichtClassAssociation(parentClass, childClass, associationName, ch
 function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
     // Get XSD Schema Data
     const xsSchema = bericht.elements.find((element) => element.name == 'xs:schema')
-    const xsAnnotation = utils.getXsAnnotation(xsSchema.elements)
+    const xsAnnotation = utils.getXsAnnotation(xsSchema)
     // Get AppInfo Data
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
     // Get Standaard info Data
@@ -156,7 +156,7 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
                 relationClasses.push(complexElem)
             } else {
                 const complexElemName = complexElem.attributes.name
-                const complexElemDocumentation = utils.getXsAnnotationDocumentationText(complexElem.elements)
+                const complexElemDocumentation = utils.getXsAnnotationDocumentationText(complexElem)
                 const berichtClass = addBerichtClass(berichtPkg, complexElemName, complexElemDocumentation)
                 const xsSequence = complexElem.elements.find(element => element.name == 'xs:sequence')
                 const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
@@ -172,7 +172,7 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
                         const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
                         const attrTypeName = utils.getDataTypeName(xsRestriction.attributes.base)
                         const attrType = getBerichtClassAttrType(gegevensModelPkg, attrTypeName)
-                        const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
+                        const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement)
                         const attrMultiplicity = utils.getUMLAttributeMultiplicity(xsElement.attributes)
                         const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrType, attrMultiplicity, attrDocumentation)
                     } else {
@@ -186,7 +186,7 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
                         } else {
                             const attrTypeName = utils.getDataTypeName(xsAttrType)
                             const attrType = getBerichtClassAttrType(gegevensModelPkg, attrTypeName)
-                            const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement.elements)
+                            const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement)
                             const attrMultiplicity = utils.getUMLAttributeMultiplicity(xsElement.attributes)
                             const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrType, attrMultiplicity, attrDocumentation)
                         }
