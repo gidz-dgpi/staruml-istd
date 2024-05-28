@@ -10,10 +10,6 @@ const convert = require('xml-js');
 const globals = require('./istd-globals')
 const utils = require('./dgpi-utils')
 
-const BERICHTEN_PACKAGE = {
-    name: 'Berichten'
-}
-
 /**
  * 
  * @param {Object} complexElem 
@@ -246,7 +242,7 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
 function importBericht(bericht) {
     try {
         const project = app.project.getProject()
-        var berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, BERICHTEN_PACKAGE.name)
+        var berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.BERICHTEN_PACKAGE.name)
 
         if (berichtenPkg == undefined) {
             // Berichten Package doesn't exist
@@ -255,7 +251,7 @@ function importBericht(bericht) {
                 id: 'UMLPackage',
                 parent: project,
                 modelInitializer: elem => {
-                    elem.name = BERICHTEN_PACKAGE.name
+                    elem.name = globals.BERICHTEN_PACKAGE.name
                 }
             })
         }
