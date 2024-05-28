@@ -19,21 +19,32 @@ function getUMLClassElementByName(elements, name) {
 }
 
 /**
- * Get the XS Annotation Element
- * @param {Array} elements 
+ * Get the Annotation Element from an XS Element
+ * @param {XSDObject} element 
  * @returns {XSDObject | undefined}
  */
-function getXsAnnotation(elements) {
-    return elements.find(element => element.name == 'xs:annotation')
+function getXsAnnotation(element) {
+    var xsAnnotation = undefined
+
+    if (element.elements) {
+        const elements = element.elements
+
+        if (Array.isArray(elements)) {
+            xsAnnotation = elements.find(element => element.name == 'xs:annotation')
+        }
+
+    }
+
+    return xsAnnotation
 }
 
 /**
  * Get the XS Annotation Documentation Element Text
- * @param {Array} elements 
+ * @param {XSObject} element
  * @returns {XSDObject | undefined}
  */
-function getXsAnnotationDocumentationText(elements) {
-    const xsAnnotation = getXsAnnotation(elements)
+function getXsAnnotationDocumentationText(element) {
+    const xsAnnotation = getXsAnnotation(element)
     var xsDocumentationText = undefined
 
     if (xsAnnotation) {

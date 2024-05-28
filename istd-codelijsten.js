@@ -28,7 +28,7 @@ function init(root) {
  */
 function getCodelijstId(codelijstenPkg, standaardId, xsRestriction) {
     var codellijstId = undefined
-    const xsRestrictionAnnotation = utils.getXsAnnotation(xsRestriction.elements)
+    const xsRestrictionAnnotation = utils.getXsAnnotation(xsRestriction)
 
     if (xsRestrictionAnnotation) {
         const xsAppInfo = xsRestrictionAnnotation.elements.find(element => element.name == 'xs:appinfo')
