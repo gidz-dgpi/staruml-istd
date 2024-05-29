@@ -10,6 +10,7 @@
 const jsonWriter = require('./json-writer')
 const istdBerichtXsdImport = require('./istd-bericht-xsd-import')
 const istdBasisSchemaXsdImport = require('./istd-basisschema-xsd-import')
+const istdRegelRapportXlsxImport = require('./istd-regelrapport-xlsx-import')
 
 const JSON_FILE_FILTERS = [
     { name: 'JSON Files', extensions: ['json'] },
@@ -18,6 +19,11 @@ const JSON_FILE_FILTERS = [
 
 const XSD_FILE_FILTERS = [
     { name: 'XSD Files', extensions: ['xsd'] },
+    { name: 'All Files', extensions: ['*'] }
+]
+
+const XLSX_FILE_FILTERS = [
+    { name: 'XLSX Files', extensions: ['xlsx'] },
     { name: 'All Files', extensions: ['*'] }
 ]
 
@@ -82,10 +88,31 @@ function _handleIstdBasisSchemaImport(fullPath) {
     }
 }
 
+function _handleIstdRegelRapportImport(fullPath) {
+    if (fullPath) {
+        try {
+            istdRegelRapportXlsxImport.importRegelRapportXlsxFile(fullPath)
+        } catch (err) {
+            console.error(err)
+        }
+    } else {
+        var files = app.dialogs.showOpenDialog('Selecteer een Regelrapport (.xlsx)', null, XLSX_FILE_FILTERS)
+        if (files && files.length > 0) {
+            try {
+                istdRegelRapportXlsxImport.importRegelRapportXlsxFile(files[0])
+            } catch (err) {
+                app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
+                console.error(err)
+            }
+        }
+    }
+}
+
 function init() {
     app.commands.register('istd:json:export', _handleIstdJsonExport)
     app.commands.register('istd:bericht:import', _handleIstdBerichtImport)
     app.commands.register('istd:basisschema:import', _handleIstdBasisSchemaImport)
+    app.commands.register('istd:regelrapport:import', _handleIstdRegelRapportImport)
 }
 
 exports.init = init

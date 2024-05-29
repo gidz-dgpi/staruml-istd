@@ -18,7 +18,13 @@
             "label": "Basisschema-XSD Import",
             "id": "istd.basisschema.xsd.import",
             "command": "istd:basisschema:import"
+          },
+          {
+            "label": "Regelrapport-XLSX Import",
+            "id": "iistd.regelrapport.import",
+            "command": "istd:regelrapport:import"
           }
+
         ]
       }
     ]
