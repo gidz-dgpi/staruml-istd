@@ -19,7 +19,7 @@ Zal een UML-model dat is opgesteld volgens het iStandaard-berichten model export
 
 ## Bericht-XSD Import
 
-Importeren van 1-of meerdere iStandaard-bericht specificaties in het XSD-formaat dat vanuit BizzDesign zijn gegenereerd.
+Importeren van 1-of meerdere iStandaard-bericht specificaties in het XSD-formaat die vanuit BizzDesign zijn gegenereerd.
 
 Bevat momenteel de volgende functionaliteiten:
 - Toevoegen UML-Package *Berichten* (indien nog geen aanwezig)
@@ -28,11 +28,11 @@ Bevat momenteel de volgende functionaliteiten:
     - Overnemen van de *Berichtklasse* documentatie
       - Toevoegen van een UML-Attribuut per *Berichtklasse element*
         - Overnemen van de *Berichtklasse element* documentatie
-        - Overnemen van de *Berichtklasse element* kardinaliteit
+        - Overnemen van de *Berichtklasse element* kardinaliteit als *multiplicity* eigenschap
         - Overnemen van het *Berichtklasse element* dataType
           - De referentie naar een *dataType* in het **Gegevens-model* (indien aanwezig)
           - Of de naam van het *dataType* (indien niet aanwezig)
-        - Overnemen van de *Berichtklasse element* sleutel-indicator
+        - Overnemen van de *Berichtklasse element* sleutel-indicator als *isId* eigenschap
     - Toevoegen van *Berichtklasse-relaties* als UML-Associaties als onderdeel van de UML-Class (voor de Parent-Berichtklasse)
 
 
