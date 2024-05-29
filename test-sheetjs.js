@@ -8,15 +8,15 @@ const workbook = XLSX.read(regelSheet);
 
 const regelsBerichtElems = workbook.Sheets[workbook.SheetNames[1]];
 
-BerichtHeader = regelsBerichtElems['A1'].v
+var row = 1
+BerichtHeader = regelsBerichtElems['A' + row].v
 
 if (BerichtHeader == 'Bericht') {
-    var row = 2
+    row ++
     var berichtNameCell = regelsBerichtElems['A' + row]
     while (berichtNameCell) {
         const bericht = berichtNameCell.v
         var nextBericht = bericht
-        console.log(bericht)
         
         while (nextBericht == bericht) {
             row ++
