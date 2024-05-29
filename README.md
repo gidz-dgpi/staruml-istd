@@ -40,3 +40,4 @@ Bevat momenteel de volgende functionaliteiten:
 - [Developing StarUML Extensiions](https://docs.staruml.io/developing-extensions)
 - [StarUML-API v2.0.0](https://files.staruml.io/api-docs/2.0.0/api/index.html)
 - [xml-js](https://github.com/nashwaan/xml-js)
+- [sheetjs](https://docs.sheetjs.com/docs)
