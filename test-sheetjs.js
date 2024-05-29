@@ -32,7 +32,7 @@ if (BerichtHeader == 'Bericht') {
                         const berichtKlasse = regelsBerichtElems['B' + row].v
                         const berichtKlasseElementDataType = regelsBerichtElems['C' + row].v
                         const berichtKlasseElement = berichtKlasseElementDataType.split('\\')[0]
-                        console.log(berichtKlasseElement)
+                        console.log(`${bericht} / ${berichtKlasse} / ${berichtKlasseElement} = Sleutel`)
                     }
 
                 }
