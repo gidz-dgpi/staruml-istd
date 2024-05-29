@@ -1,5 +1,7 @@
 const fs = require('fs')
 const XLSX = require('./assets/xlsx.full.min.js')
+const globals = require('./istd-globals')
+const utils = require('./dgpi-utils')
 
 const COLUMN = {
     bericht: 'A',
@@ -8,8 +10,12 @@ const COLUMN = {
     sleutel: 'F'
 }
 
-
-function importRegelRapport(workbook) {
+/**
+ * Importeer Regelrapport workbook into project
+ * @param {UMLPackage} berichtenPkg 
+ * @param {XLSXWorkbook} workbook 
+ */
+function importRegelRapport(berichtenPkg, workbook) {
     const regelsBerichtElems = workbook.Sheets[workbook.SheetNames[1]];
     var row = 1
     BerichtHeader = regelsBerichtElems[COLUMN.bericht + row].v
@@ -17,6 +23,7 @@ function importRegelRapport(workbook) {
     if (BerichtHeader == 'Bericht') {
         row ++
         var berichtNameCell = regelsBerichtElems[COLUMN.bericht + row]
+
         while (berichtNameCell) {
             const bericht = berichtNameCell.v
             var nextBericht = bericht
@@ -39,7 +46,10 @@ function importRegelRapport(workbook) {
                             const sleutelId = `${bericht} / ${berichtKlasse} / ${berichtKlasseElement}`
 
                             if (sleutelId != lastSleutelId) {
-                                console.log(sleutelId)
+                                console.log(`${sleutelId} = isID`)
+                                const umlClass = utils.getUMLClassElementByName(berichtenPkg.ownedElements, berichtKlasse)
+                                console.log(umlClass)
+
                                 lastSleutelId = sleutelId
                             }
                         }
@@ -72,7 +82,15 @@ function importRegelRapportXlsxFile(regelRapportFile) {
         try {
             const workbook = XLSX.read(regelSheet)
             try {
-                importRegelRapport(workbook)
+                const project = app.project.getProject()
+                const berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.BERICHTEN_PACKAGE.name)
+
+                if (berichtenPkg) {
+                    importRegelRapport(berichtenPkg, workbook)
+                } else {
+                    console.warn('Geen UMLPackage met de Naam Berichten gevonden!')
+                }
+
             } catch (err) {
                 console.error(err)
             }
