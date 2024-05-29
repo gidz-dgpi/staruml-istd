@@ -47,9 +47,11 @@ function importRegelRapport(berichtenPkg, workbook) {
 
                             if (sleutelId != lastSleutelId) {
                                 console.log(`${sleutelId} = isID`)
-                                const umlClass = utils.getUMLClassElementByName(berichtenPkg.ownedElements, berichtKlasse)
-                                console.log(umlClass)
-
+                                const berichtPkg = utils.getUMLPackagElementByName(berichtenPkg.ownedElements, nextBericht)
+                                const berichtClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, berichtKlasse)
+                                const berichtClassAttribute = berichtClass.attributes.find(attribute => attribute.name == berichtKlasseElement)
+                                //console.log(berichtClassAttribute)
+                                app.engine.setProperty(berichtClassAttribute, 'isID', true)
                                 lastSleutelId = sleutelId
                             }
                         }
@@ -86,6 +88,7 @@ function importRegelRapportXlsxFile(regelRapportFile) {
                 const berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.BERICHTEN_PACKAGE.name)
 
                 if (berichtenPkg) {
+                    console.log(berichtenPkg)
                     importRegelRapport(berichtenPkg, workbook)
                 } else {
                     console.warn('Geen UMLPackage met de Naam Berichten gevonden!')
