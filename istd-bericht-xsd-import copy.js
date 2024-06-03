@@ -69,10 +69,10 @@ function addBerichtClass(berichtPkg, berichtClassName, berichtClassDocumentation
  * @param {UMLClass} parentClass 
  * @param {UMLClass} childClass 
  * @param {String} associationName 
- * @param {String} multiplicity 
+ * @param {String} childMultiplicity 
  * @returns {UMLAssociation}
  */
-function addBerichtClassAssociation(parentClass, childClass, associationName, multiplicity) {
+function addBerichtClassAssociation(parentClass, childClass, associationName, childMultiplicity) {
     const associationId = app.repository.generateGuid()
     const associationElem = {
         _type: 'UMLAssociation',
@@ -101,7 +101,7 @@ function addBerichtClassAssociation(parentClass, childClass, associationName, mu
             reference: {
                 $ref: childClass._id
             },
-            multiplicity: multiplicity
+            multiplicity: childMultiplicity
         }
     }
     return app.project.importFromJson(parentClass, associationElem)
@@ -149,91 +149,84 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
         const relationElems = []
         const relationClasses = []
 
-        // Add a UMLClass for each Berichtklasse
         for (let i = 0; i < complexElems.length; i++) {
             const complexElem = complexElems[i]
-            const complexElemName = complexElem.attributes.name
-            const complexElemDocumentation = utils.getXsAnnotationDocumentationText(complexElem)
-            const berichtClass = addBerichtClass(berichtPkg, complexElemName, complexElemDocumentation)
-            const xsSequence = complexElem.elements.find(element => element.name == 'xs:sequence')
-            const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
 
-            // Add a UMLAttribute(s) for Bericht Element
-            // And prepare Association-processing
-            for (let j = 0; j < xsElements.length; j++) {
-                const xsElement = xsElements[j]
+            if (isRelationClass(complexElem, relationPre)) {
+                relationClasses.push(complexElem)
+            } else {
+                const complexElemName = complexElem.attributes.name
+                const complexElemDocumentation = utils.getXsAnnotationDocumentationText(complexElem)
+                const berichtClass = addBerichtClass(berichtPkg, complexElemName, complexElemDocumentation)
+                const xsSequence = complexElem.elements.find(element => element.name == 'xs:sequence')
+                const xsElements = xsSequence.elements.filter(element => element.name == 'xs:element')
 
-                if (isRelationClass(complexElem, relationPre)) {
-                    // Keep Relation Class for Association-processing
-                    relationClasses.push(complexElem)
-                }
+                for (let j = 0; j < xsElements.length; j++) {
+                    const xsElement = xsElements[j]
+                    const attrName = xsElement.attributes.name
+                    var xsAttrType = xsElement.attributes.type
 
-                const attrName = xsElement.attributes.name
-                var xsAttrType = xsElement.attributes.type
-
-                if (xsAttrType == undefined) {
-                    // Add Bericht Element with Restriction as UMLAttribute
-                    const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
-                    const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
-                    const attrTypeName = utils.getDataTypeName(xsRestriction.attributes.base)
-                    const attrType = getBerichtClassAttrType(gegevensModelPkg, attrTypeName)
-                    const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement)
-                    const attrMultiplicity = utils.getUMLAttributeMultiplicity(xsElement.attributes)
-                    const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrType, attrMultiplicity, attrDocumentation)
-                } else {
-
-                    if (xsAttrType.startsWith(relationPre)) {
-                        // Keep Relation Element for Association-processing
-                        relationElems.push({
-                            parentClass: berichtClass,
-                            element: xsElement
-                        })
-
-                    } else {
-                        // Add Bericht Element without Restriction as UMLAttribute
-                        const attrTypeName = utils.getDataTypeName(xsAttrType)
+                    if (xsAttrType == undefined) {
+                        // Restriction on a SimpleType Defined
+                        const xsSimpleType = xsElement.elements.find(element => element.name == 'xs:simpleType')
+                        const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
+                        const attrTypeName = utils.getDataTypeName(xsRestriction.attributes.base)
                         const attrType = getBerichtClassAttrType(gegevensModelPkg, attrTypeName)
                         const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement)
                         const attrMultiplicity = utils.getUMLAttributeMultiplicity(xsElement.attributes)
                         const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrType, attrMultiplicity, attrDocumentation)
+                    } else {
+
+                        if (xsAttrType.startsWith(relationPre)) {
+                            relationElems.push({
+                                parentClass: berichtClass,
+                                element: xsElement
+                            })
+
+                        } else {
+                            const attrTypeName = utils.getDataTypeName(xsAttrType)
+                            const attrType = getBerichtClassAttrType(gegevensModelPkg, attrTypeName)
+                            const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement)
+                            const attrMultiplicity = utils.getUMLAttributeMultiplicity(xsElement.attributes)
+                            const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrType, attrMultiplicity, attrDocumentation)
+                        }
                     }
                 }
+
+                app.modelExplorer.collapse(berichtClass)
             }
-
-            app.modelExplorer.collapse(berichtClass)
-
         }
 
-        // Association-processing from Relation Elements
         for (let i = 0; i < relationElems.length; i++) {
             const relationElem = relationElems[i]
             const relationElemName = relationElem.element.attributes.name
             var associationName = relationElemName
             const parentClass = relationElem.parentClass
             // Lookup direct relation ChildClass reference
-            //console.log(parentClass.name + ' / ' + associationName)
-            //console.log(relationElem.element.attributes)
             var childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
-            var multiplicity = '1'
-            const minOccurs = relationElem.element.attributes.minOccurs ? relationElem.element.attributes.minOccurs : '1'
-            const relationClass = relationClasses.find(element => element.attributes.name == relationElemName)
-            
-            if (relationClass) {
-                // Association with a Relation Class
-                const relationClassAttributes = relationClass.elements[0].elements[0].attributes
-                const maxOccurs = relationClassAttributes.maxOccurs ? relationClassAttributes.maxOccurs : '1'
+            var childMultiplicity = '1'
+            const childMinOccurs = relationElem.element.attributes.minOccurs ? relationElem.element.attributes.minOccurs : '1'
 
-                if (maxOccurs == 'unbounded') {
-                    multiplicity = minOccurs + '..' + '*'
+            if (!childClass) {
+                // Lookup for indirect relation using a Relation Class
+                const relationClass = relationClasses.find(element => element.attributes.name == relationElemName)
+                associationName = relationClass.attributes.name
+                const childClassAttributes = relationClass.elements[0].elements[0].attributes
+                const childClassName = childClassAttributes.name
+                childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, childClassName)
+                const childMaxOccurs = childClassAttributes.maxOccurs ? childClassAttributes.maxOccurs : '1'
+
+                if (childMaxOccurs == 'unbounded') {
+                    childMultiplicity = childMinOccurs + '..' + '*'
                 } else {
-                    multiplicity = minOccurs + '..' + maxOccurs
+                    childMultiplicity = childMinOccurs + '..' + childMaxOccurs
                 }
 
-            } else if (minOccurs == '0') {
-                multiplicity = minOccurs + '..' + '1'
+            } else if (childMinOccurs == '0') {
+                childMultiplicity = childMinOccurs + '..' + '1'
             }
 
-            const associationMember = addBerichtClassAssociation(parentClass, childClass, associationName, multiplicity)
+            const associationMember = addBerichtClassAssociation(parentClass, childClass, associationName, childMultiplicity)
             app.modelExplorer.collapse(parentClass)
         }
 
