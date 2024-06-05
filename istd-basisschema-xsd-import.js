@@ -121,6 +121,24 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
 }
 
 /**
+ * Get BasisSchema XSD AppInfo MetaData
+ * @param {XSDAppInfo} xsAppinfo 
+ * @returns 
+ */
+function getXsdBasisSchemaMetaData(xsAppinfo) {
+    const xsdMetaData = utils.getXsdMetaData(xsAppinfo)
+
+    return {
+        standaard: xsdMetaData.standaard,
+        bericht: xsdMetaData.bericht,
+        release: xsdMetaData.release,
+        basisschemaXsdVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdVersie')),
+        basisschemaXsdMinVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdMinVersie')),
+        basisschemaXsdMaxVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdMaxVersie')),
+    }
+}
+
+/**
  * Importeer Basisschema XSD Elementen als UML-DataTypen 
  * @param {UMLPackage} gegevensModelPkg 
  * @param {UMLPackage} primitiveTypePkg
@@ -130,26 +148,28 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
 function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
     const modelBase = basisSchema.elements[0]
     const modelElements = modelBase.elements
-    //console.log('modelElements')
-    //console.log(modelElements)
     const xsAnnotation = utils.getXsAnnotation(modelBase)
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
-    const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
-    const standaardInfoElement = standaardInfo.elements[0]
-    const standaardId = standaardInfoElement.text
-    //console.log('standaardId = ' + standaardId)
+    const xsdMetaData = getXsdBasisSchemaMetaData(xsAppinfo)
+    console.log(xsdMetaData)
+    utils.addStringTag(gegevensModelPkg, 'standaard', xsdMetaData.standaard)
+    utils.addStringTag(gegevensModelPkg, 'releaseNummer', xsdMetaData.release)
+    utils.addStringTag(gegevensModelPkg, 'versieBasisschema', xsdMetaData.basisschemaXsdVersie)
+    utils.addStringTag(gegevensModelPkg, 'minVersieBasisschema', xsdMetaData.basisschemaXsdMinVersie)
+    utils.addStringTag(gegevensModelPkg, 'maxVersieBasisschema', xsdMetaData.basisschemaXsdMaxVersie)
+
 
     const simpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
     for (let i = 0; i < simpleTypes.length; i++) {
-        addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleTypes[i])
+        addSimpleType(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, simpleTypes[i])
     }
 
     const complexTypes = modelElements.filter(element => element.name == 'xs:complexType')
     for (let i = 0; i < complexTypes.length; i++) {
-        addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexTypes[i])
+        addComplexType(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, complexTypes[i])
     }
     for (let i = 0; i < complexTypes.length; i++) {
-        addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId, complexTypes[i])
+        addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, complexTypes[i])
     }
     
 }
