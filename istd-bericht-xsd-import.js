@@ -115,23 +115,14 @@ function addBerichtClassAssociation(parentClass, childClass, associationName, mu
  * @param {Object} bericht - XSD-import Object
  */
 function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
-    // Get XSD Schema Data
     const xsSchema = bericht.elements.find((element) => element.name == 'xs:schema')
     const xsAnnotation = utils.getXsAnnotation(xsSchema)
-    // Get AppInfo Data
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
-    // Get Standaard info Data
-    const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
-    const standaardInfoElement = standaardInfo.elements[0]
-    // Get standaard name
-    const standaardName = standaardInfoElement.text
-    console.log(standaardName)
-    // Get Bericht Info Data
-    const berichtInfo = xsAppinfo.elements[1]
-    const berichtInfoElement = berichtInfo.elements[0]
-
+    const xsdMetaData = utils.getXsdMetaData(xsAppinfo)
+    console.log(xsdMetaData)
+    
     // Get Name from XSD Bericht Info Data and lookup any existing Bericht Package
-    const berichtName = berichtInfoElement.text.toUpperCase()
+    const berichtName = xsdMetaData.bericht.toUpperCase()
     const relationPre = berichtName.toLowerCase() + ':'
     var berichtPkg = utils.getUMLPackagElementByName(berichtenPkg.ownedElements, berichtName)
 

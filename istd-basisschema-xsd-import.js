@@ -130,13 +130,10 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
 function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
     const modelBase = basisSchema.elements[0]
     const modelElements = modelBase.elements
-    //console.log('modelElements')
-    //console.log(modelElements)
     const xsAnnotation = utils.getXsAnnotation(modelBase)
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
     const xsdMetaData = utils.getXsdMetaData(xsAppinfo)
     console.log(xsdMetaData)
-    const standaardId = xsdMetaData.standaard
     utils.addStringTag(gegevensModelPkg, 'standaard', xsdMetaData.standaard)
 
     const simpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
