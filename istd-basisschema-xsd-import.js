@@ -153,6 +153,11 @@ function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
     const xsdMetaData = getXsdBasisSchemaMetaData(xsAppinfo)
     console.log(xsdMetaData)
     utils.addStringTag(gegevensModelPkg, 'standaard', xsdMetaData.standaard)
+    utils.addStringTag(gegevensModelPkg, 'releaseNummer', xsdMetaData.release)
+    utils.addStringTag(gegevensModelPkg, 'versieBasisschema', xsdMetaData.basisschemaXsdVersie)
+    utils.addStringTag(gegevensModelPkg, 'minVersieBasisschema', xsdMetaData.basisschemaXsdMinVersie)
+    utils.addStringTag(gegevensModelPkg, 'maxVersieBasisschema', xsdMetaData.basisschemaXsdMaxVersie)
+
 
     const simpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
     for (let i = 0; i < simpleTypes.length; i++) {
