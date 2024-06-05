@@ -141,7 +141,7 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
     const xsdMetaData = getXsdBerichtMetaData(xsAppinfo)
     console.log(xsdMetaData)
-    
+
     // Get Name from XSD Bericht Info Data and lookup any existing Bericht Package
     const berichtName = xsdMetaData.bericht.toUpperCase()
     const relationPre = berichtName.toLowerCase() + ':'
@@ -157,6 +157,14 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
                 elem.name = berichtName
             }
         })
+        utils.addStringTag(berichtPkg, 'standaard', xsdMetaData.standaard)
+        utils.addStringTag(berichtPkg, 'releaseNummer', xsdMetaData.release)
+        utils.addStringTag(berichtPkg, 'versieBerichtXsd', xsdMetaData.berichtXsdVersie)
+        utils.addStringTag(berichtPkg, 'minVersieBerichtXsd', xsdMetaData.berichtXsdMinVersie)
+        utils.addStringTag(berichtPkg, 'maxVersieBerichtXsd', xsdMetaData.berichtXsdMaxVersie)
+        utils.addStringTag(berichtPkg, 'versieBasisschema', xsdMetaData.basisschemaXsdVersie)
+        utils.addStringTag(berichtPkg, 'minVersieBasisschema', xsdMetaData.basisschemaXsdMinVersie)
+        utils.addStringTag(berichtPkg, 'maxVersieBasisschema', xsdMetaData.basisschemaXsdMaxVersie)    
         const complexElems = xsSchema.elements.filter(element => element.name == 'xs:complexType')
         const relationElems = []
         const relationClasses = []
