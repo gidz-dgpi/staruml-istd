@@ -157,6 +157,11 @@ function addStringTag(parent, tagName, tagValue) {
     })
 }
 
+/**
+ * Get Text from XSD Appinfo Element
+ * @param {XSDAppInfo} appInfoElement 
+ * @returns String
+ */
 function getAppInfoElementText(appInfoElement) {
     return String(appInfoElement.elements[0].text)
 }
@@ -170,12 +175,10 @@ function getXsdMetaData(xsAppinfo) {
     const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
     const standaard = getAppInfoElementText(standaardInfo)
 
-    const berichtInfo = xsAppinfo.elements.find(element => element.name == standaard + ':bericht')
-    const bericht = getAppInfoElementText(berichtInfo)
-
     return {
         standaard: standaard,
-        bericht: bericht
+        bericht: getAppInfoElementText(xsAppinfo.elements.find(element => element.name == standaard + ':bericht')),
+        release: getAppInfoElementText(xsAppinfo.elements.find(element => element.name == standaard + ':release'))
     }
 }
 
@@ -189,4 +192,5 @@ exports.getDataTypeName = getDataTypeName
 exports.getUMLAttributeMultiplicity = getUMLAttributeMultiplicity
 exports.getUMLDataType = getUMLDataType
 exports.addStringTag = addStringTag
+exports.getAppInfoElementText = getAppInfoElementText
 exports.getXsdMetaData = getXsdMetaData

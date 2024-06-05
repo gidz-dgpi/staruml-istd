@@ -121,6 +121,24 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
 }
 
 /**
+ * Get BasisSchema XSD AppInfo MetaData
+ * @param {XSDAppInfo} xsAppinfo 
+ * @returns 
+ */
+function getXsdBasisSchemaMetaData(xsAppinfo) {
+    const xsdMetaData = utils.getXsdMetaData(xsAppinfo)
+
+    return {
+        standaard: xsdMetaData.standaard,
+        bericht: xsdMetaData.bericht,
+        release: xsdMetaData.release,
+        basisschemaXsdVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdVersie')),
+        basisschemaXsdMinVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdMinVersie')),
+        basisschemaXsdMaxVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdMaxVersie')),
+    }
+}
+
+/**
  * Importeer Basisschema XSD Elementen als UML-DataTypen 
  * @param {UMLPackage} gegevensModelPkg 
  * @param {UMLPackage} primitiveTypePkg
@@ -132,7 +150,7 @@ function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
     const modelElements = modelBase.elements
     const xsAnnotation = utils.getXsAnnotation(modelBase)
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
-    const xsdMetaData = utils.getXsdMetaData(xsAppinfo)
+    const xsdMetaData = getXsdBasisSchemaMetaData(xsAppinfo)
     console.log(xsdMetaData)
     utils.addStringTag(gegevensModelPkg, 'standaard', xsdMetaData.standaard)
 

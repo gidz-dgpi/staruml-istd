@@ -108,6 +108,27 @@ function addBerichtClassAssociation(parentClass, childClass, associationName, mu
 }
 
 /**
+ * Get Bericht XSD AppInfo MetaData
+ * @param {XSDAppInfo} xsAppinfo 
+ * @returns 
+ */
+function getXsdBerichtMetaData(xsAppinfo) {
+    const xsdMetaData = utils.getXsdMetaData(xsAppinfo)
+
+    return {
+        standaard: xsdMetaData.standaard,
+        bericht: xsdMetaData.bericht,
+        release: xsdMetaData.release,
+        berichtXsdVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BerichtXsdVersie')),
+        berichtXsdMinVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BerichtXsdMinVersie')),
+        berichtXsdMaxVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BerichtXsdMaxVersie')),
+        basisschemaXsdVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdVersie')),
+        basisschemaXsdMinVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdMinVersie')),
+        basisschemaXsdMaxVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdMaxVersie')),
+    }
+}
+
+/**
  * 
  * Import Bericht Klassen from bericht
  * @param {UMLPackage | undefined} gegevensModelPkg - StarUML UMLPackage Gegevensmodel Object (if available)
@@ -118,7 +139,7 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
     const xsSchema = bericht.elements.find((element) => element.name == 'xs:schema')
     const xsAnnotation = utils.getXsAnnotation(xsSchema)
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
-    const xsdMetaData = utils.getXsdMetaData(xsAppinfo)
+    const xsdMetaData = getXsdBerichtMetaData(xsAppinfo)
     console.log(xsdMetaData)
     
     // Get Name from XSD Bericht Info Data and lookup any existing Bericht Package
