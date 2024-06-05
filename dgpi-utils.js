@@ -134,6 +134,51 @@ function getUMLDataType(gegevensModelPkg, attrDataTypeName) {
     return gegevensModelPkg.ownedElements.find(element => element._type = 'UMLDataType' && element.name == attrDataTypeName)
 }
 
+/**
+ * Add a String Type Tag to a Project or UMLObjectType
+ * @param {Project | UMLObjectType} parent 
+ * @param {String} tagName 
+ * @param {String} tagValue 
+ * @returns {Tag}
+ */
+function addStringTag(parent, tagName, tagValue) {
+    return app.factory.createModel({
+        id: "Tag",
+        parent: parent,
+        field: "tags",
+        modelInitializer: tag => {
+            tag.name = tagName
+            tag.kind = type.Tag.TK_STRING; // or TK_BOOLEAN, TK_NUMBER, TK_REFERENCE, TK_HIDDEN
+            tag.value = tagValue
+            // tag.checked = true; // for TK_BOOLEAN
+            // tag.number = 100; // for TK_NUMBER
+            // tag.reference = ...; // for TK_REFERENCE
+        }
+    })
+}
+
+function getAppInfoElementText(appInfoElement) {
+    return String(appInfoElement.elements[0].text)
+}
+
+/**
+ * Get XSD AppInfo MetaData
+ * @param {XSDAppInfo} xsAppinfo 
+ * @returns 
+ */
+function getXsdMetaData(xsAppinfo) {
+    const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
+    const standaard = getAppInfoElementText(standaardInfo)
+
+    const berichtInfo = xsAppinfo.elements.find(element => element.name == standaard + ':bericht')
+    const bericht = getAppInfoElementText(berichtInfo)
+
+    return {
+        standaard: standaard,
+        bericht: bericht
+    }
+}
+
 exports.getUMLPackagElementByName = getUMLPackagElementByName
 exports.getUMLClassElementByName = getUMLClassElementByName
 exports.getXsAnnotation = getXsAnnotation
@@ -143,3 +188,5 @@ exports.addUMLAttribute = addUMLAttribute
 exports.getDataTypeName = getDataTypeName
 exports.getUMLAttributeMultiplicity = getUMLAttributeMultiplicity
 exports.getUMLDataType = getUMLDataType
+exports.addStringTag = addStringTag
+exports.getXsdMetaData = getXsdMetaData

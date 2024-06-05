@@ -134,22 +134,22 @@ function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
     //console.log(modelElements)
     const xsAnnotation = utils.getXsAnnotation(modelBase)
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
-    const standaardInfo = xsAppinfo.elements.find(element => element.name.match(':standaard'))
-    const standaardInfoElement = standaardInfo.elements[0]
-    const standaardId = standaardInfoElement.text
-    //console.log('standaardId = ' + standaardId)
+    const xsdMetaData = utils.getXsdMetaData(xsAppinfo)
+    console.log(xsdMetaData)
+    const standaardId = xsdMetaData.standaard
+    utils.addStringTag(gegevensModelPkg, 'standaard', xsdMetaData.standaard)
 
     const simpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
     for (let i = 0; i < simpleTypes.length; i++) {
-        addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleTypes[i])
+        addSimpleType(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, simpleTypes[i])
     }
 
     const complexTypes = modelElements.filter(element => element.name == 'xs:complexType')
     for (let i = 0; i < complexTypes.length; i++) {
-        addComplexType(gegevensModelPkg, codelijstenPkg, standaardId, complexTypes[i])
+        addComplexType(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, complexTypes[i])
     }
     for (let i = 0; i < complexTypes.length; i++) {
-        addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId, complexTypes[i])
+        addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, complexTypes[i])
     }
     
 }
