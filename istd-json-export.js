@@ -36,17 +36,17 @@ const LD_JSON_CONTEXT = {
     },
     "klassen": {
       "@id": "istd:berichtklassen",
-      "@type": "uml:Package",
+      "@type": "uml:Class",
       "@container": "@list"
     },
     "elementen": {
         "@id": "istd:berichtelementen",
-        "@type": "uml:Attributes",
+        "@type": "uml:Attribute",
         "@container": "@list"
       },
       "relaties": {
         "@id": "istd:relaties",
-        "@type": "uml:Associations",
+        "@type": "uml:Association",
         "@container": "@list"
     }
 }

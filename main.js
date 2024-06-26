@@ -35,15 +35,17 @@ function _handleIstdJsonExport(fullPath) {
             console.error(err)
         }
     } else {
-        var _filename = app.project.getProject().name
-        var filename = app.dialogs.showSaveDialog('Export Berichtmodel As JSON', _filename + '.json', JSON_FILE_FILTERS)
-        if (filename) {
-            try {
-                jsonWriter.saveToFile(filename)
-            } catch (err) {
-                console.error(err)
-            }
-        }
+        const _filePath = app.project.getProject().name + '-' + app.project.getProject().version +  + '.json'
+        app.dialogs.showSaveDialog('Export Berichtmodel As JSON', _filePath, JSON_FILE_FILTERS).then(
+            (filePath => {
+                try {
+                    jsonWriter.saveToFile(filePath)
+                } catch (err) {
+                    console.error(err)
+                }
+            }),
+            (err => console.error(err))
+        )
     }
 }
 
