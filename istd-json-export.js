@@ -8,6 +8,7 @@
  * 
  */
 
+const utils = require('./dgpi-utils')
 
 const LD_JSON_CONTEXT = {
     "schema": "https://schema.org",
@@ -124,21 +125,34 @@ function buildElementenJson(classId, umlClass) {
  * @param {UMLPackage} umlPackage 
  * @returns json
  */
-function buildKlassenJson(berichtId, umlPackage) {
+function buildBerichtKlassenJson(berichtId, berichtPkg) {
     var json = []
-    umlPackage.ownedElements.forEach(element => {
-        if (element instanceof type.UMLClass) {
-            const classId = berichtId + "/klassen/" + element.name
-            json.push({
-                "@id": classId,
-                "@type": LD_JSON_TYPE.UMLClass,
-                name: element.name,
-                elementen: buildElementenJson(classId, element),
-                relaties: buildRelatiesJson(berichtId, element)
-            })
+    const berichtKlassen = berichtPkg.ownedElements.filter(element => element instanceof type.UMLClass)
+
+    for (let i = 0; i < berichtKlassen.length; i++) {
+        const berichtKlasse = berichtKlassen[i]
+        const classId = berichtId + "/klassen/" + berichtKlasse.name
+        json.push({
+            "@id": classId,
+            "@type": LD_JSON_TYPE.UMLClass,
+            name: berichtKlasse.name,
+            elementen: buildElementenJson(classId, berichtKlasse),
+            relaties: buildRelatiesJson(berichtId, berichtKlasse)
+        })   
+    }
+//    umlPackage.ownedElements.forEach(element => {
+//        if (element instanceof type.UMLClass) {
+//            const classId = berichtId + "/klassen/" + element.name
+//            json.push({
+//                "@id": classId,
+//                "@type": LD_JSON_TYPE.UMLClass,
+//                name: element.name,
+//                elementen: buildElementenJson(classId, element),
+//                relaties: buildRelatiesJson(berichtId, element)
+//            })
             
-        }
-    })
+//        }
+//    })
     return json
 }
 
@@ -148,28 +162,39 @@ function buildKlassenJson(berichtId, umlPackage) {
  * @param {UMLPackage} berichtenPackage 
  * @returns berichten
  */
-function buildBerichtenJson(modelId, berichtenPackage) {
+function buildBerichtenPkgJson(modelId, berichtenPkg) {
     var json = []
-    berichtenPackage.ownedElements.forEach(element => {
-        if (element instanceof type.UMLPackage) {
-            const berichtId = modelId + "/berichten/" + element.name
-            json.push({
-                "@id": berichtId,
-                "@type": LD_JSON_TYPE.UMLPackage,
-                name: element.name,
-                klassen: buildKlassenJson(berichtId, element)
-            })
-            
-        }
-    })
+    const berichtPkgs = berichtenPkg.ownedElements.filter(element => element instanceof type.UMLPackage)
+    for (let i = 0; i < berichtPkgs.length; i++) {
+        const berichtPkg = berichtPkgs[i]
+        const berichtId = modelId + "/berichten/" + berichtPkg.name
+        json.push({
+            "@id": berichtId,
+            "@type": LD_JSON_TYPE.UMLPackage,
+            name: berichtPkg.name,
+            klassen: buildBerichtKlassenJson(berichtId, berichtPkg)
+        })
+    }
+//    berichtenPackage.ownedElements.forEach(element => {
+//        if (element instanceof type.UMLPackage) {
+//            const berichtId = modelId + "/berichten/" + element.name
+//            json.push({
+//                "@id": berichtId,
+//                "@type": LD_JSON_TYPE.UMLPackage,
+//                name: element.name,
+//                klassen: buildKlassenJson(berichtId, element)
+//            })
+//            
+//        }
+//    })
     return json
 }
 
 
 /**
  * Build a JSON-export Object from iStandaard UML Bericht Model MetaData
- * @param {Object} root 
- * @returns json
+ * @param {Project} umlModel 
+ * @returns {iStdModelExport}
  */
 function buildBerichtModelJson(umlModel) {
     const modelId = "model:" + umlModel.name + "/" + umlModel.version
@@ -178,16 +203,21 @@ function buildBerichtModelJson(umlModel) {
         "@id": modelId,
         "@type": LD_JSON_TYPE.iStdInformatieModel,
         name: umlModel.name,
-        version: umlModel.version,
-        berichten: []
+        version: umlModel.version
     }
-    umlModel.ownedElements.forEach(element => {
-        if (element instanceof type.UMLPackage) {
-            if (element.name == 'Berichten') {
-                json.berichten = buildBerichtenJson(modelId, element);
-            }
-        }
-    });
+    const berichtenPkg = utils.getUMLPackagElementByName(umlModel.ownedElements, 'Berichten')
+
+    if (berichtenPkg) {
+        json['berichten'] = buildBerichtenPkgJson(modelId, berichtenPkg)
+    }
+
+//    umlModel.ownedElements.forEach(element => {
+//      if (element instanceof type.UMLPackage) {
+//            if (element.name == 'Berichten') {
+//                json.berichten = buildBerichtenJson(modelId, element);
+//            }
+//        }
+//    });
     return json
 }
 
