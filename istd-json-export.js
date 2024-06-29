@@ -134,10 +134,11 @@ function buildElementenJson(classId, berichtKlasse) {
 function buildBerichtKlassenJson(berichtId, berichtPkg) {
     var json = []
     const berichtKlassen = berichtPkg.ownedElements.filter(element => element instanceof type.UMLClass)
+    const berichtKlassenId = berichtId + "/klassen"
 
     for (let i = 0; i < berichtKlassen.length; i++) {
         const berichtKlasse = berichtKlassen[i]
-        const classId = berichtId + "/klassen/" + berichtKlasse.name
+        const classId = berichtKlassenId + "/" + berichtKlasse.name
         json.push({
             "@id": classId,
             "@type": LD_JSON_TYPE.UMLClass,
@@ -160,10 +161,11 @@ function buildBerichtKlassenJson(berichtId, berichtPkg) {
 function buildBerichtenPkgJson(modelId, berichtenPkg) {
     var json = []
     const berichtPkgs = berichtenPkg.ownedElements.filter(element => element instanceof type.UMLPackage)
+    const berichtPkgsId = modelId + "/berichten"
 
     for (let i = 0; i < berichtPkgs.length; i++) {
         const berichtPkg = berichtPkgs[i]
-        const berichtId = modelId + "/berichten/" + berichtPkg.name
+        const berichtId =berichtPkgsId + "/" + berichtPkg.name
         json.push({
             "@id": berichtId,
             "@type": LD_JSON_TYPE.UMLPackage,
@@ -208,7 +210,7 @@ function buildBerichtModelJson(project) {
         name: project.name,
         version: project.version,
         berichten: buildBerichtenPkgJson(modelId, berichtenPkg),
-        gegevens: buildGegegevensModelJson(modelId),
+        gegevens: buildGegegevensModelJson(modelId, gegevensPkg),
   }
 
     return json
