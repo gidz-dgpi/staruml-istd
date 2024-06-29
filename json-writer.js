@@ -24,7 +24,7 @@ function saveJsonToFile(json, filePath) {
  * @param {string} filePath
  */
 function saveBerichtModelToFile(filePath) {
-  console.log(`filename = ${filename}`)
+  console.log(`filePath = ${filePath}`)
   const root = app.project.getProject()
   const json = istd.buildBerichtModelJson(root)
   saveJsonToFile(json, filePath)

@@ -27,19 +27,21 @@ const XLSX_FILE_FILTERS = [
     { name: 'All Files', extensions: ['*'] }
 ]
 
-function _handleIstdModelExport(fullPath) {
+function _handleBerichtModelExport(fullPath) {
     if (fullPath) {
         try {
-            jsonWriter.saveToFile(fullPath)
+            jsonWriter.saveBerichtModelToFile(fullPath)
         } catch (err) {
             console.error(err)
         }
     } else {
-        const _filePath = app.project.getProject().name + '-' + app.project.getProject().version +  + '.json'
+        const root = app.project.getProject()
+        console.log(`${root.name} / ${root.version}`)
+        const _filePath = root.name + '-' + root.version + '.json'
         app.dialogs.showSaveDialog('Export Berichtmodel As JSON', _filePath, JSON_FILE_FILTERS).then(
             (filePath => {
                 try {
-                    jsonWriter.saveToFile(filePath)
+                    jsonWriter.saveBerichtModelToFile(filePath)
                 } catch (err) {
                     console.error(err)
                 }
@@ -111,7 +113,7 @@ function _handleIstdRegelRapportImport(fullPath) {
 }
 
 function init() {
-    app.commands.register('istd:model:export', _handleIstdModelExport)
+    app.commands.register('istd:berichtmodel:export', _handleBerichtModelExport)
     app.commands.register('istd:bericht:import', _handleIstdBerichtImport)
     app.commands.register('istd:basisschema:import', _handleIstdBasisSchemaImport)
     app.commands.register('istd:regelrapport:import', _handleIstdRegelRapportImport)
