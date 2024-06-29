@@ -67,9 +67,8 @@ const LD_JSON_TYPE = {
  */
 function buildRelatiesJson(berichtId, berichtKlasse) {
     var json = []
-    //    umlClass.ownedElements.forEach(element => {
-    //        if (element instanceof type.UMLAssociation) {
     const relaties = berichtKlasse.ownedElements.filter(element => element instanceof type.UMLAssociation)
+
     for (let i = 0; i < relaties.length; i++) {
         const relatie = relaties[i]
         const associationId = berichtId + "/relaties/" + relatie.name
@@ -89,8 +88,7 @@ function buildRelatiesJson(berichtId, berichtKlasse) {
             }
         })
     }
-    //        }
-    //    })
+
     return json
 }
 
@@ -103,7 +101,7 @@ function buildRelatiesJson(berichtId, berichtKlasse) {
  */
 function buildElementenJson(classId, berichtKlasse) {
     var json = []
-    //umlClass.attributes.forEach(attribute => {
+
     for (let i = 0; i < berichtKlasse.attributes.length; i++) {
         const attribute = berichtKlasse.attributes[i]
         var jsonAttribute = {
@@ -122,7 +120,7 @@ function buildElementenJson(classId, berichtKlasse) {
         }
         json.push(jsonAttribute)
     }
-    //})
+
     return json
 }
 
@@ -148,19 +146,7 @@ function buildBerichtKlassenJson(berichtId, berichtPkg) {
             relaties: buildRelatiesJson(berichtId, berichtKlasse)
         })
     }
-    //    umlPackage.ownedElements.forEach(element => {
-    //        if (element instanceof type.UMLClass) {
-    //            const classId = berichtId + "/klassen/" + element.name
-    //            json.push({
-    //                "@id": classId,
-    //                "@type": LD_JSON_TYPE.UMLClass,
-    //                name: element.name,
-    //                elementen: buildElementenJson(classId, element),
-    //                relaties: buildRelatiesJson(berichtId, element)
-    //            })
 
-    //        }
-    //    })
     return json
 }
 
@@ -174,6 +160,7 @@ function buildBerichtKlassenJson(berichtId, berichtPkg) {
 function buildBerichtenPkgJson(modelId, berichtenPkg) {
     var json = []
     const berichtPkgs = berichtenPkg.ownedElements.filter(element => element instanceof type.UMLPackage)
+
     for (let i = 0; i < berichtPkgs.length; i++) {
         const berichtPkg = berichtPkgs[i]
         const berichtId = modelId + "/berichten/" + berichtPkg.name
@@ -184,18 +171,7 @@ function buildBerichtenPkgJson(modelId, berichtenPkg) {
             klassen: buildBerichtKlassenJson(berichtId, berichtPkg)
         })
     }
-    //    berichtenPackage.ownedElements.forEach(element => {
-    //        if (element instanceof type.UMLPackage) {
-    //            const berichtId = modelId + "/berichten/" + element.name
-    //            json.push({
-    //                "@id": berichtId,
-    //                "@type": LD_JSON_TYPE.UMLPackage,
-    //                name: element.name,
-    //                klassen: buildKlassenJson(berichtId, element)
-    //            })
-    //            
-    //        }
-    //    })
+
     return json
 }
 
@@ -208,7 +184,7 @@ function buildBerichtenPkgJson(modelId, berichtenPkg) {
 function buildBerichtModelJson(umlModel) {
     const modelId = "model:" + umlModel.name + "/" + umlModel.version
     const berichtenPkg = utils.getUMLPackagElementByName(umlModel.ownedElements, 'Berichten')
-    var json = {
+    const json = {
         "@context": LD_JSON_CONTEXT,
         "@id": modelId,
         "@type": LD_JSON_TYPE.iStdInformatieModel,
@@ -217,13 +193,6 @@ function buildBerichtModelJson(umlModel) {
         berichten: buildBerichtenPkgJson(modelId, berichtenPkg)
     }
 
-    //    umlModel.ownedElements.forEach(element => {
-    //      if (element instanceof type.UMLPackage) {
-    //            if (element.name == 'Berichten') {
-    //                json.berichten = buildBerichtenJson(modelId, element);
-    //            }
-    //        }
-    //    });
     return json
 }
 
