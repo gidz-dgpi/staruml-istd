@@ -176,24 +176,30 @@ function buildBerichtenPkgJson(modelId, berichtenPkg) {
 }
 
 
+function buildGegegevensModelJson(gegevensModelPkg) {
+
+}
+
+
 /**
  * Build a JSON-export Object from iStandaard UML Bericht Model MetaData
- * @param {Project} umlModel 
+ * @param {Project} project 
  * @returns json
  */
-function buildBerichtModelJson(umlModel) {
-    const modelId = "model:" + umlModel.name + "/" + umlModel.version
-    const berichtenPkg = utils.getUMLPackagElementByName(umlModel.ownedElements, 'Berichten')
+function buildBerichtModelJson(project) {
+    const modelId = "model:" + project.name + "/" + project.version
+    const berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, 'Berichten')
     const json = {
         "@context": LD_JSON_CONTEXT,
         "@id": modelId,
         "@type": LD_JSON_TYPE.iStdInformatieModel,
-        name: umlModel.name,
-        version: umlModel.version,
+        name: project.name,
+        version: project.version,
         berichten: buildBerichtenPkgJson(modelId, berichtenPkg)
     }
 
     return json
 }
+
 
 exports.buildBerichtModelJson = buildBerichtModelJson

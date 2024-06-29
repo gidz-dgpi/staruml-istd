@@ -28,20 +28,20 @@ const XLSX_FILE_FILTERS = [
 ]
 
 function _handleBerichtModelExport(fullPath) {
+    const project = app.project.getProject()
+
     if (fullPath) {
         try {
-            jsonWriter.saveBerichtModelToFile(fullPath)
+            jsonWriter.saveBerichtModelToFile(project, fullPath)
         } catch (err) {
             console.error(err)
         }
     } else {
-        const root = app.project.getProject()
-        console.log(`${root.name} / ${root.version}`)
-        const _filePath = root.name + '-' + root.version + '.json'
+        const _filePath = project.name + '-' + project.version + '.json'
         app.dialogs.showSaveDialog('Export Berichtmodel As JSON', _filePath, JSON_FILE_FILTERS).then(
             (filePath => {
                 try {
-                    jsonWriter.saveBerichtModelToFile(filePath)
+                    jsonWriter.saveBerichtModelToFile(project, filePath)
                 } catch (err) {
                     console.error(err)
                 }
