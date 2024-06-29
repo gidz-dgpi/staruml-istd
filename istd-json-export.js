@@ -21,7 +21,7 @@ const LD_JSON_CONTEXT = {
     "multiplicity": "uml:Multiplicity",
     "aggregation": "uml:Aggregation",
     "isID": "xmi:isID",
-    "type": "uml:Type",
+    "dataType": "xmi:DataType",
     "parent": {
         "@id": "uml:End1",
         "@type": "uml:AssociationEnd"
@@ -108,7 +108,7 @@ function buildElementenJson(classId, berichtKlasse) {
             "@id": classId + "/elementen/" + attribute.name,
             "@type": LD_JSON_TYPE.UMLProperty,
             name: attribute.name,
-            type: {
+            dataType: {
                 name: String(attribute.type.name)
             }
         }
@@ -175,9 +175,20 @@ function buildBerichtenPkgJson(modelId, berichtenPkg) {
     return json
 }
 
+/**
+ * Build a JSON-export Gegevens Package Object
+ * @param {String} modelId 
+ * @param {UMLPackage} gegevensModelPkg 
+ */
+function buildGegegevensModelJson(modelId, gegevensModelPkg) {
+    var json = []
+    const dataTypen = gegevensModelPkg.ownedElements.filter(element => element instanceof type.UMLDataType)
 
-function buildGegegevensModelJson(gegevensModelPkg) {
+    for (let i = 0; i < dataTypen.length; i++) {
+        const dataType = dataTypen[i]
+    }
 
+    return json
 }
 
 
@@ -189,14 +200,16 @@ function buildGegegevensModelJson(gegevensModelPkg) {
 function buildBerichtModelJson(project) {
     const modelId = "model:" + project.name + "/" + project.version
     const berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, 'Berichten')
+    const gegevensPkg = utils.getUMLPackagElementByName(project.ownedElements, 'Gegevens')
     const json = {
         "@context": LD_JSON_CONTEXT,
         "@id": modelId,
         "@type": LD_JSON_TYPE.iStdInformatieModel,
         name: project.name,
         version: project.version,
-        berichten: buildBerichtenPkgJson(modelId, berichtenPkg)
-    }
+        berichten: buildBerichtenPkgJson(modelId, berichtenPkg),
+        gegevens: buildGegegevensModelJson(modelId),
+  }
 
     return json
 }
