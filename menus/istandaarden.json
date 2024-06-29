@@ -7,7 +7,7 @@
           {
             "label": "Model-JSON Export",
             "id": "istd.json.export",
-            "command": "istd:json:export"
+            "command": "istd:model:export"
           },
           {
             "label": "Bericht-XSD Import",

@@ -27,7 +27,7 @@ const XLSX_FILE_FILTERS = [
     { name: 'All Files', extensions: ['*'] }
 ]
 
-function _handleIstdJsonExport(fullPath) {
+function _handleIstdModelExport(fullPath) {
     if (fullPath) {
         try {
             jsonWriter.saveToFile(fullPath)
@@ -111,7 +111,7 @@ function _handleIstdRegelRapportImport(fullPath) {
 }
 
 function init() {
-    app.commands.register('istd:json:export', _handleIstdJsonExport)
+    app.commands.register('istd:model:export', _handleIstdModelExport)
     app.commands.register('istd:bericht:import', _handleIstdBerichtImport)
     app.commands.register('istd:basisschema:import', _handleIstdBasisSchemaImport)
     app.commands.register('istd:regelrapport:import', _handleIstdRegelRapportImport)

@@ -11,24 +11,23 @@
 const fs = require('fs')
 const istd = require('./istd-json-export')
 
-/**
- * Save to file
- *
- * @param {string} filename
- * @return {$.Promise}
- */
-function saveToFile(filename) {
-  console.log(`filename = ${filename}`)
+function saveJsonToFile(json, filePath) {
   try {
-    // Build intermediate JSON representations
-    var root = app.project.getProject()
-    var json = istd.buildBerichtModelJson(root)
-
-    // Save to File
-    fs.writeFileSync(filename, JSON.stringify(json, null, '\t'))
+    fs.writeFileSync(filePath, JSON.stringify(json, null, '\t'))
   } catch (err) {
     console.error(err)
   }
 }
 
-exports.saveToFile = saveToFile
+/**
+ * Save iStandaard Model to file
+ * @param {string} filePath
+ */
+function saveBerichtModelToFile(filePath) {
+  console.log(`filename = ${filename}`)
+  const root = app.project.getProject()
+  const json = istd.buildBerichtModelJson(root)
+  saveJsonToFile(json, filePath)
+}
+
+exports.saveBerichtModelToFile = saveBerichtModelToFile
