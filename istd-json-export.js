@@ -18,46 +18,50 @@ const LD_JSON_CONTEXT = {
     "model": "https://www.istandaarden.nl/",
     "name": "schema:name",
     "version": "schema:version",
-    "multiplicity": "uml:Multiplicity",
-    "aggregation": "uml:Aggregation",
+    "multiplicity": "xmi:multiplicity",
+    "aggregation": "xmi:Aggregation",
     "isID": "xmi:isID",
-    "dataType": "xmi:DataType",
+    "dataType": {
+        "@id": "uml:type",
+        "type": "xmi:DataType"
+    },
     "parent": {
-        "@id": "uml:End1",
-        "@type": "uml:AssociationEnd"
+        "@id": "istd:BerichtKlasseRelatieParentEnd",
+        "@type": "xmi:AssociationEnd"
     },
     "child": {
-        "@id": "uml:End2",
-        "@type": "uml:AssociationEnd"
+        "@id": "istd:BerichtKlasseRelatieChildEnd",
+        "@type": "xmi:AssociationEnd"
     },
     "berichten": {
         "@id": "istd:berichtspecificaties",
-        "@type": "uml:Package",
+        "@type": "xmi:Package",
         "@container": "@list"
     },
     "klassen": {
         "@id": "istd:berichtklassen",
-        "@type": "uml:Class",
+        "@type": "xmi:Class",
         "@container": "@list"
     },
     "elementen": {
         "@id": "istd:berichtelementen",
-        "@type": "uml:Attribute",
+        "@type": "xmi:attribute",
         "@container": "@list"
     },
     "relaties": {
         "@id": "istd:relaties",
-        "@type": "uml:Association",
+        "@type": "xmi:Association",
         "@container": "@list"
     }
 }
 
 const LD_JSON_TYPE = {
     iStdInformatieModel: 'istd:informatiemodel',
-    UMLPackage: 'uml:Package',
-    UMLClass: 'uml:Class',
-    UMLProperty: 'uml:Property',
-    UMLAssociation: 'uml:Association'
+    UMLPackage: 'xmi:Package',
+    UMLClass: 'xmi:Class',
+    UMLProperty: 'xmi:Property',
+    UMLAssociation: 'xmi:Association',
+    UMLDataType: 'xmi:DataType'
 }
 
 /**
@@ -185,9 +189,16 @@ function buildBerichtenPkgJson(modelId, berichtenPkg) {
 function buildGegegevensModelJson(modelId, gegevensModelPkg) {
     var json = []
     const dataTypen = gegevensModelPkg.ownedElements.filter(element => element instanceof type.UMLDataType)
+    const gegevensModelId = modelId + "/gegevens"
 
     for (let i = 0; i < dataTypen.length; i++) {
         const dataType = dataTypen[i]
+        const dataTypeId = gegevensModelId + "/" + dataType.name 
+        json.push({
+            "@id": dataTypeId,
+            "@type": LD_JSON_TYPE.UMLDataType,
+            name: dataType.name
+        })
     }
 
     return json
@@ -203,6 +214,7 @@ function buildBerichtModelJson(project) {
     const modelId = "model:" + project.name + "/" + project.version
     const berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, 'Berichten')
     const gegevensPkg = utils.getUMLPackagElementByName(project.ownedElements, 'Gegevens')
+    const gegevensModel = buildGegegevensModelJson(modelId, gegevensPkg)
     const json = {
         "@context": LD_JSON_CONTEXT,
         "@id": modelId,
@@ -210,7 +222,7 @@ function buildBerichtModelJson(project) {
         name: project.name,
         version: project.version,
         berichten: buildBerichtenPkgJson(modelId, berichtenPkg),
-        gegevens: buildGegegevensModelJson(modelId, gegevensPkg),
+        gegevens: gegevensModel,
   }
 
     return json
