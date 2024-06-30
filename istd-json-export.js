@@ -8,7 +8,7 @@
  * 
  */
 
-const utils = require('./dgpi-utils')
+const primitiveTypesPkgId = require('./istd-primitive-types').primitiveTypesPkgId
 
 const LD_JSON_CONTEXT = {
     "schema": "https://schema.org",
@@ -21,10 +21,7 @@ const LD_JSON_CONTEXT = {
     "multiplicity": "xmi:multiplicity",
     "aggregation": "xmi:Aggregation",
     "isID": "xmi:isID",
-    "dataType": {
-        "@id": "uml:type",
-        "type": "xmi:DataType"
-    },
+    "dataType": "xmi:DataType",
     "parent": {
         "@id": "istd:BerichtKlasseRelatieParentEnd",
         "@type": "xmi:AssociationEnd"
@@ -34,7 +31,7 @@ const LD_JSON_CONTEXT = {
         "@type": "xmi:AssociationEnd"
     },
     "berichten": {
-        "@id": "istd:berichtspecificaties",
+        "@id": "istd:berichten",
         "@type": "xmi:Package",
         "@container": "@list"
     },
@@ -51,6 +48,11 @@ const LD_JSON_CONTEXT = {
     "relaties": {
         "@id": "istd:relaties",
         "@type": "xmi:Association",
+        "@container": "@list"
+    },
+    "gegevens": {
+        "@id": "istd:gegevensmodel",
+        "@type": "xmi:Package",
         "@container": "@list"
     }
 }
@@ -98,31 +100,48 @@ function buildRelatiesJson(berichtId, berichtKlasse) {
 
 
 /**
- * Build a JSON-export elementen Object
- * @param {String} classId
- * @param {UMLClass} berichtKlasse 
+ * 
+ * @param {String} elementenId 
+ * @param {UMLAttribute} attribute 
  * @returns json
  */
-function buildElementenJson(classId, berichtKlasse) {
+function buildElementJson(elementenId, attribute) {
+    const name = String(attribute.name)
+    var json = {
+        "@id": elementenId + "/" + name,
+        "@type": LD_JSON_TYPE.UMLProperty,
+        name: name,
+        dataType: {
+            name: String(attribute.type.name)
+        }
+    }
+
+    if (attribute.isID) {
+        json['isID'] = attribute.isID
+    }
+
+    if (attribute.multiplicity) {
+        json['multiplicity'] = attribute.multiplicity
+    }
+
+    return json
+}
+
+
+/**
+ * Build a JSON-export elementen Object
+ * @param {String} klasseId
+ * @param {UMLClass} berichtKlasse
+ * @returns json
+ */
+function buildBerichtKlasseElementenJson(klasseId, berichtKlasse) {
     var json = []
+    const elementenId = klasseId + "/elementen"
 
     for (let i = 0; i < berichtKlasse.attributes.length; i++) {
         const attribute = berichtKlasse.attributes[i]
-        var jsonAttribute = {
-            "@id": classId + "/elementen/" + attribute.name,
-            "@type": LD_JSON_TYPE.UMLProperty,
-            name: attribute.name,
-            dataType: {
-                name: String(attribute.type.name)
-            }
-        }
-        if (attribute.isID) {
-            jsonAttribute['isID'] = attribute.isID
-        }
-        if (attribute.multiplicity) {
-            jsonAttribute['multiplicity'] = attribute.multiplicity
-        }
-        json.push(jsonAttribute)
+        var elementJson = buildElementJson(elementenId, attribute)
+        json.push(elementJson)
     }
 
     return json
@@ -137,6 +156,7 @@ function buildElementenJson(classId, berichtKlasse) {
  */
 function buildBerichtKlassenJson(berichtId, berichtPkg) {
     var json = []
+    //const berichtKlassen = berichtPkg.ownedElements.filter(element => element instanceof type.UMLClass)
     const berichtKlassen = berichtPkg.ownedElements.filter(element => element instanceof type.UMLClass)
     const berichtKlassenId = berichtId + "/klassen"
 
@@ -147,7 +167,7 @@ function buildBerichtKlassenJson(berichtId, berichtPkg) {
             "@id": classId,
             "@type": LD_JSON_TYPE.UMLClass,
             name: berichtKlasse.name,
-            elementen: buildElementenJson(classId, berichtKlasse),
+            elementen: buildBerichtKlasseElementenJson(classId, berichtKlasse),
             relaties: buildRelatiesJson(berichtId, berichtKlasse)
         })
     }
@@ -186,20 +206,32 @@ function buildBerichtenPkgJson(modelId, berichtenPkg) {
  * @param {String} modelId 
  * @param {UMLPackage} gegevensModelPkg 
  */
-function buildGegegevensModelJson(modelId, gegevensModelPkg) {
+function buildGegegevensJson(modelId, primitiveTypes, gegevensModelPkg) {
     var json = []
     const dataTypen = gegevensModelPkg.ownedElements.filter(element => element instanceof type.UMLDataType)
     const gegevensModelId = modelId + "/gegevens"
 
     for (let i = 0; i < dataTypen.length; i++) {
         const dataType = dataTypen[i]
-        const dataTypeId = gegevensModelId + "/" + dataType.name 
-        json.push({
+        const dataTypeId = gegevensModelId + "/" + dataType.name
+        var dataTypeJsom = {
             "@id": dataTypeId,
             "@type": LD_JSON_TYPE.UMLDataType,
             name: dataType.name
-        })
+        }
+
+
+
+        json.push(dataTypeJsom)
     }
+
+    return json
+}
+
+function buildPrimitiveTypesJson(modelId) {
+    var json = []
+    const primitiveTypesPkg = project.ownedElements.find(element => element._id == primitiveTypesPkgId && element instanceof type.UMLPackage)
+
 
     return json
 }
@@ -212,9 +244,10 @@ function buildGegegevensModelJson(modelId, gegevensModelPkg) {
  */
 function buildBerichtModelJson(project) {
     const modelId = "model:" + project.name + "/" + project.version
-    const berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, 'Berichten')
-    const gegevensPkg = utils.getUMLPackagElementByName(project.ownedElements, 'Gegevens')
-    const gegevensModel = buildGegegevensModelJson(modelId, gegevensPkg)
+    const berichtenPkg = project.ownedElements.find(element => element.name == 'Berichten' && element instanceof type.UMLPackage)
+    const gegevensPkg = project.ownedElements.find(element => element.name == 'Gegevens' && element instanceof type.UMLPackage)
+    const primitiveTypes = buildPrimitiveTypesJson(modelId)
+    const gegevens = buildGegegevensJson(modelId, primitiveTypes, gegevensPkg)
     const json = {
         "@context": LD_JSON_CONTEXT,
         "@id": modelId,
@@ -222,7 +255,8 @@ function buildBerichtModelJson(project) {
         name: project.name,
         version: project.version,
         berichten: buildBerichtenPkgJson(modelId, berichtenPkg),
-        gegevens: gegevensModel,
+        gegevens: gegevens,
+        primitiveTypes: primitiveTypes
   }
 
     return json

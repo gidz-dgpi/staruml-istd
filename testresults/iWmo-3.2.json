@@ -10,10 +10,7 @@
 		"multiplicity": "xmi:multiplicity",
 		"aggregation": "xmi:Aggregation",
 		"isID": "xmi:isID",
-		"dataType": {
-			"@id": "uml:type",
-			"type": "xmi:DataType"
-		},
+		"dataType": "xmi:DataType",
 		"parent": {
 			"@id": "istd:BerichtKlasseRelatieParentEnd",
 			"@type": "xmi:AssociationEnd"
@@ -23,7 +20,7 @@
 			"@type": "xmi:AssociationEnd"
 		},
 		"berichten": {
-			"@id": "istd:berichtspecificaties",
+			"@id": "istd:berichten",
 			"@type": "xmi:Package",
 			"@container": "@list"
 		},
@@ -40,6 +37,11 @@
 		"relaties": {
 			"@id": "istd:relaties",
 			"@type": "xmi:Association",
+			"@container": "@list"
+		},
+		"gegevens": {
+			"@id": "istd:gegevensmodel",
+			"@type": "xmi:Package",
 			"@container": "@list"
 		}
 	},
