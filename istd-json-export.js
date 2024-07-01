@@ -9,9 +9,11 @@
  */
 
 const primitiveTypesPkgId = require('./istd-primitive-types').primitiveTypesPkgId
+const codelijstenPkgId = require('./istd-codelijsten').codelijstenPkgId
 
 const LD_JSON_CONTEXT = {
     "schema": "https://schema.org",
+    "xs": "http://www.w3.org/2001/XMLSchema#",
     "uml": "https://www.omg.org/spec/UML/2.5.1#",
     "xmi": "https://www.omg.org/spec/UML/20161101/UML.xmi#",
     "istd": "https://www.istandaarden.nl/over-istandaarden/istandaarden/begrippenlijst#",
@@ -54,6 +56,11 @@ const LD_JSON_CONTEXT = {
         "@id": "istd:gegevensmodel",
         "@type": "xmi:Package",
         "@container": "@list"
+    },
+    "simpleTypes": {
+        "@id": "xs:simpleTypes",
+        "@type": "xmi:Package",
+        "@container": "@list"
     }
 }
 
@@ -63,7 +70,9 @@ const LD_JSON_TYPE = {
     UMLClass: 'xmi:Class',
     UMLProperty: 'xmi:Property',
     UMLAssociation: 'xmi:Association',
-    UMLDataType: 'xmi:DataType'
+    UMLDataType: 'xmi:DataType',
+    UMLSimpleType: 'xs:simpleType',
+    UMLEnumeration: 'xmi:Enumeration'
 }
 
 /**
@@ -213,11 +222,12 @@ function buildGegegevensJson(modelId, primitiveTypes, gegevensModelPkg) {
 
     for (let i = 0; i < dataTypen.length; i++) {
         const dataType = dataTypen[i]
-        const dataTypeId = gegevensModelId + "/" + dataType.name
+        const name = String(dataType.name)
+        const dataTypeId = gegevensModelId + "/" + name
         var dataTypeJsom = {
             "@id": dataTypeId,
             "@type": LD_JSON_TYPE.UMLDataType,
-            name: dataType.name
+            name: name
         }
 
 
@@ -228,10 +238,51 @@ function buildGegegevensJson(modelId, primitiveTypes, gegevensModelPkg) {
     return json
 }
 
-function buildPrimitiveTypesJson(modelId) {
+/**
+ * Build a JSON-export Object for UML Primitive Types
+ * @param {*} modelId 
+ * @param {*} project 
+ * @returns 
+ */
+function buildPrimitiveTypesJson(project) {
     var json = []
     const primitiveTypesPkg = project.ownedElements.find(element => element._id == primitiveTypesPkgId && element instanceof type.UMLPackage)
+    const primitiveTypes = primitiveTypesPkg.ownedElements.filter(element => element instanceof type.UMLPrimitiveType)
+    
+    for (let i = 0; i < primitiveTypes.length; i++) {
+        const primitiveType = primitiveTypes[i]
+        const name = String(primitiveType.name)
+        json.push({
+            "@id": LD_JSON_TYPE.UMLSimpleType + "#" + name,
+            "@type": LD_JSON_TYPE.UMLSimpleType,
+            name: name
+        })
+    }
 
+    return json
+}
+
+/**
+ * Build a JSON-export Object for UML Enumerations
+ * @param {*} modelId 
+ * @param {*} project 
+ * @returns 
+ */
+function buildCodelijstenJson(project) {
+    var json = []
+    const codelijstenPkg = project.ownedElements.find(element => element._id == codelijstenPkgId && element instanceof type.UMLPackage)
+    const codelijsten = codelijstenPkg.ownedElements.filter(element => element instanceof type.UMLEnumeration)
+    const codelijstenId = modelId + "/codelijsten" 
+    
+    for (let i = 0; i < codelijsten.length; i++) {
+        const codelijst = codelijsten[i]
+        const name = String(codelijst.name)
+        json.push({
+            "@id": codelijstenId + "/" + name,
+            "@type": LD_JSON_TYPE.UMLEnumeration,
+            name: name
+        })
+    }
 
     return json
 }
@@ -246,7 +297,8 @@ function buildBerichtModelJson(project) {
     const modelId = "model:" + project.name + "/" + project.version
     const berichtenPkg = project.ownedElements.find(element => element.name == 'Berichten' && element instanceof type.UMLPackage)
     const gegevensPkg = project.ownedElements.find(element => element.name == 'Gegevens' && element instanceof type.UMLPackage)
-    const primitiveTypes = buildPrimitiveTypesJson(modelId)
+    const primitiveTypes = buildPrimitiveTypesJson(project)
+    const codelijsten = buildCodelijstenJson(project)
     const gegevens = buildGegegevensJson(modelId, primitiveTypes, gegevensPkg)
     const json = {
         "@context": LD_JSON_CONTEXT,
@@ -256,7 +308,8 @@ function buildBerichtModelJson(project) {
         version: project.version,
         berichten: buildBerichtenPkgJson(modelId, berichtenPkg),
         gegevens: gegevens,
-        primitiveTypes: primitiveTypes
+        primitiveTypes: primitiveTypes,
+        codelijsten: codelijsten
   }
 
     return json

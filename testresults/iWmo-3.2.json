@@ -1,6 +1,7 @@
 {
 	"@context": {
 		"schema": "https://schema.org",
+		"xs": "http://www.w3.org/2001/XMLSchema#",
 		"uml": "https://www.omg.org/spec/UML/2.5.1#",
 		"xmi": "https://www.omg.org/spec/UML/20161101/UML.xmi#",
 		"istd": "https://www.istandaarden.nl/over-istandaarden/istandaarden/begrippenlijst#",
@@ -41,6 +42,11 @@
 		},
 		"gegevens": {
 			"@id": "istd:gegevensmodel",
+			"@type": "xmi:Package",
+			"@container": "@list"
+		},
+		"simpleTypes": {
+			"@id": "xs:simpleTypes",
 			"@type": "xmi:Package",
 			"@container": "@list"
 		}
@@ -1408,6 +1414,28 @@
 			"@id": "model:iWmo/3.2/gegevens/CDT_XsdVersie",
 			"@type": "xmi:DataType",
 			"name": "CDT_XsdVersie"
+		}
+	],
+	"primitiveTypes": [
+		{
+			"@id": "xs:simpleType#integer",
+			"@type": "xs:simpleType",
+			"name": "integer"
+		},
+		{
+			"@id": "xs:simpleType#string",
+			"@type": "xs:simpleType",
+			"name": "string"
+		},
+		{
+			"@id": "xs:simpleType#date",
+			"@type": "xs:simpleType",
+			"name": "date"
+		},
+		{
+			"@id": "xs:simpleType#time",
+			"@type": "xs:simpleType",
+			"name": "time"
 		}
 	]
 }
