@@ -14,65 +14,64 @@ const codelijstenPkgId = require('./istd-codelijsten').codelijstenPkgId
 const LD_JSON_CONTEXT = {
     "schema": "https://schema.org",
     "xs": "http://www.w3.org/2001/XMLSchema#",
-    "uml": "https://www.omg.org/spec/UML/2.5.1#",
-    "xmi": "https://www.omg.org/spec/UML/20161101/UML.xmi#",
+    "uml": "https://www.omg.org/spec/UML/20161101/UML.xmi#",
     "istd": "https://www.istandaarden.nl/over-istandaarden/istandaarden/begrippenlijst#",
     "model": "https://www.istandaarden.nl/",
     "name": "schema:name",
     "version": "schema:version",
-    "multiplicity": "xmi:multiplicity",
-    "aggregation": "xmi:Aggregation",
-    "isID": "xmi:isID",
-    "dataType": "xmi:DataType",
+    "multiplicity": "uml:multiplicity",
+    "aggregation": "uml:Aggregation",
+    "isID": "uml:isID",
+    "dataType": "uml:DataType",
     "parent": {
         "@id": "istd:BerichtKlasseRelatieParentEnd",
-        "@type": "xmi:AssociationEnd"
+        "@type": "uml:AssociationEnd"
     },
     "child": {
         "@id": "istd:BerichtKlasseRelatieChildEnd",
-        "@type": "xmi:AssociationEnd"
+        "@type": "uml:AssociationEnd"
     },
     "berichten": {
         "@id": "istd:berichten",
-        "@type": "xmi:Package",
+        "@type": "uml:Package",
         "@container": "@list"
     },
     "klassen": {
         "@id": "istd:berichtklassen",
-        "@type": "xmi:Class",
+        "@type": "uml:Class",
         "@container": "@list"
     },
     "elementen": {
         "@id": "istd:berichtelementen",
-        "@type": "xmi:attribute",
+        "@type": "uml:attribute",
         "@container": "@list"
     },
     "relaties": {
         "@id": "istd:relaties",
-        "@type": "xmi:Association",
+        "@type": "uml:Association",
         "@container": "@list"
     },
     "gegevens": {
         "@id": "istd:gegevensmodel",
-        "@type": "xmi:Package",
+        "@type": "uml:Package",
         "@container": "@list"
     },
     "simpleTypes": {
         "@id": "xs:simpleTypes",
-        "@type": "xmi:Package",
+        "@type": "uml:Package",
         "@container": "@list"
     }
 }
 
 const LD_JSON_TYPE = {
     iStdInformatieModel: 'istd:informatiemodel',
-    UMLPackage: 'xmi:Package',
-    UMLClass: 'xmi:Class',
-    UMLProperty: 'xmi:Property',
-    UMLAssociation: 'xmi:Association',
-    UMLDataType: 'xmi:DataType',
+    UMLPackage: 'uml:Package',
+    UMLClass: 'uml:Class',
+    UMLProperty: 'uml:Property',
+    UMLAssociation: 'uml:Association',
+    UMLDataType: 'uml:DataType',
     UMLSimpleType: 'xs:simpleType',
-    UMLEnumeration: 'xmi:Enumeration'
+    UMLEnumeration: 'uml:Enumeration'
 }
 
 /**
@@ -268,7 +267,7 @@ function buildPrimitiveTypesJson(project) {
  * @param {*} project 
  * @returns 
  */
-function buildCodelijstenJson(project) {
+function buildCodelijstenJson(modelId, project) {
     var json = []
     const codelijstenPkg = project.ownedElements.find(element => element._id == codelijstenPkgId && element instanceof type.UMLPackage)
     const codelijsten = codelijstenPkg.ownedElements.filter(element => element instanceof type.UMLEnumeration)
@@ -298,7 +297,7 @@ function buildBerichtModelJson(project) {
     const berichtenPkg = project.ownedElements.find(element => element.name == 'Berichten' && element instanceof type.UMLPackage)
     const gegevensPkg = project.ownedElements.find(element => element.name == 'Gegevens' && element instanceof type.UMLPackage)
     const primitiveTypes = buildPrimitiveTypesJson(project)
-    const codelijsten = buildCodelijstenJson(project)
+    const codelijsten = buildCodelijstenJson(modelId, project)
     const gegevens = buildGegegevensJson(modelId, primitiveTypes, gegevensPkg)
     const json = {
         "@context": LD_JSON_CONTEXT,
