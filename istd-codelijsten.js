@@ -73,3 +73,4 @@ function getCodelijstId(codelijstenPkg, standaardId, xsRestriction) {
 
 exports.init = init
 exports.getCodelijstId = getCodelijstId
+exports.codelijstenPkgId = codelijstenPkgId

@@ -1,10 +1,10 @@
-const primitivePkgId = 'iStandaardPrimitiveTypes'
+const primitiveTypesPkgId = 'iStandaardPrimitiveTypes'
 const primitiveTypeElements = [
     {
         _type: 'UMLPrimitiveType',
         _id: 'iStandaardIntegerType',
         _parent: {
-            $ref: primitivePkgId
+            $ref: primitiveTypesPkgId
         },
         name: 'integer'
     },
@@ -12,7 +12,7 @@ const primitiveTypeElements = [
         _type: 'UMLPrimitiveType',
         _id: 'iStandaardStringType',
         _parent: {
-            $ref: primitivePkgId
+            $ref: primitiveTypesPkgId
         },
         name: 'string'
     },
@@ -20,7 +20,7 @@ const primitiveTypeElements = [
         _type: 'UMLPrimitiveType',
         _id: 'iStandaardDateType',
         _parent: {
-            $ref: primitivePkgId
+            $ref: primitiveTypesPkgId
         },
         name: 'date'
     },
@@ -28,7 +28,7 @@ const primitiveTypeElements = [
         _type: 'UMLPrimitiveType',
         _id: 'iStandaardTimeType',
         _parent: {
-            $ref: primitivePkgId
+            $ref: primitiveTypesPkgId
         },
         name: 'time'
     }
@@ -42,7 +42,7 @@ const primitiveTypeElements = [
 function init(root) {
     const primitivePkg = {
         _type: 'UMLPackage',
-        _id: primitivePkgId,
+        _id: primitiveTypesPkgId,
         _parent: {
             $ref: root._id
         },
@@ -71,3 +71,4 @@ function getTypeId(xsBase) {
 
 exports.init = init
 exports.getTypeId = getTypeId
+exports.primitiveTypesPkgId = primitiveTypesPkgId
