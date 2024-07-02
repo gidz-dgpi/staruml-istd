@@ -29,17 +29,17 @@
 		},
 		"klassen": {
 			"@id": "istd:berichtklassen",
-			"@type": "uml:Class",
+			"@type": "uml:Package",
 			"@container": "@list"
 		},
 		"elementen": {
-			"@id": "istd:berichtelementen",
-			"@type": "uml:attributes",
+			"@id": "istd:elementen",
+			"@type": "uml:Attributes",
 			"@container": "@list"
 		},
 		"relaties": {
 			"@id": "istd:relaties",
-			"@type": "uml:Association",
+			"@type": "uml:Associations",
 			"@container": "@list"
 		},
 		"gegevens": {
@@ -77,7 +77,6 @@
 					"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"elementen": [],
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/relaties/Header",
@@ -120,60 +119,45 @@
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"dataType": {
-								"name": "LDT_BerichtCode"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"dataType": {
-								"name": "LDT_BerichtVersie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"dataType": {
-								"name": "LDT_BerichtSubversie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"dataType": {
-								"name": "LDT_Gemeente"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"dataType": {
-								"name": "LDT_AgbCode"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"dataType": {
-								"name": "CDT_BerichtIdentificatie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"dataType": {
-								"name": "CDT_XsdVersie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_XsdVersie"
 						}
-					],
-					"relaties": []
+					]
 				},
 				{
 					"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Client",
@@ -184,69 +168,53 @@
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Client/elementen/Bsn",
 							"@type": "uml:Property",
 							"name": "Bsn",
-							"dataType": {
-								"name": "LDT_BurgerServicenummer"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_BurgerServicenummer",
 							"isID": true
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Client/elementen/Geboortedatum",
 							"@type": "uml:Property",
 							"name": "Geboortedatum",
-							"dataType": {
-								"name": "CDT_Geboortedatum"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_Geboortedatum"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Client/elementen/Geslacht",
 							"@type": "uml:Property",
 							"name": "Geslacht",
-							"dataType": {
-								"name": "LDT_Geslacht"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Geslacht"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Client/elementen/Naam",
 							"@type": "uml:Property",
 							"name": "Naam",
-							"dataType": {
-								"name": "CDT_VolledigeNaam"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_VolledigeNaam"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Client/elementen/Communicatie",
 							"@type": "uml:Property",
 							"name": "Communicatie",
-							"dataType": {
-								"name": "CDT_Communicatie"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/CDT_Communicatie",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Client/elementen/JuridischeStatus",
 							"@type": "uml:Property",
 							"name": "JuridischeStatus",
-							"dataType": {
-								"name": "LDT_JuridischeStatus"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_JuridischeStatus",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Client/elementen/WettelijkeVertegenwoordiging",
 							"@type": "uml:Property",
 							"name": "WettelijkeVertegenwoordiging",
-							"dataType": {
-								"name": "LDT_WettelijkeVertegenwoordiging"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_WettelijkeVertegenwoordiging",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Client/elementen/Commentaar",
 							"@type": "uml:Property",
 							"name": "Commentaar",
-							"dataType": {
-								"name": "LDT_Commentaar"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Commentaar",
 							"multiplicity": "0..1"
 						}
 					],
@@ -302,7 +270,6 @@
 					"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Relaties",
 					"@type": "uml:Class",
 					"name": "Relaties",
-					"elementen": [],
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/relaties/Relatie",
@@ -330,53 +297,41 @@
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Relatie/elementen/Nummer",
 							"@type": "uml:Property",
 							"name": "Nummer",
-							"dataType": {
-								"name": "LDT_Persoonsid"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Persoonsid",
 							"isID": true
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Relatie/elementen/Volgorde",
 							"@type": "uml:Property",
 							"name": "Volgorde",
-							"dataType": {
-								"name": "LDT_RelatieVolgorde"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_RelatieVolgorde",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Relatie/elementen/Soort",
 							"@type": "uml:Property",
 							"name": "Soort",
-							"dataType": {
-								"name": "LDT_SoortRelatie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_SoortRelatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Relatie/elementen/Geboortedatum",
 							"@type": "uml:Property",
 							"name": "Geboortedatum",
-							"dataType": {
-								"name": "CDT_Geboortedatum"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/CDT_Geboortedatum",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Relatie/elementen/Geslacht",
 							"@type": "uml:Property",
 							"name": "Geslacht",
-							"dataType": {
-								"name": "LDT_Geslacht"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Geslacht",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Relatie/elementen/Naam",
 							"@type": "uml:Property",
 							"name": "Naam",
-							"dataType": {
-								"name": "CDT_VolledigeNaam"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_VolledigeNaam"
 						}
 					],
 					"relaties": [
@@ -406,64 +361,50 @@
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Contact/elementen/Soort",
 							"@type": "uml:Property",
 							"name": "Soort",
-							"dataType": {
-								"name": "LDT_AdresSoort"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_AdresSoort",
 							"isID": true
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Contact/elementen/Adres",
 							"@type": "uml:Property",
 							"name": "Adres",
-							"dataType": {
-								"name": "CDT_Adres"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/CDT_Adres",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Contact/elementen/Organisatie",
 							"@type": "uml:Property",
 							"name": "Organisatie",
-							"dataType": {
-								"name": "LDT_Organisatienaam"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Organisatienaam",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Contact/elementen/Telefoon",
 							"@type": "uml:Property",
 							"name": "Telefoon",
-							"dataType": {
-								"name": "CDT_Telefoonnummers"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/CDT_Telefoonnummers",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Contact/elementen/Emailadres",
 							"@type": "uml:Property",
 							"name": "Emailadres",
-							"dataType": {
-								"name": "LDT_Emailadres"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Emailadres",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Contact/elementen/Periode",
 							"@type": "uml:Property",
 							"name": "Periode",
-							"dataType": {
-								"name": "CDT_OpenPeriode"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/CDT_OpenPeriode",
 							"multiplicity": "0..1"
 						}
-					],
-					"relaties": []
+					]
 				},
 				{
 					"@id": "model:iWmo/3.2/berichten/WMO301/klassen/Contactgegevens",
 					"@type": "uml:Class",
 					"name": "Contactgegevens",
-					"elementen": [],
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/relaties/Contact",
@@ -486,7 +427,6 @@
 					"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProducten",
 					"@type": "uml:Class",
 					"name": "ToegewezenProducten",
-					"elementen": [],
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/relaties/ToegewezenProduct",
@@ -514,100 +454,77 @@
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProduct/elementen/ToewijzingNummer",
 							"@type": "uml:Property",
 							"name": "ToewijzingNummer",
-							"dataType": {
-								"name": "LDT_Nummer"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Nummer",
 							"isID": true
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProduct/elementen/ReferentieAanbieder",
 							"@type": "uml:Property",
 							"name": "ReferentieAanbieder",
-							"dataType": {
-								"name": "LDT_Referentie"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Referentie",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProduct/elementen/Product",
 							"@type": "uml:Property",
 							"name": "Product",
-							"dataType": {
-								"name": "CDT_Product"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/CDT_Product",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProduct/elementen/Toewijzingsdatum",
 							"@type": "uml:Property",
 							"name": "Toewijzingsdatum",
-							"dataType": {
-								"name": "LDT_Datum"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProduct/elementen/Toewijzingstijd",
 							"@type": "uml:Property",
 							"name": "Toewijzingstijd",
-							"dataType": {
-								"name": "LDT_Tijd"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Tijd"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProduct/elementen/Ingangsdatum",
 							"@type": "uml:Property",
 							"name": "Ingangsdatum",
-							"dataType": {
-								"name": "LDT_Datum"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProduct/elementen/Einddatum",
 							"@type": "uml:Property",
 							"name": "Einddatum",
-							"dataType": {
-								"name": "LDT_Datum"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Datum",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProduct/elementen/RedenWijziging",
 							"@type": "uml:Property",
 							"name": "RedenWijziging",
-							"dataType": {
-								"name": "LDT_RedenWijziging"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_RedenWijziging",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProduct/elementen/Omvang",
 							"@type": "uml:Property",
 							"name": "Omvang",
-							"dataType": {
-								"name": "CDT_Omvang"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/CDT_Omvang",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProduct/elementen/Budget",
 							"@type": "uml:Property",
 							"name": "Budget",
-							"dataType": {
-								"name": "LDT_Budget"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Budget",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO301/klassen/ToegewezenProduct/elementen/Commentaar",
 							"@type": "uml:Property",
 							"name": "Commentaar",
-							"dataType": {
-								"name": "LDT_Commentaar"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Commentaar",
 							"multiplicity": "0..1"
 						}
-					],
-					"relaties": []
+					]
 				}
 			]
 		},
@@ -620,7 +537,6 @@
 					"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"elementen": [],
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/relaties/Header",
@@ -663,82 +579,62 @@
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"dataType": {
-								"name": "LDT_BerichtCode"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"dataType": {
-								"name": "LDT_BerichtVersie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"dataType": {
-								"name": "LDT_BerichtSubversie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"dataType": {
-								"name": "LDT_Gemeente"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"dataType": {
-								"name": "LDT_AgbCode"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"dataType": {
-								"name": "CDT_BerichtIdentificatie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"dataType": {
-								"name": "CDT_XsdVersie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_XsdVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Header/elementen/DeclaratieIdentificatie",
 							"@type": "uml:Property",
 							"name": "DeclaratieIdentificatie",
-							"dataType": {
-								"name": "CDT_BerichtIdentificatie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Header/elementen/XsltVersie",
 							"@type": "uml:Property",
 							"name": "XsltVersie",
-							"dataType": {
-								"name": "LDT_Versie"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Versie",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Header/elementen/XsdVersieDeclaratie",
 							"@type": "uml:Property",
 							"name": "XsdVersieDeclaratie",
-							"dataType": {
-								"name": "CDT_XsdVersie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_XsdVersie"
 						}
 					],
 					"relaties": [
@@ -768,12 +664,9 @@
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/RetourCodes/elementen/RetourCode",
 							"@type": "uml:Property",
 							"name": "RetourCode",
-							"dataType": {
-								"name": "LDT_RetourCode"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_RetourCode"
 						}
-					],
-					"relaties": []
+					]
 				},
 				{
 					"@id": "model:iWmo/3.2/berichten/WMO325/klassen/DeclaratieAntwoord",
@@ -784,25 +677,19 @@
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/DeclaratieAntwoord/elementen/DeclaratieNummer",
 							"@type": "uml:Property",
 							"name": "DeclaratieNummer",
-							"dataType": {
-								"name": "LDT_IdentificatieDeclaratie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_IdentificatieDeclaratie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/DeclaratieAntwoord/elementen/TotaalIngediendBedrag",
 							"@type": "uml:Property",
 							"name": "TotaalIngediendBedrag",
-							"dataType": {
-								"name": "CDT_TotaalBedragMetDC"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_TotaalBedragMetDC"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/DeclaratieAntwoord/elementen/TotaalToegekendBedrag",
 							"@type": "uml:Property",
 							"name": "TotaalToegekendBedrag",
-							"dataType": {
-								"name": "CDT_TotaalBedragMetDC"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_TotaalBedragMetDC"
 						}
 					],
 					"relaties": [
@@ -842,7 +729,6 @@
 					"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Clienten",
 					"@type": "uml:Class",
 					"name": "Clienten",
-					"elementen": [],
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/relaties/Client",
@@ -870,9 +756,7 @@
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Client/elementen/Bsn",
 							"@type": "uml:Property",
 							"name": "Bsn",
-							"dataType": {
-								"name": "LDT_BurgerServicenummer"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_BurgerServicenummer"
 						}
 					],
 					"relaties": [
@@ -912,7 +796,6 @@
 					"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Prestaties",
 					"@type": "uml:Class",
 					"name": "Prestaties",
-					"elementen": [],
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/relaties/Prestatie",
@@ -940,74 +823,56 @@
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Prestatie/elementen/ProductReferentie",
 							"@type": "uml:Property",
 							"name": "ProductReferentie",
-							"dataType": {
-								"name": "CDT_Referentie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_Referentie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Prestatie/elementen/ToewijzingNummer",
 							"@type": "uml:Property",
 							"name": "ToewijzingNummer",
-							"dataType": {
-								"name": "LDT_Nummer"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Nummer"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Prestatie/elementen/ProductCategorie",
 							"@type": "uml:Property",
 							"name": "ProductCategorie",
-							"dataType": {
-								"name": "LDT_ProductCategorie"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_ProductCategorie"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Prestatie/elementen/ProductCode",
 							"@type": "uml:Property",
 							"name": "ProductCode",
-							"dataType": {
-								"name": "LDT_ProductCode"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_ProductCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Prestatie/elementen/ProductPeriode",
 							"@type": "uml:Property",
 							"name": "ProductPeriode",
-							"dataType": {
-								"name": "CDT_GeslotenPeriode"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_GeslotenPeriode"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Prestatie/elementen/GeleverdVolume",
 							"@type": "uml:Property",
 							"name": "GeleverdVolume",
-							"dataType": {
-								"name": "LDT_Volume"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Volume"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Prestatie/elementen/Eenheid",
 							"@type": "uml:Property",
 							"name": "Eenheid",
-							"dataType": {
-								"name": "LDT_Eenheid"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Eenheid"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Prestatie/elementen/ProductTarief",
 							"@type": "uml:Property",
 							"name": "ProductTarief",
-							"dataType": {
-								"name": "LDT_Bedrag"
-							},
+							"dataType": "model:iWmo/3.2/gegevens/LDT_Bedrag",
 							"multiplicity": "0..1"
 						},
 						{
 							"@id": "model:iWmo/3.2/berichten/WMO325/klassen/Prestatie/elementen/IngediendBedrag",
 							"@type": "uml:Property",
 							"name": "IngediendBedrag",
-							"dataType": {
-								"name": "CDT_BedragMetDC"
-							}
+							"dataType": "model:iWmo/3.2/gegevens/CDT_BedragMetDC"
 						}
 					],
 					"relaties": [
@@ -1870,118 +1735,473 @@
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_Achternaam",
 			"@type": "uml:DataType",
-			"name": "CDT_Achternaam"
+			"name": "CDT_Achternaam",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Achternaam",
+					"@type": "uml:Property",
+					"name": "Achternaam",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Naam"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Voorvoegsel",
+					"@type": "uml:Property",
+					"name": "Voorvoegsel",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Voorvoegsel",
+					"multiplicity": "0..1"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_Adres",
 			"@type": "uml:DataType",
-			"name": "CDT_Adres"
+			"name": "CDT_Adres",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Huis",
+					"@type": "uml:Property",
+					"name": "Huis",
+					"dataType": "model:iWmo/3.2/gegevens/CDT_Huis",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Postcode",
+					"@type": "uml:Property",
+					"name": "Postcode",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Postcode",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Straatnaam",
+					"@type": "uml:Property",
+					"name": "Straatnaam",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Straatnaam",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Plaatsnaam",
+					"@type": "uml:Property",
+					"name": "Plaatsnaam",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Plaatsnaam",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/LandCode",
+					"@type": "uml:Property",
+					"name": "LandCode",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_LandCode",
+					"multiplicity": "0..1"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_BedragMetDC",
 			"@type": "uml:DataType",
-			"name": "CDT_BedragMetDC"
+			"name": "CDT_BedragMetDC",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Bedrag",
+					"@type": "uml:Property",
+					"name": "Bedrag",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Bedrag"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/DebetCredit",
+					"@type": "uml:Property",
+					"name": "DebetCredit",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_DebetCredit"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_BerichtIdentificatie",
 			"@type": "uml:DataType",
-			"name": "CDT_BerichtIdentificatie"
+			"name": "CDT_BerichtIdentificatie",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Identificatie",
+					"@type": "uml:Property",
+					"name": "Identificatie",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_IdentificatieBericht"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Dagtekening",
+					"@type": "uml:Property",
+					"name": "Dagtekening",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Datum"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_Communicatie",
 			"@type": "uml:DataType",
-			"name": "CDT_Communicatie"
+			"name": "CDT_Communicatie",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Vorm",
+					"@type": "uml:Property",
+					"name": "Vorm",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Communicatievorm"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Taal",
+					"@type": "uml:Property",
+					"name": "Taal",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Taal",
+					"multiplicity": "0..1"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_Geboortedatum",
 			"@type": "uml:DataType",
-			"name": "CDT_Geboortedatum"
+			"name": "CDT_Geboortedatum",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Datum",
+					"@type": "uml:Property",
+					"name": "Datum",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Datum"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/DatumGebruik",
+					"@type": "uml:Property",
+					"name": "DatumGebruik",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_DatumGebruik",
+					"multiplicity": "0..1"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_GeslotenPeriode",
 			"@type": "uml:DataType",
-			"name": "CDT_GeslotenPeriode"
+			"name": "CDT_GeslotenPeriode",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Begindatum",
+					"@type": "uml:Property",
+					"name": "Begindatum",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Datum"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Einddatum",
+					"@type": "uml:Property",
+					"name": "Einddatum",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Datum"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_Huis",
 			"@type": "uml:DataType",
-			"name": "CDT_Huis"
+			"name": "CDT_Huis",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Huisnummer",
+					"@type": "uml:Property",
+					"name": "Huisnummer",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Huisnummer"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Huisletter",
+					"@type": "uml:Property",
+					"name": "Huisletter",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Huisletter",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/HuisnummerToevoeging",
+					"@type": "uml:Property",
+					"name": "HuisnummerToevoeging",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_HuisnummerToevoeging",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/AanduidingWoonadres",
+					"@type": "uml:Property",
+					"name": "AanduidingWoonadres",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_AanduidingWoonadres",
+					"multiplicity": "0..1"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_Omvang",
 			"@type": "uml:DataType",
-			"name": "CDT_Omvang"
+			"name": "CDT_Omvang",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Volume",
+					"@type": "uml:Property",
+					"name": "Volume",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Volume"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Eenheid",
+					"@type": "uml:Property",
+					"name": "Eenheid",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Eenheid"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Frequentie",
+					"@type": "uml:Property",
+					"name": "Frequentie",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Frequentie"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_OpenPeriode",
 			"@type": "uml:DataType",
-			"name": "CDT_OpenPeriode"
+			"name": "CDT_OpenPeriode",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Begindatum",
+					"@type": "uml:Property",
+					"name": "Begindatum",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Datum",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Einddatum",
+					"@type": "uml:Property",
+					"name": "Einddatum",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Datum",
+					"multiplicity": "0..1"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_Product",
 			"@type": "uml:DataType",
-			"name": "CDT_Product"
+			"name": "CDT_Product",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Categorie",
+					"@type": "uml:Property",
+					"name": "Categorie",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_ProductCategorie"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Code",
+					"@type": "uml:Property",
+					"name": "Code",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_ProductCode",
+					"multiplicity": "0..1"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_Referentie",
 			"@type": "uml:DataType",
-			"name": "CDT_Referentie"
+			"name": "CDT_Referentie",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/ReferentieNummer",
+					"@type": "uml:Property",
+					"name": "ReferentieNummer",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_ReferentieNummer"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/VorigReferentieNummer",
+					"@type": "uml:Property",
+					"name": "VorigReferentieNummer",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_ReferentieNummer",
+					"multiplicity": "0..1"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_Telefoon",
 			"@type": "uml:DataType",
-			"name": "CDT_Telefoon"
+			"name": "CDT_Telefoon",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Telefoonnummer",
+					"@type": "uml:Property",
+					"name": "Telefoonnummer",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Telefoonnummer"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Landnummer",
+					"@type": "uml:Property",
+					"name": "Landnummer",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Landnummer"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_Telefoonnummers",
 			"@type": "uml:DataType",
-			"name": "CDT_Telefoonnummers"
+			"name": "CDT_Telefoonnummers",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Telefoon01",
+					"@type": "uml:Property",
+					"name": "Telefoon01",
+					"dataType": "model:iWmo/3.2/gegevens/CDT_Telefoon"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Telefoon02",
+					"@type": "uml:Property",
+					"name": "Telefoon02",
+					"dataType": "model:iWmo/3.2/gegevens/CDT_Telefoon",
+					"multiplicity": "0..1"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_TotaalBedragMetDC",
 			"@type": "uml:DataType",
-			"name": "CDT_TotaalBedragMetDC"
+			"name": "CDT_TotaalBedragMetDC",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/TotaalBedrag",
+					"@type": "uml:Property",
+					"name": "TotaalBedrag",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_TotaalBedrag"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/DebetCredit",
+					"@type": "uml:Property",
+					"name": "DebetCredit",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_DebetCredit"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_VerkorteNaam",
 			"@type": "uml:DataType",
-			"name": "CDT_VerkorteNaam"
+			"name": "CDT_VerkorteNaam",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Geslachtsnaam",
+					"@type": "uml:Property",
+					"name": "Geslachtsnaam",
+					"dataType": "model:iWmo/3.2/gegevens/CDT_Achternaam"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Voornamen",
+					"@type": "uml:Property",
+					"name": "Voornamen",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Naam",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Voorletters",
+					"@type": "uml:Property",
+					"name": "Voorletters",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Voorletters",
+					"multiplicity": "0..1"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_Verwijzer",
 			"@type": "uml:DataType",
-			"name": "CDT_Verwijzer"
+			"name": "CDT_Verwijzer",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Type",
+					"@type": "uml:Property",
+					"name": "Type",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_TypeVerwijzer"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Naam",
+					"@type": "uml:Property",
+					"name": "Naam",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_NaamVerwijzer",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/ZorgverlenerCode",
+					"@type": "uml:Property",
+					"name": "ZorgverlenerCode",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_AgbCode",
+					"multiplicity": "0..1"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_VolledigeNaam",
 			"@type": "uml:DataType",
-			"name": "CDT_VolledigeNaam"
+			"name": "CDT_VolledigeNaam",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Geslachtsnaam",
+					"@type": "uml:Property",
+					"name": "Geslachtsnaam",
+					"dataType": "model:iWmo/3.2/gegevens/CDT_Achternaam"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Partnernaam",
+					"@type": "uml:Property",
+					"name": "Partnernaam",
+					"dataType": "model:iWmo/3.2/gegevens/CDT_Achternaam",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Voornamen",
+					"@type": "uml:Property",
+					"name": "Voornamen",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Naam",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/Voorletters",
+					"@type": "uml:Property",
+					"name": "Voorletters",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Voorletters",
+					"multiplicity": "0..1"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/NaamGebruik",
+					"@type": "uml:Property",
+					"name": "NaamGebruik",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_NaamGebruik"
+				}
+			]
 		},
 		{
 			"@id": "model:iWmo/3.2/gegevens/CDT_XsdVersie",
 			"@type": "uml:DataType",
-			"name": "CDT_XsdVersie"
+			"name": "CDT_XsdVersie",
+			"elementen": [
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/BasisschemaXsdVersie",
+					"@type": "uml:Property",
+					"name": "BasisschemaXsdVersie",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Versie"
+				},
+				{
+					"@id": "model:iWmo/3.2/gegevens/elementen/BerichtXsdVersie",
+					"@type": "uml:Property",
+					"name": "BerichtXsdVersie",
+					"dataType": "model:iWmo/3.2/gegevens/LDT_Versie"
+				}
+			]
 		}
 	],
 	"primitieveDataTypen": [
 		{
 			"@id": "model:iWmo/3.2/primitieveTypen/integer",
-			"@type": "xs:simpleType",
+			"@type": "xs:integer",
 			"name": "integer"
 		},
 		{
 			"@id": "model:iWmo/3.2/primitieveTypen/string",
-			"@type": "xs:simpleType",
+			"@type": "xs:boolean",
 			"name": "string"
 		},
 		{
 			"@id": "model:iWmo/3.2/primitieveTypen/date",
-			"@type": "xs:simpleType",
+			"@type": "xs:date",
 			"name": "date"
 		},
 		{
 			"@id": "model:iWmo/3.2/primitieveTypen/time",
-			"@type": "xs:simpleType",
+			"@type": "xs:time",
 			"name": "time"
 		}
 	],
