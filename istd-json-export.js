@@ -46,7 +46,7 @@ const LD_JSON_CONTEXT = {
     },
     "elementen": {
         "@id": "istd:berichtelementen",
-        "@type": "uml:attribute",
+        "@type": "uml:attributes",
         "@container": "@list"
     },
     "relaties": {
@@ -71,7 +71,7 @@ const LD_JSON_CONTEXT = {
     },
     "dataWaarden": {
         "@id": "istd:dataWaarden",
-        "@type": "uml:Package",
+        "@type": "uml:Dependencies",
         "@container": "@list"
     }
 }
@@ -224,7 +224,7 @@ function buildBerichtenPkgJson(modelId, berichtenPkg) {
 }
 
 function buildDataWaardenJson(dataTypeId, primitieveDataTypen, codelijsten, dataType) {
-    var json = {}
+    var json = []
     const dependencies = dataType.ownedElements.filter(element => element instanceof type.UMLDependency)
     const dataWaardebId = dataTypeId + "/dataWaarden"
 
@@ -232,10 +232,19 @@ function buildDataWaardenJson(dataTypeId, primitieveDataTypen, codelijsten, data
         const dependencyTarget = dependencies[i].target
         
         if (dependencyTarget instanceof type.UMLPrimitiveType) {
-            const name = String(dependencyTarget.name)
-            const primitieveDataType = primitieveDataTypen.find(element => element.name == name)
-            json['primitiveType'] = primitieveDataType['@type']
+            const primitieveDataType = primitieveDataTypen.find(element => element.name == dependencyTarget.name)
+            json.push({
+                "@id": dataWaardebId + "/primitieveDataType",
+                "@type": LD_JSON_TYPE.Dependency,
+                parent: primitieveDataType['@id']
+            })
         } else if (dependencyTarget instanceof type.UMLEnumeration) {
+            const codelijst = codelijsten.find(element => element.name == dependencyTarget.name)
+            json.push({
+                "@id": dataWaardebId + "/codelijst",
+                "@type": LD_JSON_TYPE.Dependency,
+                parent: codelijst['@id']
+            })
 
         }
 
@@ -266,7 +275,7 @@ function buildGegegevensJson(modelId, primitieveDataTypen, codelijsten, gegevens
         }
         const dataWaardenJson = buildDataWaardenJson(dataTypeId, primitieveDataTypen, codelijsten, dataType)
 
-        if (dataWaardenJson != {}) {
+        if (dataWaardenJson.length > 0) {
             dataTypeJson['dataWaarden'] = dataWaardenJson
         }
         
