@@ -236,14 +236,14 @@ function buildDataWaardenJson(dataTypeId, primitieveDataTypen, codelijsten, data
             json.push({
                 "@id": dataWaardebId + "/primitieveDataType",
                 "@type": LD_JSON_TYPE.Dependency,
-                parent: primitieveDataType['@id']
+                target: primitieveDataType['@id']
             })
         } else if (dependencyTarget instanceof type.UMLEnumeration) {
             const codelijst = codelijsten.find(element => element.name == dependencyTarget.name)
             json.push({
                 "@id": dataWaardebId + "/codelijst",
                 "@type": LD_JSON_TYPE.Dependency,
-                parent: codelijst['@id']
+                target: codelijst['@id']
             })
 
         }
