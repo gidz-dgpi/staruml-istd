@@ -905,12 +905,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_AanduidingWoonadres/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_AanduidingWoonadres/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/NUM061"
+					"target": "model:iWmo/3.2/codelijsten/NUM061"
 				}
 			]
 		},
@@ -922,12 +922,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_AdresSoort/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_AdresSoort/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/COD757"
+					"target": "model:iWmo/3.2/codelijsten/COD757"
 				}
 			]
 		},
@@ -939,7 +939,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_AgbCode/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -951,7 +951,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Bedrag/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/integer"
+					"target": "model:iWmo/3.2/primitieveTypen/integer"
 				}
 			]
 		},
@@ -963,7 +963,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_BerichtCode/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -975,7 +975,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_BerichtSubversie/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/integer"
+					"target": "model:iWmo/3.2/primitieveTypen/integer"
 				}
 			]
 		},
@@ -987,7 +987,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_BerichtVersie/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/integer"
+					"target": "model:iWmo/3.2/primitieveTypen/integer"
 				}
 			]
 		},
@@ -999,7 +999,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Budget/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/integer"
+					"target": "model:iWmo/3.2/primitieveTypen/integer"
 				}
 			]
 		},
@@ -1011,7 +1011,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_BurgerServicenummer/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1023,7 +1023,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Commentaar/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1035,12 +1035,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Communicatievorm/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Communicatievorm/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/COD747"
+					"target": "model:iWmo/3.2/codelijsten/COD747"
 				}
 			]
 		},
@@ -1052,7 +1052,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Datum/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/date"
+					"target": "model:iWmo/3.2/primitieveTypen/date"
 				}
 			]
 		},
@@ -1064,12 +1064,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_DatumGebruik/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_DatumGebruik/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/COD170"
+					"target": "model:iWmo/3.2/codelijsten/COD170"
 				}
 			]
 		},
@@ -1081,12 +1081,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_DebetCredit/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_DebetCredit/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/COD043"
+					"target": "model:iWmo/3.2/codelijsten/COD043"
 				}
 			]
 		},
@@ -1098,12 +1098,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Eenheid/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Eenheid/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/WJ756"
+					"target": "model:iWmo/3.2/codelijsten/WJ756"
 				}
 			]
 		},
@@ -1115,7 +1115,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Emailadres/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1127,12 +1127,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Frequentie/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Frequentie/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/WMO757"
+					"target": "model:iWmo/3.2/codelijsten/WMO757"
 				}
 			]
 		},
@@ -1144,7 +1144,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Gemeente/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1156,12 +1156,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Geslacht/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Geslacht/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/COD046"
+					"target": "model:iWmo/3.2/codelijsten/COD046"
 				}
 			]
 		},
@@ -1173,7 +1173,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Huisletter/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1185,7 +1185,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Huisnummer/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/integer"
+					"target": "model:iWmo/3.2/primitieveTypen/integer"
 				}
 			]
 		},
@@ -1197,7 +1197,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_HuisnummerToevoeging/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1209,7 +1209,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_IdentificatieBericht/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1221,7 +1221,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_IdentificatieDeclaratie/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1233,12 +1233,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_JaNee/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_JaNee/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/COD260"
+					"target": "model:iWmo/3.2/codelijsten/COD260"
 				}
 			]
 		},
@@ -1250,12 +1250,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_JuridischeStatus/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_JuridischeStatus/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/WJ232"
+					"target": "model:iWmo/3.2/codelijsten/WJ232"
 				}
 			]
 		},
@@ -1267,12 +1267,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_LandCode/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_LandCode/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/COD032"
+					"target": "model:iWmo/3.2/codelijsten/COD032"
 				}
 			]
 		},
@@ -1284,7 +1284,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Landnummer/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1296,7 +1296,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Naam/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1308,12 +1308,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_NaamGebruik/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_NaamGebruik/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/COD700"
+					"target": "model:iWmo/3.2/codelijsten/COD700"
 				}
 			]
 		},
@@ -1325,7 +1325,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_NaamVerwijzer/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1337,7 +1337,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Nummer/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/integer"
+					"target": "model:iWmo/3.2/primitieveTypen/integer"
 				}
 			]
 		},
@@ -1349,7 +1349,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Organisatienaam/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1361,7 +1361,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Persoonsid/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1373,7 +1373,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Plaatsnaam/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1385,7 +1385,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Postcode/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1397,12 +1397,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_ProductCategorie/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_ProductCategorie/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/JZ020"
+					"target": "model:iWmo/3.2/codelijsten/JZ020"
 				}
 			]
 		},
@@ -1414,7 +1414,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_ProductCode/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1426,12 +1426,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_RedenAfwijzingVerzoek/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_RedenAfwijzingVerzoek/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/WJ759"
+					"target": "model:iWmo/3.2/codelijsten/WJ759"
 				}
 			]
 		},
@@ -1443,12 +1443,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_RedenBeeindiging/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_RedenBeeindiging/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/JZ588"
+					"target": "model:iWmo/3.2/codelijsten/JZ588"
 				}
 			]
 		},
@@ -1460,12 +1460,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_RedenVerzoek/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_RedenVerzoek/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/WJ758"
+					"target": "model:iWmo/3.2/codelijsten/WJ758"
 				}
 			]
 		},
@@ -1477,12 +1477,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_RedenWijziging/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_RedenWijziging/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/JZ002"
+					"target": "model:iWmo/3.2/codelijsten/JZ002"
 				}
 			]
 		},
@@ -1494,7 +1494,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Referentie/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1506,7 +1506,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_ReferentieNummer/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1518,7 +1518,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_RelatieVolgorde/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/integer"
+					"target": "model:iWmo/3.2/primitieveTypen/integer"
 				}
 			]
 		},
@@ -1530,12 +1530,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_RetourCode/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_RetourCode/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/WJ001"
+					"target": "model:iWmo/3.2/codelijsten/WJ001"
 				}
 			]
 		},
@@ -1547,12 +1547,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_SoortRelatie/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_SoortRelatie/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/COD472"
+					"target": "model:iWmo/3.2/codelijsten/COD472"
 				}
 			]
 		},
@@ -1564,12 +1564,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_StatusAanlevering/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_StatusAanlevering/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/COD467"
+					"target": "model:iWmo/3.2/codelijsten/COD467"
 				}
 			]
 		},
@@ -1581,7 +1581,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Straatnaam/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1593,7 +1593,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Taal/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1605,7 +1605,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Telefoonnummer/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1617,7 +1617,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Tijd/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/time"
+					"target": "model:iWmo/3.2/primitieveTypen/time"
 				}
 			]
 		},
@@ -1629,7 +1629,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_TotaalBedrag/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/integer"
+					"target": "model:iWmo/3.2/primitieveTypen/integer"
 				}
 			]
 		},
@@ -1641,12 +1641,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_TypeVerwijzer/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_TypeVerwijzer/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/COD327"
+					"target": "model:iWmo/3.2/codelijsten/COD327"
 				}
 			]
 		},
@@ -1658,7 +1658,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Versie/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1670,12 +1670,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_VerzoekAntwoord/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_VerzoekAntwoord/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/WJ760"
+					"target": "model:iWmo/3.2/codelijsten/WJ760"
 				}
 			]
 		},
@@ -1687,7 +1687,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Volume/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/integer"
+					"target": "model:iWmo/3.2/primitieveTypen/integer"
 				}
 			]
 		},
@@ -1699,7 +1699,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Voorletters/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1711,7 +1711,7 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_Voorvoegsel/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				}
 			]
 		},
@@ -1723,12 +1723,12 @@
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_WettelijkeVertegenwoordiging/dataWaarden/primitieveDataType",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/primitieveTypen/string"
+					"target": "model:iWmo/3.2/primitieveTypen/string"
 				},
 				{
 					"@id": "model:iWmo/3.2/gegevens/LDT_WettelijkeVertegenwoordiging/dataWaarden/codelijst",
 					"@type": "uml:Dependency",
-					"parent": "model:iWmo/3.2/codelijsten/WJ003"
+					"target": "model:iWmo/3.2/codelijsten/WJ003"
 				}
 			]
 		},
