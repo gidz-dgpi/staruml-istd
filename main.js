@@ -60,15 +60,19 @@ function _handleIstdBerichtImport(fullPath) {
             console.error(err)
         }
     } else {
-        var files = app.dialogs.showOpenDialog('Selecteer een Bericht (.xsd)', null, XSD_FILE_FILTERS)
-        if (files && files.length > 0) {
-            try {
-                istdBerichtXsdImport.importBerichtXsdFile(files[0])
-            } catch (err) {
-                app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
-                console.error(err)
-            }
-        }
+        app.dialogs.showOpenDialog('Selecteer een Bericht (.xsd)', null, XSD_FILE_FILTERS).then(
+            (files => {
+                if (files && files.length > 0) {
+                    try {
+                        istdBerichtXsdImport.importBerichtXsdFile(files[0])
+                    } catch (err) {
+                        app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
+                        console.error(err)
+                    }
+                }
+            }),
+            (err => console.error(err))
+        )
     }
 }
 
@@ -80,15 +84,19 @@ function _handleIstdBasisSchemaImport(fullPath) {
             console.error(err)
         }
     } else {
-        var files = app.dialogs.showOpenDialog('Selecteer een Basisschema (.xsd)', null, XSD_FILE_FILTERS)
-        if (files && files.length > 0) {
-            try {
-                istdBasisSchemaXsdImport.importBasisSchemaXsdFile(files[0])
-            } catch (err) {
-                app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
-                console.error(err)
-            }
-        }
+        app.dialogs.showOpenDialog('Selecteer een Basisschema (.xsd)', null, XSD_FILE_FILTERS).then(
+            (files => {
+                if (files && files.length > 0) {
+                    try {
+                        istdBasisSchemaXsdImport.importBasisSchemaXsdFile(files[0])
+                    } catch (err) {
+                        app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
+                        console.error(err)
+                    }
+                }
+            }),
+            (err => console.error(err))
+        )
     }
 }
 
@@ -100,15 +108,19 @@ function _handleIstdRegelRapportImport(fullPath) {
             console.error(err)
         }
     } else {
-        var files = app.dialogs.showOpenDialog('Selecteer een Regelrapport (.xlsx)', null, XLSX_FILE_FILTERS)
-        if (files && files.length > 0) {
-            try {
-                istdRegelRapportXlsxImport.importRegelRapportXlsxFile(files[0])
-            } catch (err) {
-                app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
-                console.error(err)
-            }
-        }
+        app.dialogs.showOpenDialog('Selecteer een Regelrapport (.xlsx)', null, XLSX_FILE_FILTERS).then(
+            (files => {
+                if (files && files.length > 0) {
+                    try {
+                        istdRegelRapportXlsxImport.importRegelRapportXlsxFile(files[0])
+                    } catch (err) {
+                        app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
+                        console.error(err)
+                    }
+                }
+            }),
+            (err => console.error(err))
+        )
     }
 }
 
