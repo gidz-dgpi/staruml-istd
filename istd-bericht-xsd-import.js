@@ -162,7 +162,7 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
             for (let j = 0; j < xsElements.length; j++) {
                 const xsElement = xsElements[j]
                 const attrName = xsElement.attributes.name
-                var xsAttrType = xsElement.attributes.type
+                const xsAttrType = xsElement.attributes.type
 
                 if (xsAttrType == undefined) {
                     // Add Bericht Element with Restriction as UMLAttribute
