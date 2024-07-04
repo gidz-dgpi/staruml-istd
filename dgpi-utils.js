@@ -106,6 +106,19 @@ function getDataTypeName(typeValue) {
 }
 
 /**
+ * Build a UML Multiplicity Value from a XSD Occurence Attributes
+ * @param {String | undefined} minOccurs 
+ * @param {String | undefined} maxOccurs 
+ * @returns 
+ */
+function buildUMLMultiplicityFromXsOccursAttr(minOccurs, maxOccurs) {
+    const minRelationSet = minOccurs ? String(minOccurs) : '1'
+    const maxRelationSet = maxOccurs ? String(maxOccurs).replace('unbounded', '*') : '1'
+
+    return (minRelationSet != '1' || maxRelationSet != '1') ? `${minRelationSet}..${maxRelationSet}` : '1'
+}
+
+/**
  * Get UMLAttribute Muliplicity Value from XSD minOccurs-attribute 
  * @param {XSDAttributes} attributes 
  * @returns {undefined | '0..1'}
@@ -194,3 +207,4 @@ exports.getUMLDataType = getUMLDataType
 exports.addStringTag = addStringTag
 exports.getAppInfoElementText = getAppInfoElementText
 exports.getXsdMetaData = getXsdMetaData
+exports.buildUMLMultiplicityFromXsOccursAttr = buildUMLMultiplicityFromXsOccursAttr
