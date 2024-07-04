@@ -227,33 +227,16 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
         // Association-processing from Relation Elements
         for (let i = 0; i < relationElems.length; i++) {
             const relationElem = relationElems[i]
-            const relationElemName = relationElem.element.attributes.name
-            var associationName = relationElemName
+            const relationElemName = String(relationElem.element.attributes.name)
             const parentClass = relationElem.parentClass
-            // Lookup direct relation ChildClass reference
-            //console.log(parentClass.name + ' / ' + associationName)
-            //console.log(relationElem.element.attributes)
-            var childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
-            var multiplicity = '1'
-            const minOccurs = relationElem.element.attributes.minOccurs ? relationElem.element.attributes.minOccurs : '1'
-            const relationClass = relationClasses.find(element => element.attributes.name == relationElemName)
-            
-            if (relationClass) {
-                // Association with a Relation Class
-                const relationClassAttributes = relationClass.elements[0].elements[0].attributes
-                const maxOccurs = relationClassAttributes.maxOccurs ? relationClassAttributes.maxOccurs : '1'
-
-                if (maxOccurs == 'unbounded') {
-                    multiplicity = minOccurs + '..' + '*'
-                } else {
-                    multiplicity = minOccurs + '..' + maxOccurs
-                }
-
-            } else if (minOccurs == '0') {
-                multiplicity = minOccurs + '..' + '1'
-            }
-
-            const associationMember = addBerichtClassAssociation(parentClass, childClass, associationName, multiplicity)
+            const childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
+            console.log(`parentClass ${parentClass.name} childClass ${childClass.name}`)
+            const minRelationSet = relationElem.element.attributes.minOccurs ? String(relationElem.element.attributes.minOccurs) : '1'
+            const maxRelationSet = relationElem.element.attributes.maxOccurs ? String(relationElem.element.attributes.maxOccurs).replace('unbounded', '*') : '1'
+            console.log(`minRelationSet ${minRelationSet} maxRelationSet ${maxRelationSet}`)
+            const multiplicity = (minRelationSet != '1' || maxRelationSet != '1') ? `${minRelationSet}..${maxRelationSet}` : '1'
+            console.log(`multiplicity ${multiplicity}`)
+            const associationMember = addBerichtClassAssociation(parentClass, childClass, relationElemName, multiplicity)
             app.modelExplorer.collapse(parentClass)
         }
 

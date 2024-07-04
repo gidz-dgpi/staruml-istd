@@ -1,7 +1,8 @@
 # Relaties
 
-## Relatie met tussen-klasse
+## Relatie via een een klasse
 
+*XSD-fragment met 0-op-n relatie tussen *
 ```xml
     ...
 	<xs:complexType name="Client">
