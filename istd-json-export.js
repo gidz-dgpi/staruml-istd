@@ -136,19 +136,13 @@ function buildRelatiesJson(berichtId, berichtKlasse) {
  */
 function buildElementJson(modelId, elementenId, attribute) {
     const name = String(attribute.name)
-    var json = {
+    const json = {
         "@id": elementenId + "/" + name,
         "@type": LD_JSON_TYPE.Property,
         name: name,
-        dataType: modelId + "/gegevens/" + attribute.type.name
-    }
-
-    if (attribute.isID) {
-        json['isID'] = attribute.isID
-    }
-
-    if (attribute.multiplicity) {
-        json['multiplicity'] = attribute.multiplicity
+        dataType: modelId + "/gegevens/" + attribute.type.name,
+        isID: attribute.isID ? Boolean(attribute.isID) : undefined,
+        multiplicity: attribute.multiplicity ? String(attribute.multiplicity) : undefined
     }
 
     return json
@@ -242,14 +236,14 @@ function buildDataWaardenJson(dataTypeId, primitieveDataTypen, codelijsten, data
             json.push({
                 "@id": dataWaardebId + "/primitieveDataType",
                 "@type": LD_JSON_TYPE.Dependency,
-                parent: primitieveDataType['@id']
+                target: primitieveDataType['@id']
             })
         } else if (dependencyTarget instanceof type.UMLEnumeration) {
             const codelijst = codelijsten.find(element => element.name == dependencyTarget.name)
             json.push({
                 "@id": dataWaardebId + "/codelijst",
                 "@type": LD_JSON_TYPE.Dependency,
-                parent: codelijst['@id']
+                target: codelijst['@id']
             })
 
         }

@@ -11,26 +11,6 @@ const globals = require('./istd-globals')
 const utils = require('./dgpi-utils')
 
 /**
- * 
- * @param {Object} complexElem 
- * @param {String} relationPre 
- * @returns {Boolean}
- */
-function isRelationClass(complexElem, relationPre) {
-    var retVal = false
-
-    if (complexElem.elements.length == 1) {
-
-        if (complexElem.elements[0].elements.length == 1) {
-            retVal = complexElem.elements[0].elements[0].attributes.type.startsWith(relationPre)
-        }
-
-    }
-
-    return retVal
-}
-
-/**
  * Get UMLDataType from Gegevensmodel (when available)
  * @param {UMLPackage | undefined} gegevensModelPkg 
  * @param {String} attrTypeName 
@@ -167,7 +147,6 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
         utils.addStringTag(berichtPkg, 'maxVersieBasisschema', xsdMetaData.basisschemaXsdMaxVersie)    
         const complexElems = xsSchema.elements.filter(element => element.name == 'xs:complexType')
         const relationElems = []
-        const relationClasses = []
 
         // Add a UMLClass for each Berichtklasse
         for (let i = 0; i < complexElems.length; i++) {
@@ -182,14 +161,8 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
             // And prepare Association-processing
             for (let j = 0; j < xsElements.length; j++) {
                 const xsElement = xsElements[j]
-
-                if (isRelationClass(complexElem, relationPre)) {
-                    // Keep Relation Class for Association-processing
-                    relationClasses.push(complexElem)
-                }
-
                 const attrName = xsElement.attributes.name
-                var xsAttrType = xsElement.attributes.type
+                const xsAttrType = xsElement.attributes.type
 
                 if (xsAttrType == undefined) {
                     // Add Bericht Element with Restriction as UMLAttribute
@@ -227,33 +200,13 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
         // Association-processing from Relation Elements
         for (let i = 0; i < relationElems.length; i++) {
             const relationElem = relationElems[i]
-            const relationElemName = relationElem.element.attributes.name
-            var associationName = relationElemName
+            const relationElemName = String(relationElem.element.attributes.name)
             const parentClass = relationElem.parentClass
-            // Lookup direct relation ChildClass reference
-            //console.log(parentClass.name + ' / ' + associationName)
-            //console.log(relationElem.element.attributes)
-            var childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
-            var multiplicity = '1'
-            const minOccurs = relationElem.element.attributes.minOccurs ? relationElem.element.attributes.minOccurs : '1'
-            const relationClass = relationClasses.find(element => element.attributes.name == relationElemName)
-            
-            if (relationClass) {
-                // Association with a Relation Class
-                const relationClassAttributes = relationClass.elements[0].elements[0].attributes
-                const maxOccurs = relationClassAttributes.maxOccurs ? relationClassAttributes.maxOccurs : '1'
-
-                if (maxOccurs == 'unbounded') {
-                    multiplicity = minOccurs + '..' + '*'
-                } else {
-                    multiplicity = minOccurs + '..' + maxOccurs
-                }
-
-            } else if (minOccurs == '0') {
-                multiplicity = minOccurs + '..' + '1'
-            }
-
-            const associationMember = addBerichtClassAssociation(parentClass, childClass, associationName, multiplicity)
+            const childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
+            const minRelationSet = relationElem.element.attributes.minOccurs ? String(relationElem.element.attributes.minOccurs) : '1'
+            const maxRelationSet = relationElem.element.attributes.maxOccurs ? String(relationElem.element.attributes.maxOccurs).replace('unbounded', '*') : '1'
+            const multiplicity = (minRelationSet != '1' || maxRelationSet != '1') ? `${minRelationSet}..${maxRelationSet}` : '1'
+            const associationMember = addBerichtClassAssociation(parentClass, childClass, relationElemName, multiplicity)
             app.modelExplorer.collapse(parentClass)
         }
 
