@@ -112,7 +112,7 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
         const attrName = seqElem.attributes.name
         const attrTypeName = utils.getDataTypeName(seqElem.attributes.type)
         const attrType = utils.getUMLDataType(gegevensModelPkg, attrTypeName)
-        const attrMultiplicity = utils.getUMLAttributeMultiplicity(seqElem.attributes)
+        const attrMultiplicity = utils.buildUMLMultiplicityFromXsOccursAttr(seqElem.attributes.minOccurs, seqElem.attributes.maxOccurs)
         const  attrDocumentation = utils.getXsAnnotationDocumentationText(seqElem)
         utils.addUMLAttribute(complexDataType, attrName, attrType, attrMultiplicity, attrDocumentation)
     }
