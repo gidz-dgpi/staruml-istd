@@ -11,26 +11,6 @@ const globals = require('./istd-globals')
 const utils = require('./dgpi-utils')
 
 /**
- * 
- * @param {Object} complexElem 
- * @param {String} relationPre 
- * @returns {Boolean}
- */
-function isRelationClass(complexElem, relationPre) {
-    var retVal = false
-
-    if (complexElem.elements.length == 1) {
-
-        if (complexElem.elements[0].elements.length == 1) {
-            retVal = complexElem.elements[0].elements[0].attributes.type.startsWith(relationPre)
-        }
-
-    }
-
-    return retVal
-}
-
-/**
  * Get UMLDataType from Gegevensmodel (when available)
  * @param {UMLPackage | undefined} gegevensModelPkg 
  * @param {String} attrTypeName 
@@ -167,7 +147,6 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
         utils.addStringTag(berichtPkg, 'maxVersieBasisschema', xsdMetaData.basisschemaXsdMaxVersie)    
         const complexElems = xsSchema.elements.filter(element => element.name == 'xs:complexType')
         const relationElems = []
-        const relationClasses = []
 
         // Add a UMLClass for each Berichtklasse
         for (let i = 0; i < complexElems.length; i++) {
@@ -182,12 +161,6 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
             // And prepare Association-processing
             for (let j = 0; j < xsElements.length; j++) {
                 const xsElement = xsElements[j]
-
-                if (isRelationClass(complexElem, relationPre)) {
-                    // Keep Relation Class for Association-processing
-                    relationClasses.push(complexElem)
-                }
-
                 const attrName = xsElement.attributes.name
                 var xsAttrType = xsElement.attributes.type
 
@@ -230,12 +203,9 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
             const relationElemName = String(relationElem.element.attributes.name)
             const parentClass = relationElem.parentClass
             const childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
-            console.log(`parentClass ${parentClass.name} childClass ${childClass.name}`)
             const minRelationSet = relationElem.element.attributes.minOccurs ? String(relationElem.element.attributes.minOccurs) : '1'
             const maxRelationSet = relationElem.element.attributes.maxOccurs ? String(relationElem.element.attributes.maxOccurs).replace('unbounded', '*') : '1'
-            console.log(`minRelationSet ${minRelationSet} maxRelationSet ${maxRelationSet}`)
             const multiplicity = (minRelationSet != '1' || maxRelationSet != '1') ? `${minRelationSet}..${maxRelationSet}` : '1'
-            console.log(`multiplicity ${multiplicity}`)
             const associationMember = addBerichtClassAssociation(parentClass, childClass, relationElemName, multiplicity)
             app.modelExplorer.collapse(parentClass)
         }
