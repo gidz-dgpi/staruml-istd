@@ -27,31 +27,46 @@ const XLSX_FILE_FILTERS = [
     { name: 'All Files', extensions: ['*'] }
 ]
 
-function _handleBerichtModelExport(fullPath) {
+function execIstdBerichtModelExport(project, filePath) {
+    try {
+        jsonWriter.saveBerichtModelToFile(project, filePath)
+    } catch (err) {
+        console.error(err)
+    }
+}
+function _handleIstdBerichtModelExport(fullPath) {
     const project = app.project.getProject()
 
     if (fullPath) {
-        try {
-            jsonWriter.saveBerichtModelToFile(project, fullPath)
-        } catch (err) {
-            console.error(err)
-        }
+        execIstdBerichtModelExport(project, fullPath)
     } else {
         const _filePath = project.name + '-' + project.version + '.json'
-        app.dialogs.showSaveDialog('Export Berichtmodel As JSON', _filePath, JSON_FILE_FILTERS).then(
-            (filePath => {
-                try {
-                    jsonWriter.saveBerichtModelToFile(project, filePath)
-                } catch (err) {
-                    console.error(err)
-                }
-            }),
-            (err => console.error(err))
-        )
+        const selectRes = app.dialogs.showSaveDialog('Export Berichtmodel As JSON', _filePath, JSON_FILE_FILTERS)
+        // StarUML 6.1.2 changed dialogs working to Async
+        if (selectRes instanceof Promise) {
+            selectRes.then(
+                (filePath => {
+                    execIstdBerichtModelExport(project, filePath)
+                }),
+                (err => console.error(err))
+            )
+        } else {
+            // StarUML 6.1.0 dialogs works Sync
+            execIstdBerichtModelExport(project, selectRes)
+        }
     }
 }
 
-
+function manualIstBerichtImport(files) {
+    if (files && files.length > 0) {
+        try {
+            istdBerichtXsdImport.importBerichtXsdFile(files[0])
+        } catch (err) {
+            app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
+            console.error(err)
+        }
+    }
+}
 function _handleIstdBerichtImport(fullPath) {
     if (fullPath) {
         try {
@@ -60,19 +75,19 @@ function _handleIstdBerichtImport(fullPath) {
             console.error(err)
         }
     } else {
-        app.dialogs.showOpenDialog('Selecteer een Bericht (.xsd)', null, XSD_FILE_FILTERS).then(
-            (files => {
-                if (files && files.length > 0) {
-                    try {
-                        istdBerichtXsdImport.importBerichtXsdFile(files[0])
-                    } catch (err) {
-                        app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
-                        console.error(err)
-                    }
-                }
-            }),
-            (err => console.error(err))
-        )
+        const selectRes = app.dialogs.showOpenDialog('Selecteer een Bericht (.xsd)', null, XSD_FILE_FILTERS)
+        // StarUML 6.1.2 changed dialogs working to Async
+        if (selectRes instanceof Promise) {
+            selectRes.then(
+                (files => {
+                    manualIstBerichtImport(files)
+                }),
+                (err => console.error(err))
+            )
+        } else {
+            // StarUML 6.1.0 dialogs works Sync
+            manualIstBerichtImport(selectRes)
+        }
     }
 }
 
@@ -86,7 +101,6 @@ function manualIstdBasisSchemaImport(files) {
         }
     }
 }
-
 function _handleIstdBasisSchemaImport(fullPath) {
     if (fullPath) {
         try {
@@ -96,7 +110,7 @@ function _handleIstdBasisSchemaImport(fullPath) {
         }
     } else {
         const selectRes = app.dialogs.showOpenDialog('Selecteer een Basisschema (.xsd)', null, XSD_FILE_FILTERS)
-
+        // StarUML 6.1.2 changed dialog working to Async
         if (selectRes instanceof Promise) {
             selectRes.then(
                 (files => {
@@ -105,11 +119,22 @@ function _handleIstdBasisSchemaImport(fullPath) {
                 (err => console.error(err))
             )
         } else {
+            // StarUML 6.1.0 dialogs works Sync
             manualIstdBasisSchemaImport(selectRes)
         }
     }
 }
 
+function manualIstdRegelRapportImport(files) {
+    if (files && files.length > 0) {
+        try {
+            istdRegelRapportXlsxImport.importRegelRapportXlsxFile(files[0])
+        } catch (err) {
+            app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
+            console.error(err)
+        }
+    }
+}
 function _handleIstdRegelRapportImport(fullPath) {
     if (fullPath) {
         try {
@@ -118,24 +143,24 @@ function _handleIstdRegelRapportImport(fullPath) {
             console.error(err)
         }
     } else {
-        app.dialogs.showOpenDialog('Selecteer een Regelrapport (.xlsx)', null, XLSX_FILE_FILTERS).then(
-            (files => {
-                if (files && files.length > 0) {
-                    try {
-                        istdRegelRapportXlsxImport.importRegelRapportXlsxFile(files[0])
-                    } catch (err) {
-                        app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
-                        console.error(err)
-                    }
-                }
-            }),
-            (err => console.error(err))
-        )
+        const selectRes = app.dialogs.showOpenDialog('Selecteer een Regelrapport (.xlsx)', null, XLSX_FILE_FILTERS)
+        // StarUML 6.1.2 changed dialog working to Async
+        if (selectRes instanceof Promise) {
+            selectRes.then(
+                (files => {
+                    manualIstdRegelRapportImport(files)
+                }),
+                (err => console.error(err))
+            )
+        } else {
+            // StarUML 6.1.0 dialogs works Sync
+            manualIstdRegelRapportImport(selectRes)
+        }
     }
 }
 
 function init() {
-    app.commands.register('istd:berichtmodel:export', _handleBerichtModelExport)
+    app.commands.register('istd:berichtmodel:export', _handleIstdBerichtModelExport)
     app.commands.register('istd:bericht:import', _handleIstdBerichtImport)
     app.commands.register('istd:basisschema:import', _handleIstdBasisSchemaImport)
     app.commands.register('istd:regelrapport:import', _handleIstdRegelRapportImport)
