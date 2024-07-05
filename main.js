@@ -125,6 +125,16 @@ function _handleIstdBasisSchemaImport(fullPath) {
     }
 }
 
+function manualIstdRegelRapportImport(files) {
+    if (files && files.length > 0) {
+        try {
+            istdRegelRapportXlsxImport.importRegelRapportXlsxFile(files[0])
+        } catch (err) {
+            app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
+            console.error(err)
+        }
+    }
+}
 function _handleIstdRegelRapportImport(fullPath) {
     if (fullPath) {
         try {
@@ -133,19 +143,19 @@ function _handleIstdRegelRapportImport(fullPath) {
             console.error(err)
         }
     } else {
-        app.dialogs.showOpenDialog('Selecteer een Regelrapport (.xlsx)', null, XLSX_FILE_FILTERS).then(
-            (files => {
-                if (files && files.length > 0) {
-                    try {
-                        istdRegelRapportXlsxImport.importRegelRapportXlsxFile(files[0])
-                    } catch (err) {
-                        app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
-                        console.error(err)
-                    }
-                }
-            }),
-            (err => console.error(err))
-        )
+        const selectRes = app.dialogs.showOpenDialog('Selecteer een Regelrapport (.xlsx)', null, XLSX_FILE_FILTERS)
+        // StarUML 6.1.2 changed dialog working to Async
+        if (selectRes instanceof Promise) {
+            selectRes.then(
+                (files => {
+                    manualIstdRegelRapportImport(files)
+                }),
+                (err => console.error(err))
+            )
+        } else {
+            // StarUML 6.1.0 dialogs works Sync
+            manualIstdRegelRapportImport(selectRes)
+        }
     }
 }
 

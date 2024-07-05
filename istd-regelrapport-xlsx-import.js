@@ -21,24 +21,24 @@ function importRegelRapport(berichtenPkg, workbook) {
     BerichtHeader = regelsBerichtElems[COLUMN.bericht + row].v
 
     if (BerichtHeader == 'Bericht') {
-        row ++
+        row++
         var berichtNameCell = regelsBerichtElems[COLUMN.bericht + row]
 
         while (berichtNameCell) {
             const bericht = berichtNameCell.v
             var nextBericht = bericht
             var lastSleutelId = undefined
-            
+
             while (nextBericht == bericht) {
-                row ++
+                row++
                 berichtNameCell = regelsBerichtElems[COLUMN.bericht + row]
                 nextBericht = berichtNameCell ? berichtNameCell.v : undefined
 
                 if (nextBericht) {
                     const sleutel = regelsBerichtElems[COLUMN.sleutel + row]
-                    
+
                     if (sleutel) {
-                        
+
                         if (sleutel.v == 'ja') {
                             const berichtKlasse = regelsBerichtElems[COLUMN.klasse + row].v
                             const berichtKlasseElementDataType = regelsBerichtElems[COLUMN.elemDataType + row].v
@@ -46,12 +46,18 @@ function importRegelRapport(berichtenPkg, workbook) {
                             const sleutelId = `${bericht} / ${berichtKlasse} / ${berichtKlasseElement}`
 
                             if (sleutelId != lastSleutelId) {
-                                console.log(`${sleutelId} = isID`)
                                 const berichtPkg = utils.getUMLPackagElementByName(berichtenPkg.ownedElements, nextBericht)
-                                const berichtClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, berichtKlasse)
-                                const berichtClassAttribute = berichtClass.attributes.find(attribute => attribute.name == berichtKlasseElement)
-                                //console.log(berichtClassAttribute)
-                                app.engine.setProperty(berichtClassAttribute, 'isID', true)
+
+                                if (berichtPkg) {
+                                    const berichtClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, berichtKlasse)
+
+                                    if (berichtClass.attributes) {
+                                        const berichtClassAttribute = berichtClass.attributes.find(attribute => attribute.name == berichtKlasseElement)
+                                        app.engine.setProperty(berichtClassAttribute, 'isID', true)
+                                    }
+
+                                }
+
                                 lastSleutelId = sleutelId
                             }
                         }
@@ -64,7 +70,7 @@ function importRegelRapport(berichtenPkg, workbook) {
 
             }
 
-            
+
         }
 
     } else {
