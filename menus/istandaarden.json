@@ -5,9 +5,9 @@
         "label": "iStandaarden",
         "submenu": [
           {
-            "label": "Berichtmodel-JSON Export",
-            "id": "istd.berichtmodel.export",
-            "command": "istd:berichtmodel:export"
+            "label": "Basisschema-XSD Import",
+            "id": "istd.basisschema.xsd.import",
+            "command": "istd:basisschema:import"
           },
           {
             "label": "Bericht-XSD Import",
@@ -15,16 +15,15 @@
             "command": "istd:bericht:import"
           },
           {
-            "label": "Basisschema-XSD Import",
-            "id": "istd.basisschema.xsd.import",
-            "command": "istd:basisschema:import"
-          },
-          {
             "label": "Regelrapport-XLSX Import",
             "id": "iistd.regelrapport.import",
             "command": "istd:regelrapport:import"
+          },
+          {
+            "label": "Berichtmodel-JSON Export",
+            "id": "istd.berichtmodel.export",
+            "command": "istd:berichtmodel:export"
           }
-
         ]
       }
     ]
