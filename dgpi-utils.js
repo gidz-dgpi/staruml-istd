@@ -90,7 +90,7 @@ function addUMLAttribute(parentClass, attrName, attrType, attrMultiplicity, attr
         modelInitializer: elem => {
             elem.name = attrName
             elem.type = attrType
-            elem.multiplicity = attrMultiplicity
+            elem.multiplicity = ['', '1'].find(value => attrMultiplicity == value) ? undefined : attrMultiplicity
             elem.documentation = attrDocumentation
         }
     })
@@ -116,25 +116,6 @@ function buildUMLMultiplicityFromXsOccursAttr(minOccurs, maxOccurs) {
     const maxRelationSet = maxOccurs ? String(maxOccurs).replace('unbounded', '*') : '1'
 
     return (minRelationSet != '1' || maxRelationSet != '1') ? `${minRelationSet}..${maxRelationSet}` : '1'
-}
-
-/**
- * Get UMLAttribute Muliplicity Value from XSD minOccurs-attribute 
- * @param {XSDAttributes} attributes 
- * @returns {undefined | '0..1'}
- */
-function getUMLAttributeMultiplicity(attributes) {
-    var attrMultiplicity = undefined
-
-    if (attributes.minOccurs) {
-
-        if (attributes.minOccurs == '0') {
-            attrMultiplicity = '0..1'
-        }
-
-    }
-
-    return attrMultiplicity
 }
 
 /**
@@ -202,7 +183,6 @@ exports.getXsAnnotationDocumentationText = getXsAnnotationDocumentationText
 exports.getXsRestriction = getXsRestriction
 exports.addUMLAttribute = addUMLAttribute
 exports.getDataTypeName = getDataTypeName
-exports.getUMLAttributeMultiplicity = getUMLAttributeMultiplicity
 exports.getUMLDataType = getUMLDataType
 exports.addStringTag = addStringTag
 exports.getAppInfoElementText = getAppInfoElementText

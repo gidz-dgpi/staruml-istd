@@ -203,9 +203,6 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
             const relationElemName = String(relationElem.element.attributes.name)
             const parentClass = relationElem.parentClass
             const childClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, relationElemName)
-//            const minRelationSet = relationElem.element.attributes.minOccurs ? String(relationElem.element.attributes.minOccurs) : '1'
-//            const maxRelationSet = relationElem.element.attributes.maxOccurs ? String(relationElem.element.attributes.maxOccurs).replace('unbounded', '*') : '1'
-//            const multiplicity = (minRelationSet != '1' || maxRelationSet != '1') ? `${minRelationSet}..${maxRelationSet}` : '1'
             const multiplicity = utils.buildUMLMultiplicityFromXsOccursAttr(relationElem.element.attributes.minOccurs, relationElem.element.attributes.maxOccurs)
             const associationMember = addBerichtClassAssociation(parentClass, childClass, relationElemName, multiplicity)
             app.modelExplorer.collapse(parentClass)
