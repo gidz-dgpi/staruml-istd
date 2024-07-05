@@ -164,6 +164,8 @@ function init() {
     app.commands.register('istd:bericht:import', _handleIstdBerichtImport)
     app.commands.register('istd:basisschema:import', _handleIstdBasisSchemaImport)
     app.commands.register('istd:regelrapport:import', _handleIstdRegelRapportImport)
+    console.log(`appPath ${app.getAppPath()}`)
+    console.log(`userPath ${app.getUserPath()}`)
 }
 
 exports.init = init
