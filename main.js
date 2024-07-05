@@ -76,6 +76,17 @@ function _handleIstdBerichtImport(fullPath) {
     }
 }
 
+function manualIstdBasisSchemaImport(files) {
+    if (files && files.length > 0) {
+        try {
+            istdBasisSchemaXsdImport.importBasisSchemaXsdFile(files[0])
+        } catch (err) {
+            app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
+            console.error(err)
+        }
+    }
+}
+
 function _handleIstdBasisSchemaImport(fullPath) {
     if (fullPath) {
         try {
@@ -84,19 +95,18 @@ function _handleIstdBasisSchemaImport(fullPath) {
             console.error(err)
         }
     } else {
-        app.dialogs.showOpenDialog('Selecteer een Basisschema (.xsd)', null, XSD_FILE_FILTERS).then(
-            (files => {
-                if (files && files.length > 0) {
-                    try {
-                        istdBasisSchemaXsdImport.importBasisSchemaXsdFile(files[0])
-                    } catch (err) {
-                        app.dialogs.showErrorDialog('Geen bestand kunnen selecteren.', err)
-                        console.error(err)
-                    }
-                }
-            }),
-            (err => console.error(err))
-        )
+        const selectRes = app.dialogs.showOpenDialog('Selecteer een Basisschema (.xsd)', null, XSD_FILE_FILTERS)
+
+        if (selectRes instanceof Promise) {
+            selectRes.then(
+                (files => {
+                    manualIstdBasisSchemaImport(files)
+                }),
+                (err => console.error(err))
+            )
+        } else {
+            manualIstdBasisSchemaImport(selectRes)
+        }
     }
 }
 
