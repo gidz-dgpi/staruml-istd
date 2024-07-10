@@ -38,6 +38,7 @@ Bevat momenteel de volgende functionaliteiten:
 
 # Referenties
 - [Developing StarUML Extensiions](https://docs.staruml.io/developing-extensions)
+  - Locatie Extensie ZIN-laptop `C:\Users\<ZIN-user>\AppData\Roaming\StarUML\extensions\user`
 - [StarUML Open API Reference](https://files.staruml.io/api-docs/6.0.0/api/index.html)
 - [xml-js](https://github.com/nashwaan/xml-js)
 - [sheetjs](https://docs.sheetjs.com/docs)
