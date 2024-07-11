@@ -8,7 +8,6 @@ De extensie biedt een extra hoofd-menu voor de iStandaard-functionaliteit.
 
 ![iStandaard-menu](./assets/istd-menu.png)
 
-
 Hieronder wordt de functionaliteit per menu-optie samengevat.
 
 ## Model-JSON Export
