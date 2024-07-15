@@ -1,43 +1,24 @@
-# StarUML iStandaard Extension
+# StarUML iStandaard Extensie
 
-StarUML-extensie voor de Migratie van huidige BizzDesign-outputs naar een StarUML-project met UML-modellen.
+Deze StarUML-extensie bevat momenteel functionaliteit voor:
 
-## iStandaard Menu
-
-De extensie biedt een extra hoofd-menu voor de iStandaard-functionaliteit.
-
-![iStandaard-menu](./assets/istd-menu.png)
-
-Hieronder wordt de functionaliteit per menu-optie samengevat.
-
-## Model-JSON Export
-
-Zal een UML-model dat is opgesteld volgens het iStandaard-berichten model exporteren in een JSON-formaat met de bijbehorende JSON-LD Context.
-
-(PM)
-
-## Bericht-XSD Import
-
-Importeren van 1-of meerdere iStandaard-bericht specificaties in het XSD-formaat die vanuit BizzDesign zijn gegenereerd.
-
-Bevat momenteel de volgende functionaliteiten:
-- Toevoegen UML-Package *Berichten* (indien nog geen aanwezig)
-- Toevoegen van UML-Package per *Bericht* (indien nog niet aanwezig)
-  - Toevoegen van een UML-Class per *Berichtklasse*
-    - Overnemen van de *Berichtklasse* documentatie
-      - Toevoegen van een UML-Attribuut per *Berichtklasse element*
-        - Overnemen van de *Berichtklasse element* documentatie
-        - Overnemen van de *Berichtklasse element* kardinaliteit als *multiplicity* eigenschap
-        - Overnemen van het *Berichtklasse element* dataType
-          - De referentie naar een *dataType* in het **Gegevens-model* (indien aanwezig)
-          - Of de naam van het *dataType* (indien niet aanwezig)
-        - Overnemen van de *Berichtklasse element* sleutel-indicator als *isId* eigenschap
-    - Toevoegen van *Berichtklasse-relaties* als UML-Associaties als onderdeel van de UML-Class (voor de Parent-Berichtklasse)
+- de Migratie van huidige BizzDesign-outputs naar een StarUML-project met UML-modellen
+  - [Import Functies Estafette Model](./docs/import-functies-estafette-model.md)
+- de Publicatie van de UML-modellen in een bewaar-formaat dat kan worden hergebruikt in de Leverstraat (en toekomstig te gebruiken modelleertooling)
+  - [JSON Export Functies](./docs/json-export-functies.md)
 
 
-# Referenties
+
+
+# Technische referenties
+
+StarUML:
+
 - [Developing StarUML Extensiions](https://docs.staruml.io/developing-extensions)
   - Locatie Extensie ZIN-laptop `C:\Users\<ZIN-user>\AppData\Roaming\StarUML\extensions\user`
 - [StarUML Open API Reference](https://files.staruml.io/api-docs/6.0.0/api/index.html)
-- [xml-js](https://github.com/nashwaan/xml-js)
-- [sheetjs](https://docs.sheetjs.com/docs)
+
+Gebruikte Open Source componenten:
+
+- Inlezen XSD-specificaties: [xml-js](https://github.com/nashwaan/xml-js)
+- Inlezen Excel-sheets [sheetjs](https://docs.sheetjs.com/docs)
