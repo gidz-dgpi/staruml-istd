@@ -4,15 +4,16 @@
  */
 
 const axios = require('axios')
+const preferenceKeys = require('./repository-preferences').keys
 const apiPath = '/api/v4'
 var gitLabApi
 
 /**
- * Initialize GitLab Api Settings
- * @param {String} serverURL 
- * @param {String} token 
+ * Initialize GitLab Api Settings from StarUML Preferences
  */
-function init(serverURL, token) {
+function initFromPreferences() {
+    const serverURL = app.preferences.get(preferenceKeys.repoServerURL)
+    const token = app.preferences.get(preferenceKeys.repoAuthToken)
     const baseURL = serverURL + apiPath
     gitLabApi = axios.create({
         baseURL: baseURL,
