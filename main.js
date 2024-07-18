@@ -11,6 +11,7 @@ const jsonWriter = require('./json-writer')
 const istdBerichtXsdImport = require('./istd-bericht-xsd-import')
 const istdBasisSchemaXsdImport = require('./istd-basisschema-xsd-import')
 const istdRegelRapportXlsxImport = require('./istd-regelrapport-xlsx-import')
+const repositoryPreferences = require('./repository/repository-preferences')
 
 const JSON_FILE_FILTERS = [
     { name: 'JSON Files', extensions: ['json'] },
@@ -166,6 +167,8 @@ function init() {
     app.commands.register('istd:regelrapport:import', _handleIstdRegelRapportImport)
     console.log(`appPath ${app.getAppPath()}`)
     console.log(`userPath ${app.getUserPath()}`)
+    console.log(repositoryPreferences.dataSchema)
+    app.preferences.register(repositoryPreferences.dataSchema)
 }
 
 exports.init = init
