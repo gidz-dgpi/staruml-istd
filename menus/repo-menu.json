@@ -1,0 +1,20 @@
+{
+    "menu": [
+      {
+        "id": "repo",
+        "label": "Repository",
+        "submenu": [
+          {
+            "label": "Model Data ophalen",
+            "id": "repo.model.data.ophalen",
+            "command": "repo:load:model:data"
+          },
+          {
+            "label": "Model Data bewaren",
+            "id": "repo.model.data.publiceren",
+            "command": "repo:store:model:data"
+          }
+        ]
+      }
+    ]
+  }
