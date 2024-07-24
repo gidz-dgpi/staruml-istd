@@ -1,0 +1,40 @@
+{
+    "menu": [
+      {
+        "id": "istd",
+        "label": "iStandaarden",
+        "submenu": [
+          {
+            "label": "Basisschema-XSD Import",
+            "id": "istd.basisschema.xsd.import",
+            "command": "istd:basisschema:import"
+          },
+          {
+            "label": "Bericht-XSD Import",
+            "id": "istd.bericht.xsd.import",
+            "command": "istd:bericht:import"
+          },
+          {
+            "label": "Regelrapport-XLSX Import",
+            "id": "iistd.regelrapport.import",
+            "command": "istd:regelrapport:import"
+          },
+          {
+            "label": "Context Meta Data-JSON+LD Export",
+            "id": "istd.context.meta.data.export",
+            "command": "istd:context:meta:data:export"
+          },
+          {
+            "label": "Generieke Meta Data-JSON Export",
+            "id": "istd.generic.meta.data.export",
+            "command": "istd:generic:meta:data:export"
+          },
+          {
+            "label": "Specifieke Meta Data-JSON Export",
+            "id": "istd.specific.meta.data.export",
+            "command": "istd:specific:meta:data:export"
+          }
+        ]
+      }
+    ]
+  }

@@ -1,0 +1,64 @@
+{
+	"schema": "https://schema.org",
+	"xs": "http://www.w3.org/2001/XMLSchema#",
+	"uml": "https://www.omg.org/spec/UML/20161101/UML.xmi#",
+	"istd": "https://www.istandaarden.nl/over-istandaarden/istandaarden/begrippenlijst#",
+	"model": "https://www.istandaarden.nl/",
+	"name": "schema:name",
+	"version": "schema:version",
+	"multiplicity": "uml:multiplicity",
+	"aggregation": "uml:Aggregation",
+	"isID": "uml:isID",
+	"dataType": "uml:DataType",
+	"primitiveType": "uml:PrimitiveType",
+	"target": "uml:target",
+	"dependency": "uml:Dependency",
+	"parent": {
+		"@id": "istd:BerichtKlasseRelatieParentEnd",
+		"@type": "uml:AssociationEnd"
+	},
+	"child": {
+		"@id": "istd:BerichtKlasseRelatieChildEnd",
+		"@type": "uml:AssociationEnd"
+	},
+	"berichten": {
+		"@id": "istd:berichten",
+		"@type": "uml:Package",
+		"@container": "@list"
+	},
+	"klassen": {
+		"@id": "istd:berichtklassen",
+		"@type": "uml:Package",
+		"@container": "@list"
+	},
+	"elementen": {
+		"@id": "istd:elementen",
+		"@type": "uml:Attributes",
+		"@container": "@list"
+	},
+	"relaties": {
+		"@id": "istd:relaties",
+		"@type": "uml:Associations",
+		"@container": "@list"
+	},
+	"gegevens": {
+		"@id": "istd:gegevensmodel",
+		"@type": "uml:Package",
+		"@container": "@list"
+	},
+	"primitieveDataTypen": {
+		"@id": "istd:primitieveDataTypen",
+		"@type": "uml:Package",
+		"@container": "@list"
+	},
+	"codelijsten": {
+		"@id": "istd:codelijsten",
+		"@type": "uml:Package",
+		"@container": "@list"
+	},
+	"dataWaarden": {
+		"@id": "istd:dataWaarden",
+		"@type": "uml:Dependencies",
+		"@container": "@list"
+	}
+}

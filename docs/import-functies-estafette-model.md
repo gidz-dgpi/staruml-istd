@@ -24,10 +24,10 @@ Onderstaande matrix bevat een functionele samenvatting van de geimplementeerd fu
 
 | Technisch product | Migratie Functionaliteit |
 |:-|:-|
-| [Menustructuur](../menus/istandaarden.json) | Configuratie menu-opties gebruikers |  
-| [iStd Basisschema XSD import](../istd-basisschema-xsd-import.js) | Script met Basisschema XSD-import functionaliteit |
-| [iStd Bericht XSD import](../istd-bericht-xsd-import.js) | Script met Bericht XSD-import functionaliteit |
-| [iStd Regelrapport XLSX import](../istd-regelrapport-xlsx-import.js) | Script met Regelrapport XSLX-import functionaliteit |
+| [Menustructuur](../menus/istd-menu.json) | Configuratie menu-opties gebruikers |  
+| [iStd Basisschema XSD import](../istd/istd-basisschema-xsd-import.js) | Script met Basisschema XSD-import functionaliteit |
+| [iStd Bericht XSD import](../istd/istd-bericht-xsd-import.js) | Script met Bericht XSD-import functionaliteit |
+| [iStd Regelrapport XLSX import](../istd/istd-regelrapport-xlsx-import.js) | Script met Regelrapport XSLX-import functionaliteit |
 
 ---
 
