@@ -91,7 +91,8 @@ function importRegelRapportXlsxFile(regelRapportFile) {
             const workbook = XLSX.read(regelSheet)
             try {
                 const project = app.project.getProject()
-                const berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.BERICHTEN_PACKAGE.name)
+                const specificPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.SPECIFIC_MODEL_PACKAGE.name) 
+                const berichtenPkg = utils.getUMLPackagElementByName(specificPkg.ownedElements, globals.BERICHTEN_PACKAGE.name)
 
                 if (berichtenPkg) {
                     console.log(berichtenPkg)

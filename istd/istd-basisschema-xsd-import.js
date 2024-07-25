@@ -181,11 +181,19 @@ function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
 function importGegevensModel(basisSchema) {
     try {
         const root = app.project.getProject()
-        const primitiveTypePkg = primitiveTypes.init(root)
-        const codelijstenPkg = codelijsten.init(root)
-        gegevensModelPkg = app.factory.createModel({
+        const genericPkg = app.factory.createModel({
             id: 'UMLPackage',
             parent: root,
+            modelInitializer: elem => {
+                elem.name = globals.GENERIC_MODEL_PACKAGE.name
+                elem.documentation = globals.GENERIC_MODEL_PACKAGE.documentation
+            }
+        })
+        const primitiveTypePkg = primitiveTypes.init(genericPkg)
+        const codelijstenPkg = codelijsten.init(genericPkg)
+        gegevensModelPkg = app.factory.createModel({
+            id: 'UMLPackage',
+            parent: genericPkg,
             modelInitializer: elem => {
                 elem.name = globals.GEGEVENS_MODEL_PACKAGE.name
                 elem.documentation = globals.GEGEVENS_MODEL_PACKAGE.documentation

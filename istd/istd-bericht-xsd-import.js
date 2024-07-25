@@ -144,7 +144,7 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
         utils.addStringTag(berichtPkg, 'maxVersieBerichtXsd', xsdMetaData.berichtXsdMaxVersie)
         utils.addStringTag(berichtPkg, 'versieBasisschema', xsdMetaData.basisschemaXsdVersie)
         utils.addStringTag(berichtPkg, 'minVersieBasisschema', xsdMetaData.basisschemaXsdMinVersie)
-        utils.addStringTag(berichtPkg, 'maxVersieBasisschema', xsdMetaData.basisschemaXsdMaxVersie)    
+        utils.addStringTag(berichtPkg, 'maxVersieBasisschema', xsdMetaData.basisschemaXsdMaxVersie)
         const complexElems = xsSchema.elements.filter(element => element.name == 'xs:complexType')
         const relationElems = []
 
@@ -170,7 +170,7 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
                     const xsRestriction = xsSimpleType.elements.find(element => element.name == 'xs:restriction')
                     const attrTypeName = utils.getDataTypeName(xsRestriction.attributes.base)
                     const attrType = getBerichtClassAttrType(gegevensModelPkg, attrTypeName)
-                    const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement)                    
+                    const attrDocumentation = utils.getXsAnnotationDocumentationText(xsElement)
                     const attrMultiplicity = utils.buildUMLMultiplicityFromXsOccursAttr(xsElement.attributes.minOccurs, xsElement.attributes.maxOccurs)
                     const berichtClassAttribute = utils.addUMLAttribute(berichtClass, attrName, attrType, attrMultiplicity, attrDocumentation)
                 } else {
@@ -220,21 +220,37 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
 function importBericht(bericht) {
     try {
         const project = app.project.getProject()
-        var berichtenPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.BERICHTEN_PACKAGE.name)
 
+        var specificPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.SPECIFIC_MODEL_PACKAGE.name)
+        if (specificPkg == undefined) {
+            // Specific Package doesn't exist
+            // Create Specific Package
+            specificPkg = app.factory.createModel({
+                id: 'UMLPackage',
+                parent: project,
+                modelInitializer: elem => {
+                    elem.name = globals.SPECIFIC_MODEL_PACKAGE.name
+                    elem.documentation = globals.SPECIFIC_MODEL_PACKAGE.documentation
+                }
+            })
+        }
+
+        var berichtenPkg = utils.getUMLPackagElementByName(specificPkg.ownedElements, globals.BERICHTEN_PACKAGE.name)
         if (berichtenPkg == undefined) {
             // Berichten Package doesn't exist
             // Create Berichten Package
             berichtenPkg = app.factory.createModel({
                 id: 'UMLPackage',
-                parent: project,
+                parent: specificPkg,
                 modelInitializer: elem => {
                     elem.name = globals.BERICHTEN_PACKAGE.name
+                    elem.documentation = globals.BERICHTEN_PACKAGE.documentation
                 }
             })
         }
 
-        var gegevensModelPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.GEGEVENS_MODEL_PACKAGE.name)
+        const genericPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.GENERIC_MODEL_PACKAGE.name)
+        const gegevensModelPkg = utils.getUMLPackagElementByName(genericPkg.ownedElements, globals.GEGEVENS_MODEL_PACKAGE.name)
         importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht)
     } catch (err) {
         console.error(err);

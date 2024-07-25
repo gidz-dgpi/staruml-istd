@@ -8,7 +8,8 @@
  * 
  */
 
-const jsonLdContextFileName = require('./istd-globals').jsonLdContextFileName
+const utils = require('../dgpi/dgpi-utils')
+const globals = require('./istd-globals')
 const primitiveTypesPkgId = require('./istd-primitive-types').primitiveTypesPkgId
 const codelijstenPkgId = require('./istd-codelijsten').codelijstenPkgId
 const jsonLdContext = {
@@ -93,11 +94,41 @@ const jsonLdType = {
     integer: 'xs:integer'
 }
 
+var specificModelId
+/**
+ * Set Specific Model Identifier from project info
+ * @param {Project} project 
+ * @returns {String}
+ */
+function setSpecificModelId(project) {
+    specificModelId = `model:${project.name}/${project.version}/specific`
+}
+/**
+ * Get Specific Model Identifier
+ * @returns {String}
+ */
+function getSpecificModelId() { return specificModelId }
+
+var genericModelId
+/**
+ * Set Generic Model Identifier from project info
+ * @param {Project} project 
+ * @returns {String}
+ */
+function setGenericModelId(project) {
+    genericModelId = `model:${project.name}/${project.version}/generic` 
+}
+/**
+ * Get Generic Model Identifier
+ * @returns {String}
+ */
+function getGenericModelId() { return genericModelId }
 
 /**
- * Build a JSON-export relaties Object
+ * Build a JSON-export relaties Meta Data
  * @param {String} berichtId 
  * @param {Class} berichtKlasse 
+ * @returns {MetaData}
  */
 function buildRelatiesJson(berichtId, berichtKlasse) {
     var json = []
@@ -128,19 +159,18 @@ function buildRelatiesJson(berichtId, berichtKlasse) {
 
 
 /**
- * Build Element JSON Object from UML Attribute
- * @param {String} modelId 
+ * Build Element Meta Data from UML Attribute
  * @param {String} elementenId 
  * @param {UMLAttribute} attribute 
- * @returns json
+ * @returns {MetaData}
  */
-function buildElementJson(modelId, elementenId, attribute) {
+function buildElementJson(elementenId, attribute) {
     const name = String(attribute.name)
     const json = {
         "@id": elementenId + "/" + name,
         "@type": jsonLdType.Property,
         name: name,
-        dataType: modelId + "/gegevens/" + attribute.type.name,
+        dataType: getGenericModelId() + "/gegevens/" + attribute.type.name,
         isID: attribute.isID ? Boolean(attribute.isID) : undefined,
         multiplicity: attribute.multiplicity ? String(attribute.multiplicity) : undefined
     }
@@ -150,19 +180,18 @@ function buildElementJson(modelId, elementenId, attribute) {
 
 
 /**
- * Build a JSON-export elementen Object
- * @param {String} modelId
+ * Build a JSON-export elementen Meta Data
  * @param {String} elementId
  * @param {UMLClass|UMLDataType} elementOwner
- * @returns json
+ * @returns {MetaData}
  */
-function buildElementenJson(modelId, elementId, elementOwner) {
+function buildElementenJson(elementId, elementOwner) {
     var json = []
     const elementenId = elementId + "/elementen"
 
     for (let i = 0; i < elementOwner.attributes.length; i++) {
         const attribute = elementOwner.attributes[i]
-        var elementJson = buildElementJson(modelId, elementenId, attribute)
+        var elementJson = buildElementJson(elementenId, attribute)
         json.push(elementJson)
     }
 
@@ -171,25 +200,24 @@ function buildElementenJson(modelId, elementId, elementOwner) {
 
 
 /**
- * Build a JSON-export klassen Object
- * @param {String} modelId
+ * Build a JSON-export klassen Meta Data
  * @param {String} berichtId
- * @param {Package} berichtPkg 
- * @returns json
+ * @param {UMLPackage} berichtPkg 
+ * @returns {MetaData}
  */
-function buildBerichtKlassenJson(modelId, berichtId, berichtPkg) {
+function buildBerichtKlassenJson(berichtId, berichtPkg) {
     var json = []
     const berichtKlassen = berichtPkg.ownedElements.filter(element => element instanceof type.UMLClass)
     const berichtKlassenId = berichtId + "/klassen"
 
     for (let i = 0; i < berichtKlassen.length; i++) { 
         const berichtKlasse = berichtKlassen[i]
-        const classId = berichtKlassenId + "/" + berichtKlasse.name
+        const elementId = berichtKlassenId + "/" + berichtKlasse.name
         json.push({
-            "@id": classId,
+            "@id": elementId,
             "@type": jsonLdType.Class,
             name: String(berichtKlasse.name), 
-            elementen: buildElementenJson(modelId, classId, berichtKlasse),
+            elementen: buildElementenJson(elementId, berichtKlasse),
             relaties: buildRelatiesJson(berichtId, berichtKlasse),
         })
     }
@@ -199,15 +227,14 @@ function buildBerichtKlassenJson(modelId, berichtId, berichtPkg) {
 
 
 /**
- * Build a JSON-export Berichten Package Object
- * @param {String} modelId
- * @param {Package} berichtenPkg 
- * @returns json
+ * Build a JSON-export Berichten Package Meta Data
+ * @param {UMLPackage} berichtenPkg 
+ * @returns {MetaData}
  */
-function buildBerichtenPkgJson(modelId, berichtenPkg) {
+function buildBerichtenPkgJson(berichtenPkg) {
     var json = []
     const berichtPkgs = berichtenPkg.ownedElements.filter(element => element instanceof type.UMLPackage)
-    const berichtPkgsId = modelId + "/berichten"
+    const berichtPkgsId = getSpecificModelId() + "/berichten"
 
     for (let i = 0; i < berichtPkgs.length; i++) {
         const berichtPkg = berichtPkgs[i]
@@ -216,13 +243,21 @@ function buildBerichtenPkgJson(modelId, berichtenPkg) {
             "@id": berichtId,
             "@type": jsonLdType.Package,
             name: berichtPkg.name,
-            klassen: buildBerichtKlassenJson(modelId, berichtId, berichtPkg)
+            klassen: buildBerichtKlassenJson(berichtId, berichtPkg)
         })
     }
 
     return json
 }
 
+/**
+ * Build a JSON-export DataWaarden Package Meta Data
+ * @param {String} dataTypeId 
+ * @param {String} primitieveDataTypen 
+ * @param {String} codelijsten 
+ * @param {String} dataType 
+ * @returns {MetaData}
+ */
 function buildDataWaardenJson(dataTypeId, primitieveDataTypen, codelijsten, dataType) {
     var json = []
     const dependencies = dataType.ownedElements.filter(element => element instanceof type.UMLDependency)
@@ -254,14 +289,16 @@ function buildDataWaardenJson(dataTypeId, primitieveDataTypen, codelijsten, data
 }
 
 /**
- * Build a JSON-export Gegevens Package Object
- * @param {String} modelId 
- * @param {Package} gegevensModelPkg 
+ * Build a JSON-export Gegevens Package Meta Data
+ * @param {UMLPackage} primitieveDataTypenPkg 
+ * @param {UMLPackage} codelijstenPkg 
+ * @param {UMLPackage} gegevensPkg 
+ * @returns {MetaData}
  */
-function buildGegegevensJson(modelId, primitieveDataTypen, codelijsten, gegevensPkg) {
+function buildGegegevensJson(primitieveDataTypenPkg, codelijstenPkg, gegevensPkg) {
     var json = []
     const dataTypen = gegevensPkg.ownedElements.filter(element => element instanceof type.UMLDataType)
-    const gegevensId = modelId + "/gegevens"
+    const gegevensId = getGenericModelId() + "/gegevens"
 
     for (let i = 0; i < dataTypen.length; i++) {
         const dataType = dataTypen[i]
@@ -271,8 +308,8 @@ function buildGegegevensJson(modelId, primitieveDataTypen, codelijsten, gegevens
             "@id": dataTypeId,
             "@type": jsonLdType.DataType,
             name: name,
-            dataWaarden: buildDataWaardenJson(dataTypeId, primitieveDataTypen, codelijsten, dataType),
-            elementen: buildElementenJson(modelId, gegevensId, dataType),
+            dataWaarden: buildDataWaardenJson(dataTypeId, primitieveDataTypenPkg, codelijstenPkg, dataType),
+            elementen: buildElementenJson(gegevensId, dataType),
         })
     }
 
@@ -281,15 +318,14 @@ function buildGegegevensJson(modelId, primitieveDataTypen, codelijsten, gegevens
 
 /**
  * Build a JSON-export Object for UML Primitive Types
- * @param {*} modelId 
- * @param {*} project 
- * @returns 
+ * @param {UMLPackage} genericPkg 
+ * @returns {MetaData}
  */
-function buildPrimitieveDataTypenJson(modelId, project) {
+function buildPrimitieveDataTypenJson(genericPkg) {
     var json = []
-    const primitieveTypenPkg = project.ownedElements.find(element => element._id == primitiveTypesPkgId && element instanceof type.UMLPackage)
+    const primitieveTypenPkg = genericPkg.ownedElements.find(element => element._id == primitiveTypesPkgId && element instanceof type.UMLPackage)
     const primitieveTypen = primitieveTypenPkg.ownedElements.filter(element => element instanceof type.UMLPrimitiveType)
-    const primitieveTypenId = modelId + "/primitieveTypen"
+    const primitieveTypenId = getGenericModelId() + "/primitieveTypen"
     
     for (let i = 0; i < primitieveTypen.length; i++) {
         const primitieveType = primitieveTypen[i]
@@ -306,15 +342,14 @@ function buildPrimitieveDataTypenJson(modelId, project) {
 
 /**
  * Build a JSON-export Object for UML Enumerations
- * @param {*} modelId 
- * @param {*} project 
- * @returns 
+ * @param {UMLPackage} genericPkg 
+ * @returns {MetaData}
  */
-function buildCodelijstenJson(modelId, project) {
+function buildCodelijstenJson(genericPkg) {
     var json = []
-    const codelijstenPkg = project.ownedElements.find(element => element._id == codelijstenPkgId && element instanceof type.UMLPackage)
+    const codelijstenPkg = genericPkg.ownedElements.find(element => element._id == codelijstenPkgId && element instanceof type.UMLPackage)
     const codelijsten = codelijstenPkg.ownedElements.filter(element => element instanceof type.UMLEnumeration)
-    const codelijstenId = modelId + "/codelijsten" 
+    const codelijstenId = getGenericModelId() + "/codelijsten" 
     
     for (let i = 0; i < codelijsten.length; i++) {
         const codelijst = codelijsten[i]
@@ -336,15 +371,17 @@ function buildCodelijstenJson(modelId, project) {
  * @returns json
  */
 function buildSpecificMetaDataJson(project) {
-    const modelId = "model:" + project.name + "/specific/" + project.version
-    const berichtenPkg = project.ownedElements.find(element => element.name == 'Berichten' && element instanceof type.UMLPackage)
+    setGenericModelId(project)
+    setSpecificModelId(project) 
+    const specificPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.SPECIFIC_MODEL_PACKAGE.name)
+    const berichtenPkg = utils.getUMLPackagElementByName(specificPkg.ownedElements, globals.BERICHTEN_PACKAGE.name)
     const json = {
-        "@context": jsonLdContextFileName,
-        "@id": modelId,
+        "@context": globals.jsonLdContextFileName,
+        "@id": getSpecificModelId(),
         "@type": jsonLdType.Model,
         name: String(project.name),
         version: String(project.version),
-        berichten: buildBerichtenPkgJson(modelId, berichtenPkg)
+        berichten: buildBerichtenPkgJson(berichtenPkg)
   }
 
     return json
@@ -356,14 +393,15 @@ function buildSpecificMetaDataJson(project) {
  * @returns json
  */
 function buildGenericMetaDataJson(project) {
-    const modelId = "model:" + project.name + "/generic/" + project.version
-    const gegevensPkg = project.ownedElements.find(element => element.name == 'Gegevens' && element instanceof type.UMLPackage)
-    const primitieveDataTypen = buildPrimitieveDataTypenJson(modelId, project)
-    const codelijsten = buildCodelijstenJson(modelId, project)
-    const gegevens = buildGegegevensJson(modelId, primitieveDataTypen, codelijsten, gegevensPkg)
+    setGenericModelId(project)
+    const genericPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.GENERIC_MODEL_PACKAGE.name)
+    const gegevensPkg = utils.getUMLPackagElementByName(genericPkg.ownedElements, globals.GEGEVENS_MODEL_PACKAGE.name)
+    const primitieveDataTypen = buildPrimitieveDataTypenJson(genericPkg)
+    const codelijsten = buildCodelijstenJson(genericPkg)
+    const gegevens = buildGegegevensJson(primitieveDataTypen, codelijsten, gegevensPkg)
     const json = {
-        "@context": jsonLdContextFileName,
-        "@id": modelId,
+        "@context": globals.jsonLdContextFileName,
+        "@id": getGenericModelId(),
         "@type": jsonLdType.Model,
         name: String(project.name),
         version: String(project.version),
@@ -376,6 +414,5 @@ function buildGenericMetaDataJson(project) {
 }
 
 exports.jsonLdContext = jsonLdContext
-exports.jsonLdContextFileName = jsonLdContextFileName
 exports.buildSpecificMetaDataJson = buildSpecificMetaDataJson
 exports.buildGenericMetaDataJson = buildGenericMetaDataJson
