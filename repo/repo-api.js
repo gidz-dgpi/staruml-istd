@@ -13,13 +13,15 @@ var gitLabApi = undefined
  * @param {String} serverURL
  * @param {String} token
  */
-function init(serverURL, token) {
+function init() {
+    const serverURL = app.preferences.get(preferenceKeys.repoServerURL)
+    const authToken = app.preferences.get(preferenceKeys.repoAuthToken)
     const baseURL = serverURL + apiPath
     gitLabApi = axios.create({
         baseURL: baseURL,
         headers: {
             'Content-Type': 'application/json',
-            'PRIVATE-TOKEN': token
+            'PRIVATE-TOKEN': authToken
         }
     })
 }
@@ -47,7 +49,7 @@ function listProjects(searchNamespaces, search, simple) {
     var params = {}
     if (searchNamespaces) params['searchNamespaces'] = searchNamespaces
     if (search) params['search'] = search
-    if (search) params['simple'] = simple
+    if (simple) params['simple'] = simple
     const config = params != {} ? { params: params } : undefined
     return gitLabApi.get(url, config)
 }
