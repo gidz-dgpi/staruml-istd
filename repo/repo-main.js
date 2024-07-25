@@ -32,7 +32,7 @@ function selectRepoAndLoadModelData(repoList) {
                 const modelData = JSON.parse(atob(response.data.content))
                 console.log(modelData)
                 //per laag impoeteren
-                app.project.importFromJson(app.project.getProject(), modelData)
+                //app.project.importFromJson(app.project.getProject(), modelData)
             })
             .catch(reason => {
                 console.log(reason)
