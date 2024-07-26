@@ -56,14 +56,14 @@ function listProjects(searchNamespaces, search, simple) {
 
 /**
  * Based on: https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree
- * @param {String} projecPath 
+ * @param {String} projectId 
  * @param {String | undefined} filePath 
  * @param {Boolean | undefined} recursive 
  * @param {String | undefined} ref 
  * @returns {Promise<axios.get>}
  */
-function listRepoFileTree(projecPath, filePath, recursive, ref) {
-    const id = encodeURIComponent(projecPath)
+function listRepoFileTree(projectId, filePath, recursive, ref) {
+    const id = encodeURIComponent(projectId)
     const url = `/projects/${id}/repository/tree`
     var params = {}
     if (filePath) params['path'] = encodeURIComponent(filePath)
@@ -76,62 +76,62 @@ function listRepoFileTree(projecPath, filePath, recursive, ref) {
 
 /**
  * Based on https://docs.gitlab.com/ee/api/repository_files.html
- * @param {String} projecPath 
+ * @param {String} projectId 
  * @param {String} filePath 
  * @returns {encodedURI}
  */
-function buildRepoFilesPath(projecPath, filePath) {
-    const id = encodeURIComponent(projecPath)
+function buildRepoFilesPath(projectId, filePath) {
+    const id = encodeURIComponent(projectId)
     const ueFilePath = encodeURIComponent(filePath)
     return `/projects/${id}/repository/files/${ueFilePath}`
 }
 
 /**
  * Based on: https://docs.gitlab.com/ee/api/repository_files.html#get-file-from-repository
- * @param {String} projecPath 
+ * @param {String} projectId 
  * @param {String} filePath 
  * @param {String} ref 
  * @returns {Promise<axios.get>}
  */
-function getFileFromRepo(projecPath, filePath, ref) {
+function getFileFromRepo(projectId, filePath, ref) {
     const config = { params: { ref: ref } }
-    return gitLabApi.get(buildRepoFilesPath(projecPath, filePath), config)
+    return gitLabApi.get(buildRepoFilesPath(projectId, filePath), config)
 }
 
 /**
  * Based on: https://docs.gitlab.com/ee/api/repository_files.html#create-new-file-in-repository
- * @param {String} projecPath 
+ * @param {String} projectId 
  * @param {String} branch 
  * @param {String} filePath 
  * @param {String} content 
  * @param {String} commitMessage 
  * @returns {Promise<axios.post>}
  */
-function createNewFileInRepo(projecPath, branch, filePath, content, commitMessage) {
+function createNewFileInRepo(projectId, branch, filePath, content, commitMessage) {
     const data = {
         branch: branch,
         content: content,
         commit_message: commitMessage
     }
-    return gitLabApi.post(buildRepoFilesPath(projecPath, filePath), data)
+    return gitLabApi.post(buildRepoFilesPath(projectId, filePath), data)
 }
 
 /**
  * Based on: https://docs.gitlab.com/ee/api/repository_files.html#update-existing-file-in-repository
- * @param {String} projecPath 
+ * @param {String} projectId 
  * @param {String} branch 
  * @param {String} filePath 
  * @param {String} content 
  * @param {String} commitMessage 
  * @returns {Promise<axios.put>}
  */
-function updateExistingFileInRepo(projecPath, branch, filePath, content, commitMessage) {
+function updateExistingFileInRepo(projectId, branch, filePath, content, commitMessage) {
     const data = {
         branch: branch,
         content: content,
         commit_message: commitMessage
     }
-    return gitLabApi.put(buildRepoFilesPath(projecPath, filePath), data)
+    return gitLabApi.put(buildRepoFilesPath(projectId, filePath), data)
 }
 
 exports.init = init

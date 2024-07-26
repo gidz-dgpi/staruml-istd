@@ -130,7 +130,7 @@ function getUMLDataType(gegevensModelPkg, attrDataTypeName) {
 
 /**
  * Add a String Type Tag to a Project or UMLObjectType
- * @param {Project | UMLObjectType} parent 
+ * @param {UMLObjectType} parent 
  * @param {String} tagName 
  * @param {String} tagValue 
  * @returns {Tag}
@@ -149,6 +149,17 @@ function addStringTag(parent, tagName, tagValue) {
             // tag.reference = ...; // for TK_REFERENCE
         }
     })
+}
+
+/**
+ * Get the Value from a Tag
+ * @param {UMLObjectType} parent 
+ * @param {String} tagName 
+ * @returns {Object | undefined}
+ */
+function getTagValue(parent, tagName) {
+    const tag = parent.tags.find(tag => tag.name == tagName)
+    return tag ? tag.value : undefined
 }
 
 /**
@@ -176,6 +187,24 @@ function getXsdMetaData(xsAppinfo) {
     }
 }
 
+/**
+ * Encode Base64 String with JSON to a JavaScript Object
+ * @param {String} base64JsonStr as JavaScript
+ * @returns {Object}
+ */
+function encodeBase64JsonStrToObj(base64JsonStr) {
+    return JSON.parse(atob(base64JsonStr))
+}
+
+/**
+ * Nice formatted String from JavaScript JSON Object
+ * @param {Object} json 
+ * @returns {String}
+ */
+function jsonToString(json) {
+    return JSON.stringify(json, null, '\t')
+}
+
 exports.getUMLPackagElementByName = getUMLPackagElementByName
 exports.getUMLClassElementByName = getUMLClassElementByName
 exports.getXsAnnotation = getXsAnnotation
@@ -185,6 +214,9 @@ exports.addUMLAttribute = addUMLAttribute
 exports.getDataTypeName = getDataTypeName
 exports.getUMLDataType = getUMLDataType
 exports.addStringTag = addStringTag
+exports.getTagValue = getTagValue
 exports.getAppInfoElementText = getAppInfoElementText
 exports.getXsdMetaData = getXsdMetaData
 exports.buildUMLMultiplicityFromXsOccursAttr = buildUMLMultiplicityFromXsOccursAttr
+exports.encodeBase64JsonStrToObj = encodeBase64JsonStrToObj
+exports.jsonToString = jsonToString
