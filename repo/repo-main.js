@@ -6,7 +6,7 @@ function _handleRepoLoadModelData() {
 }
 
 function _handleRepoStoreModelData() {
-    //repoSourceData.store()
+    repoSourceData.store()
 }
 
 function init() {

@@ -9,6 +9,7 @@
  */
 
 const fs = require('fs')
+const utils = require('../dgpi/dgpi-utils')
 const jsonExport = require('./istd-json-export')
 
 /**
@@ -18,7 +19,7 @@ const jsonExport = require('./istd-json-export')
  */
 function saveJsonToFile(json, filePath) {
   try {
-    fs.writeFileSync(filePath, JSON.stringify(json, null, '\t'))
+    fs.writeFileSync(filePath, utils.jsonToString(json))
   } catch (err) {
     console.error(err)
   }
