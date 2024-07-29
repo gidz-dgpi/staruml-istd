@@ -54,21 +54,74 @@ function selectRepoAndLoadSourceData() {
         .then(response => {
             const repoList = response.data
             const modelGroupPath = app.preferences.get(repoPrefs.keys.repoModelGroupPath)
-            const modelDataList = repoList.filter(item => item.namespace.full_path.startsWith(modelGroupPath) && item.name != 'gitlab-profile')
-            const options = []
+            const modelDataRepoList = repoList.filter(item => item.namespace.full_path.startsWith(modelGroupPath) && item.name != 'gitlab-profile')
+            const repoOptions = []
 
-            for (let i = 0; i < modelDataList.length; i++) {
-                options.push({
-                    text: modelDataList[i].name,
-                    value: modelDataList[i].id
+            for (let i = 0; i < modelDataRepoList.length; i++) {
+                repoOptions.push({
+                    text: modelDataRepoList[i].name,
+                    value: modelDataRepoList[i].id
                 })
             }
 
-            app.dialogs.showSelectDropdownDialog("Selecteer een Model Data repository.", options).then(({ buttonId, returnValue }) => {
+            app.dialogs.showSelectDropdownDialog("Selecteer een Model Data repository.", repoOptions).then(({ buttonId, returnValue }) => {
                 if (buttonId === 'ok') {
-                    const branch = 'test' // branch selection in later phase
                     const projectId = returnValue
-                    LoadMetaDataRootAndFragments(projectId, branch)
+                    const repo = repoOptions.find(option => option.value = projectId)
+                    const repoName = repo.text
+
+                    api.listRepoBranches(projectId)
+                        .then(response => {
+                            console.log('listRepoBranches')
+                            const workBrancheList = response.data.filter(item => !item.protected)
+
+                            if (workBrancheList.length > 0) {
+                                // pre: 1 or more work-branches
+                                if (workBrancheList.length == 1) {
+                                    // post: 1 workbranch
+                                    // Load the only available work-branch
+                                    const branch = workBrancheList[0].name
+                                    LoadMetaDataRootAndFragments(projectId, branch)
+                                } else {
+                                    // post: > 1 work-branches
+                                    // select one of the available work-branches
+                                    const brancheOptions = []
+
+                                    for (let i = 0; i < workBrancheList.length; i++) {
+                                        brancheOptions.push({
+                                            text: workBrancheList[i].name,
+                                            value: workBrancheList[i].name
+                                        })
+                                    }
+
+                                    app.dialogs.showSelectDropdownDialog(`Selecteer "werk-branche" in repo "${repoName}"`, brancheOptions).then(({ buttonId, returnValue }) => {
+                                        if (buttonId === 'ok') {
+                                            const branch = returnValue
+                                            LoadMetaDataRootAndFragments(projectId, branch)
+                                        } else {
+                                            console.log("User canceled")
+                                        }
+                                    })
+
+
+                                }
+
+                            } else {
+                                console.log(`Work-branch (unprotected) not found in repo "${repoName}"`)
+                                app.dialogs.showAlertDialog(`Geen werk-branch (unprotected) in repo "${repoName}" gevonden!`).then(({ buttonId, returnValue }) => {
+                                    if (buttonId === 'ok') {
+                                        console.log(returnValue)
+                                    } else {
+                                        console.log("User canceled")
+                                    }
+                                })
+                            }
+
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+
                 } else {
                     console.log("User canceled")
                 }
@@ -78,10 +131,7 @@ function selectRepoAndLoadSourceData() {
         .catch(error => {
             console.log(error)
         })
-        .finally(() => {
-            // always executed
 
-        })
 }
 
 /**
@@ -106,6 +156,13 @@ function buildAttributeDataList(attributes) {
                 $ref: String(attribute.type._id)
             }
         }
+
+        if (attribute.multiplicity) {
+            if (attribute.multiplicity != '1') {
+                attributeData['multiplicity'] = attribute.multiplicity
+            }
+        }
+
         attributDataList.push(attributeData)
     }
 
@@ -227,30 +284,166 @@ function buildCodeLijstDataList(ownedElements) {
 }
 
 /**
- * Store StarUML Project Root Data in Repository
+ * Build Source Bericht Class Association Data Array
+ * @param {Array<UMLAssociation>} ownedElements 
+ * @returns 
+ */
+function buildBerichtClassAssociationDataList(ownedElements) {
+    const associationDataList = []
+    const associationList = ownedElements.filter(element => element instanceof type.UMLAssociation)
+
+
+    for (let i = 0; i < associationList.length; i++) {
+        const association = associationList[i]
+        const associationData = {
+            _type: 'UMLAssociation',
+            _id: String(association._id),
+            _parent: {
+                $ref: String(association._parent._id)
+            },
+            name: String(association.name),
+            end1: {
+                _type: 'UMLAssociationEnd',
+                _id: String(association.end1._id),
+                _parent: {
+                    $ref: String(association.end1._parent._id)
+                },
+                reference: {
+                    $ref: String(association.end1.reference._id)
+                },
+                aggregation: String(association.end1.aggregation)
+            },
+            end2: {
+                _type: 'UMLAssociationEnd',
+                _id: String(association.end2._id),
+                _parent: {
+                    $ref: String(association.end2._parent._id)
+                },
+                reference: {
+                    $ref: String(association.end2.reference._id)
+                },
+                multiplicity: String(association.end2.multiplicity)
+            },
+        }
+        associationDataList.push(associationData)
+    }
+
+    return associationDataList
+}
+
+/**
+ * Build Source Bericht Class Data Array
+ * @param {Array<UMLClass>} ownedElements 
+ * @returns 
+ */
+function buildBerichtClassDataList(ownedElements) {
+    const berichtClassDataList = []
+    const berichtClassList = ownedElements.filter(element => element instanceof type.UMLClass)
+
+    for (let i = 0; i < berichtClassList.length; i++) {
+        const berichtClass = berichtClassList[i]
+        const berichtClassData = {
+            _type: 'UMLClass',
+            _id: String(berichtClass._id),
+            _parent: {
+                $ref: String(berichtClass._parent._id)
+            },
+            name: String(berichtClass.name),
+            documentation: String(berichtClass.documentation)
+        }
+
+        if (berichtClass.attributes) {
+            berichtClassData['attributes'] = buildAttributeDataList(berichtClass.attributes)
+        }
+
+        if (berichtClass.ownedElements) {
+            berichtClassData['ownedElements'] = buildBerichtClassAssociationDataList(berichtClass.ownedElements)
+        }
+
+        berichtClassDataList.push(berichtClassData)
+    }
+
+    return berichtClassDataList
+}
+
+/**
+ * Build Source Bericht Package Data Array
+ * @param {Array<UMLPackage>} ownedElements 
+ * @returns 
+ */
+function buildBerichtPkgDataList(ownedElements) {
+    const berichtPkgDataList = []
+    const berichtPkgList = ownedElements.filter(element => element instanceof type.UMLPackage)
+
+    for (let i = 0; i < berichtPkgList.length; i++) {
+        const berichtPkg = berichtPkgList[i]
+        const berichtPkgData = {
+            _type: 'UMLPackage',
+            _id: String(berichtPkg._id),
+            _parent: {
+                $ref: String(berichtPkg._parent._id)
+            },
+            name: String(berichtPkg.name),
+            documentation: String(berichtPkg.documentation),
+            ownedElements: buildBerichtClassDataList(berichtPkg.ownedElements)
+        }
+        berichtPkgDataList.push(berichtPkgData)
+    }
+
+    return berichtPkgDataList
+}
+
+/**
+ * Store StarUML Project Specfic Data in Repository
  * @param {Project} root 
- * @param {String} rootId 
  * @param {String} branch 
  * @param {String | Number} projectId 
  * @param {String} commitMessage 
  */
-function update_Root_Generic_Specfic_SourceDataInRepo(root, branch, projectId, commitMessage) {
-    const rootMetaDataFilePath = `${sourceData.path}/${sourceData.rootMetaDataFile}`
-    const rootMetaData = {
-        _type: 'Project',
-        _id: String(root._id),
-        name: String(root.name),
-        version: String(root.version)
+function update_Specfic_SourceDataInRepo(root, branch, projectId, commitMessage) {
+    // build bericht model data
+    const specificPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.SPECIFIC_MODEL_PACKAGE.name)
+    const specificPkgId = String(specificPkg._id)
+    const berichtenModelPkg = utils.getUMLPackagElementByName(specificPkg.ownedElements, istGlobals.BERICHTEN_PACKAGE.name)
+    const berichtenModelPkgId = String(berichtenModelPkg._id)
+
+    const berichtenModelPkgData = {
+        _type: 'UMLPackage',
+        _id: berichtenModelPkgId,
+        _parent: {
+            $ref: specificPkgId
+        },
+        name: istGlobals.BERICHTEN_PACKAGE.name,
+        documentation: istGlobals.BERICHTEN_PACKAGE.documentation,
+        ownedElements: buildBerichtPkgDataList(berichtenModelPkg.ownedElements)
     }
-    api.updateExistingFileInRepo(projectId, branch, rootMetaDataFilePath, utils.jsonToString(rootMetaData), commitMessage)
+
+    // build specific model data
+    const specificModelMetaData = {
+        _type: 'UMLPackage',
+        _id: specificPkgId,
+        _parent: {
+            $ref: root._id
+        },
+        name: String(specificPkg.name),
+        documentation: String(specificPkg.documentation),
+        ownedElements: [berichtenModelPkgData]
+    }
+
+    // update specific source data
+    api.updateExistingFileInRepo(
+        projectId,
+        branch,
+        `${sourceData.path}/${sourceData.specificModelMetaDataFile}`,
+        utils.jsonToString(specificModelMetaData),
+        commitMessage
+    )
         .then(response => {
             // handle success
-            console.log('update root source data')
-            console.log('=======================')
+            console.log('update specific source data')
+            console.log('==========================')
             console.log(response.status)
             console.log(response.data)
-            const genericPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.GENERIC_MODEL_PACKAGE.name)
-            update_Generic_Specfic_SourceDataInRepo(genericPkg, branch, projectId, commitMessage)
         })
         .catch(error => {
             // handle error
@@ -263,15 +456,15 @@ function update_Root_Generic_Specfic_SourceDataInRepo(root, branch, projectId, c
 }
 
 /**
- * Store StarUML Project Root Data in Repository
- * @param {UMLPackage} genericPkg 
- * @param {String} genericPkgId 
+ * Store StarUML Project Generic and Specfic Data in Repository
+ * @param {Project} root 
  * @param {String} branch 
  * @param {String | Number} projectId 
  * @param {String} commitMessage 
  */
-function update_Generic_Specfic_SourceDataInRepo(genericPkg, branch, projectId, commitMessage) {
+function update_Generic_Specfic_SourceDataInRepo(root, branch, projectId, commitMessage) {
     // build gegevens model data
+    const genericPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.GENERIC_MODEL_PACKAGE.name)
     const genericPkgId = String(genericPkg._id)
     const gegevensModelPkg = utils.getUMLPackagElementByName(genericPkg.ownedElements, istGlobals.GEGEVENS_MODEL_PACKAGE.name)
     const gegevensModelPkgId = String(gegevensModelPkg._id)
@@ -312,13 +505,12 @@ function update_Generic_Specfic_SourceDataInRepo(genericPkg, branch, projectId, 
         ownedElements: buildCodeLijstDataList(codeLijstenPkg.ownedElements)
     }
 
-    // update generic package data
-    const genericModelMetaDataFilePath = `${sourceData.path}/${sourceData.genericModelMetaDataFile}`
+    // build generic model data
     const genericModelMetaData = {
         _type: 'UMLPackage',
         _id: genericPkgId,
         _parent: {
-            $ref: gegevensModelPkg._parent._id
+            $ref: root._id
         },
         name: String(genericPkg.name),
         documentation: String(genericPkg.documentation),
@@ -328,15 +520,57 @@ function update_Generic_Specfic_SourceDataInRepo(genericPkg, branch, projectId, 
             codeLijstenPkgData
         ]
     }
-    api.updateExistingFileInRepo(projectId, branch, genericModelMetaDataFilePath, utils.jsonToString(genericModelMetaData), commitMessage)
+
+    // update generic package data
+    api.updateExistingFileInRepo(
+        projectId,
+        branch,
+        `${sourceData.path}/${sourceData.genericModelMetaDataFile}`,
+        utils.jsonToString(genericModelMetaData),
+        commitMessage
+    )
         .then(response => {
             // handle success
             console.log('update generic source data')
             console.log('==========================')
             console.log(response.status)
             console.log(response.data)
-            // store specific package
-            
+            update_Specfic_SourceDataInRepo(root, branch, projectId, commitMessage)
+        })
+        .catch(error => {
+            // handle error
+            console.log(error)
+        })
+        .finally(() => {
+            // always executed
+
+        })
+}
+
+/**
+ * Store StarUML Project Root, Generic and Specfic Data in Repository
+ * @param {Project} root 
+ * @param {String} rootId 
+ * @param {String} branch 
+ * @param {String | Number} projectId 
+ * @param {String} commitMessage 
+ */
+function update_Root_Generic_Specfic_SourceDataInRepo(root, branch, projectId, commitMessage) {
+    const rootMetaDataFilePath = `${sourceData.path}/${sourceData.rootMetaDataFile}`
+    const rootMetaData = {
+        _type: 'Project',
+        _id: String(root._id),
+        name: String(root.name),
+        version: String(root.version)
+    }
+    api.updateExistingFileInRepo(projectId, branch, rootMetaDataFilePath, utils.jsonToString(rootMetaData), commitMessage)
+        .then(response => {
+            // handle success
+            console.log('update root source data')
+            console.log('=======================')
+            console.log(response.status)
+            console.log(response.data)
+            update_Generic_Specfic_SourceDataInRepo(root, branch, projectId, commitMessage)
         })
         .catch(error => {
             // handle error

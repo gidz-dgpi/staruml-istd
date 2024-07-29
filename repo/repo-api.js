@@ -27,6 +27,14 @@ function init() {
 }
 
 /**
+ * Based on https://docs.gitlab.com/ee/api/users.html#list-current-user
+ * @returns {Promise<axios.get>}
+ */
+function listCurrentUser() {
+    return gitLabApi.get('/user')
+}
+
+/**
  * Based on https://docs.gitlab.com/ee/api/groups.html#list-a-groups-subgroups
  * @param {String} groupPath 
  * @returns {Promise<axios.get>}
@@ -55,6 +63,18 @@ function listProjects(searchNamespaces, search, simple) {
 }
 
 /**
+ * Based on https://docs.gitlab.com/ee/api/branches.html#list-repository-branches
+ * @param {String} projectId 
+ * @returns {Promise<axios.get>}
+ */
+function listRepoBranches(projectId) {
+    const id = encodeURIComponent(projectId)
+    const url = `/projects/${id}/repository/branches`
+    return gitLabApi.get(url)
+}
+
+
+/**
  * Based on: https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree
  * @param {String} projectId 
  * @param {String | undefined} filePath 
@@ -70,7 +90,6 @@ function listRepoFileTree(projectId, filePath, recursive, ref) {
     if (recursive) params['recursive'] = recursive
     if (ref) params['ref'] = ref
     const config = params != {} ? { params: params } : undefined
-    console.log(config)
     return gitLabApi.get(url, config)
 }
 
@@ -135,8 +154,10 @@ function updateExistingFileInRepo(projectId, branch, filePath, content, commitMe
 }
 
 exports.init = init
+exports.listCurrentUser = listCurrentUser
 exports.listSubGroups = listSubGroups
 exports.listProjects = listProjects
+exports.listRepoBranches = listRepoBranches
 exports.listRepoFileTree = listRepoFileTree
 exports.getFileFromRepo = getFileFromRepo
 exports.createNewFileInRepo = createNewFileInRepo
