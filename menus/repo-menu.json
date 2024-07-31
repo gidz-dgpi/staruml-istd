@@ -7,11 +7,11 @@
           {
             "label": "Model Data ophalen",
             "id": "repo.model.data.ophalen",
-            "command": "repo:load:model:data"
+            "command": "repo:retrieve:model:data"
           },
           {
             "label": "Model Data bewaren",
-            "id": "repo.model.data.publiceren",
+            "id": "repo.model.data.bewaren",
             "command": "repo:store:model:data"
           }
         ]

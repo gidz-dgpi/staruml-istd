@@ -9,9 +9,7 @@ const apiPath = '/api/v4'
 var gitLabApi = undefined
 
 /**
- * Initialize Generic Axios GitLab Api Settings
- * @param {String} serverURL
- * @param {String} token
+ * Initialize Generic Axios GitLab Api Settings from StarUML Preferences
  */
 function init() {
     const serverURL = app.preferences.get(preferenceKeys.repoServerURL)

@@ -6,129 +6,224 @@ const repoPrefs = require('./repo-prefs')
 const api = require('./repo-api')
 const utils = require('../dgpi/dgpi-utils')
 
-
-function loadMetaDataFragments(root, projectId, branch) {
-
-    api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.genericModelMetaDataFile}`, branch)
-        .then(response => {
-            app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(response.data.content))
-
-            api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.specificModelMetaDataFile}`, branch)
-                .then(response => {
-                    app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(response.data.content))
-                })
-                .catch(reason => {
-                    console.log(reason)
-                })
-
-        })
-        .catch(reason => {
-            console.log(reason)
-        })
-
-}
-
-function LoadMetaDataRootAndFragments(projectId, branch) {
-    api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.rootMetaDataFile}`, branch)
-        .then(response => {
-            // create new application root object
-            const root = app.project.loadFromJson(utils.encodeBase64JsonStrToObj(response.data.content))
-            // add Tags that are used to keep repository storage locations info
-            utils.addStringTag(root, 'projectId', projectId)
-            utils.addStringTag(root, 'branch', branch)
-            console.log(root)
-            // add Meta Data Fragments for different levels
-            loadMetaDataFragments(root, projectId, branch)
-        })
-        .catch(reason => {
-            console.log(reason)
-        })
+/**
+ * Add StarUML UMLPackage from Repository Specific Model Data
+ * @param {Project} root 
+ * @param {Base64JsonString} specficDataContent 
+ * @returns {UMLPackage}
+ */
+function addMetaDataSpecficModel(root, specficDataContent) {
+    return app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(specficDataContent))
 }
 
 /**
- * Select Model Data Repository and Load Source Data
+ * Get Promise to retrieve Meta Data for the Specific Model from selected Branch in Repository
+ * @param {String | Number} projectId 
+ * @param {String} branche  
  */
-function selectRepoAndLoadSourceData() {
-    api.init()
-    api.listProjects(false, undefined, true)
-        .then(response => {
-            const repoList = response.data
-            const modelGroupPath = app.preferences.get(repoPrefs.keys.repoModelGroupPath)
-            const modelDataRepoList = repoList.filter(item => item.namespace.full_path.startsWith(modelGroupPath) && item.name != 'gitlab-profile')
-            const repoOptions = []
+function getMetaDataSpecificModel(projectId, branche) {
+    return api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.specificModelMetaDataFile}`, branche)
+}
 
-            for (let i = 0; i < modelDataRepoList.length; i++) {
-                repoOptions.push({
-                    text: modelDataRepoList[i].name,
-                    value: modelDataRepoList[i].id
-                })
+/**
+ * Add StarUML UMLPackage from Repository Generic Model Data
+ * @param {Project} root 
+ * @param {Base64JsonString} genericDataContent 
+ * @returns {UMLPackage}
+ */
+function addMetaDataGenericModel(root, genericDataContent) {
+    return app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(genericDataContent))
+}
+
+/**
+ * Get Promise to retrieve Meta Data for the Generic Model from selected Branch in Repository
+ * @param {String | Number} projectId 
+ * @param {String} branche  
+ */
+function getMetaDataGenericModel(projectId, branche) {
+    return api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.genericModelMetaDataFile}`, branche)
+}
+
+/**
+ * Create new StarUML Project from Repository Root Data Content
+ * @param {Base64JsonString} rootDataContent 
+ * @param {String | Number} projectId
+ * @param {String} branch
+ * @returns {Project}
+ */
+function createMetaDataRoot(rootDataContent, projectId, branch) {
+    // create new application root object
+    const root = app.project.loadFromJson(utils.encodeBase64JsonStrToObj(rootDataContent))
+    // add Tags that are used to keep repository storage locations info
+    utils.addStringTag(root, 'projectId', projectId)
+    utils.addStringTag(root, 'branch', branch)
+    return root
+}
+
+/**
+ * Get Promise to retrieve Meta Data Root from selected Branch in Repository
+ * @param {Strung | Number} projectId 
+ * @param {String} branche  
+ */
+function getMetaDataRoot(projectId, branche) {
+    return api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.rootMetaDataFile}`, branche)
+}
+
+/**
+ * Get Model Data Repository Selection Options from all avalailable GitLab Repositories
+ * @param {Array<GitLabRepoData>} repoList all avalailable GitLab Repositories
+ */
+function getModelDataRepoOptions(repoList) {
+    const modelGroupPath = app.preferences.get(repoPrefs.keys.repoModelGroupPath)
+    const modelDataRepoList = repoList.filter(item => item.namespace.full_path.startsWith(modelGroupPath) && item.name != 'gitlab-profile')
+    const modelDataRepoOptions = []
+
+    for (let i = 0; i < modelDataRepoList.length; i++) {
+        modelDataRepoOptions.push({
+            text: String(modelDataRepoList[i].name),
+            value: String(modelDataRepoList[i].id)
+        })
+    }
+
+    return modelDataRepoOptions
+}
+
+function getModelDataRepoBrancheOptions(brancheList) {
+    const workBrancheList = brancheList.filter(item => !item.protected)
+    const modelDataRepoBrancheOptions = []
+
+    for (let i = 0; i < workBrancheList.length; i++) {
+        modelDataRepoBrancheOptions.push({
+            text: workBrancheList[i].name,
+            value: workBrancheList[i].name
+        })
+    }
+
+    return modelDataRepoBrancheOptions
+}
+
+function getRepoList() {
+    return api.listProjects(false, undefined, true)
+}
+
+/**
+ * Select a Model Data Repo Option
+ * @param {{text: string, value: string}[]} options 
+ * @returns {Promise<dialog>}
+ */
+function selectModelDataRepo(options) {
+    return app.dialogs.showSelectDropdownDialog(
+        'Selecteer een Model Data repository.',
+        options)
+}
+
+/**
+ * Retrieve StarUML Source Meta Data from GitLab Repository
+ */
+function retrieveSourceDataFromRepo() {
+    // Initialize process vars
+    let modelDataRepoOptions = []
+    let modelDataRepoSelection = {
+        id: undefined,
+        name: undefined,
+        branch: undefined,
+    }
+    metaModelRoot = undefined 
+    genericModelPkg = undefined
+    api.init()
+
+    /**
+     * (0) Get available Model Data Repos 
+     */
+    getRepoList()
+        /**
+         * (1.a) Select a Model Data Repo
+         */
+        .then(response => {
+            modelDataRepoOptions = getModelDataRepoOptions(response.data)
+            return selectModelDataRepo(modelDataRepoOptions)
+        })
+        /**
+         * (1.b) Get available Branches
+         */
+        .then(({ buttonId, returnValue }) => {
+
+            if (buttonId === 'ok') {
+                const option = modelDataRepoOptions.find(item => item.value == returnValue)
+                modelDataRepoSelection.id = option.value
+                modelDataRepoSelection.name = option.text
+                return api.listRepoBranches(modelDataRepoSelection.id)
+            } else {
+                return Promise.reject('Geen Model Data repository geselecteerd!!')
             }
 
-            app.dialogs.showSelectDropdownDialog("Selecteer een Model Data repository.", repoOptions).then(({ buttonId, returnValue }) => {
-                if (buttonId === 'ok') {
-                    const projectId = returnValue
-                    const repo = repoOptions.find(option => option.value = projectId)
-                    const repoName = repo.text
+        })
+        /**
+         * (1.c) Select a non-protected Branch 
+         */
+        .then(response => {
+            const brancheOptions = getModelDataRepoBrancheOptions(response.data)
 
-                    api.listRepoBranches(projectId)
-                        .then(response => {
-                            console.log('listRepoBranches')
-                            const workBrancheList = response.data.filter(item => !item.protected)
-
-                            if (workBrancheList.length > 0) {
-                                // pre: 1 or more work-branches
-                                if (workBrancheList.length == 1) {
-                                    // post: 1 workbranch
-                                    // Load the only available work-branch
-                                    const branch = workBrancheList[0].name
-                                    LoadMetaDataRootAndFragments(projectId, branch)
-                                } else {
-                                    // post: > 1 work-branches
-                                    // select one of the available work-branches
-                                    const brancheOptions = []
-
-                                    for (let i = 0; i < workBrancheList.length; i++) {
-                                        brancheOptions.push({
-                                            text: workBrancheList[i].name,
-                                            value: workBrancheList[i].name
-                                        })
-                                    }
-
-                                    app.dialogs.showSelectDropdownDialog(`Selecteer "werk-branche" in repo "${repoName}"`, brancheOptions).then(({ buttonId, returnValue }) => {
-                                        if (buttonId === 'ok') {
-                                            const branch = returnValue
-                                            LoadMetaDataRootAndFragments(projectId, branch)
-                                        } else {
-                                            console.log("User canceled")
-                                        }
-                                    })
-
-
-                                }
-
-                            } else {
-                                console.log(`Work-branch (unprotected) not found in repo "${repoName}"`)
-                                app.dialogs.showAlertDialog(`Geen werk-branch (unprotected) in repo "${repoName}" gevonden!`).then(({ buttonId, returnValue }) => {
-                                    if (buttonId === 'ok') {
-                                        console.log(returnValue)
-                                    } else {
-                                        console.log("User canceled")
-                                    }
-                                })
-                            }
-
-                        })
-                        .catch(error => {
-                            console.log(error)
-                        })
-
-                } else {
-                    console.log("User canceled")
-                }
-            })
+            if (brancheOptions.length > 0) {
+                return app.dialogs.showSelectDropdownDialog(
+                    `Selecteer "werk-branche" in repo "${modelDataRepoSelection.name}"`,
+                    brancheOptions
+                )
+            } else {
+                const error = 'Geen (non-protected) werk-branches beschikbaar!'
+                app.dialogs.showAlertDialog(error)
+                return Promise.reject(error)
+            }
 
         })
+        /**
+         * (2.a) Load Root Meta Data
+         */
+        .then(({ buttonId, returnValue }) => {
+
+            if (buttonId === 'ok') {
+                modelDataRepoSelection.branch = returnValue
+                return getMetaDataRoot(modelDataRepoSelection.id, modelDataRepoSelection.branch)
+            } else {
+                return Promise.reject('Geen werk-branche geselecteerd!')
+            }
+
+        })
+        /**
+         * (2.b) 
+         * - Create Project from Root Meta Data
+         * - Retrieve Generic Meta Data Fragment
+         */
+        .then(response => {
+            metaModelRoot = createMetaDataRoot(response.data.content, modelDataRepoSelection.id, modelDataRepoSelection.branch)
+            return getMetaDataGenericModel(modelDataRepoSelection.id, modelDataRepoSelection.branch)
+        })
+        /**
+         * (2.c) 
+         * - Create UMLPacpakge from Generic Meta Data Fragment
+         * - Retrieve Specific Meta Data Fragment
+         */
+        .then(response => {
+            genericModelPkg = addMetaDataGenericModel(metaModelRoot, response.data.content)
+            return getMetaDataSpecificModel(modelDataRepoSelection.id, modelDataRepoSelection.branch)
+        })
+        /**
+         * (2.d) 
+         * - Create UMLPacpakge from Generic Meta Data Fragment
+         * - Retrieve Specific Meta Data Fragment
+         */
+        .then(response => {
+            specficModelPkg = addMetaDataSpecficModel(metaModelRoot, response.data.content)
+            app.dialogs.showAlertDialog(
+                `Bron Meta Data Model succesvol opgehaald van repository=[${modelDataRepoSelection.name}] branch=[${modelDataRepoSelection.branch}] !`
+            )
+        })
+
+        /**
+         * Handle Rejections
+         */
         .catch(error => {
+            // handle error
             console.log(error)
         })
 
@@ -597,5 +692,5 @@ function storeSourceDataInRepo() {
 }
 
 
-exports.selectAndLoad = selectRepoAndLoadSourceData
+exports.retrieve = retrieveSourceDataFromRepo
 exports.store = storeSourceDataInRepo
