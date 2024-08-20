@@ -128,7 +128,7 @@ function retrieveSourceDataFromRepo() {
         name: undefined,
         branch: undefined,
     }
-    metaModelRoot = undefined 
+    metaModelRoot = undefined
     genericModelPkg = undefined
     api.init()
 
@@ -678,17 +678,186 @@ function update_Root_Generic_Specfic_SourceDataInRepo(root, branch, projectId, c
 }
 
 /**
+ * Update StarUML Project Specific Data in Repository
+ * @param {Project} root 
+ * @param {String} rootId 
+ * @param {String} branch 
+ * @param {String | Number} projectId 
+ * @param {String} commitMessage 
+ */
+function updateSpecificSourceDataInRepo(root, branch, projectId, commitMessage) {
+    // build bericht model data
+    const specificPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.SPECIFIC_MODEL_PACKAGE.name)
+    const specificPkgId = String(specificPkg._id)
+    const berichtenModelPkg = utils.getUMLPackagElementByName(specificPkg.ownedElements, istGlobals.BERICHTEN_PACKAGE.name)
+    const berichtenModelPkgId = String(berichtenModelPkg._id)
+
+    const berichtenModelPkgData = {
+        _type: 'UMLPackage',
+        _id: berichtenModelPkgId,
+        _parent: {
+            $ref: specificPkgId
+        },
+        name: istGlobals.BERICHTEN_PACKAGE.name,
+        documentation: istGlobals.BERICHTEN_PACKAGE.documentation,
+        ownedElements: buildBerichtPkgDataList(berichtenModelPkg.ownedElements)
+    }
+
+    // build specific model data
+    const specificModelMetaData = {
+        _type: 'UMLPackage',
+        _id: specificPkgId,
+        _parent: {
+            $ref: root._id
+        },
+        name: String(specificPkg.name),
+        documentation: String(specificPkg.documentation),
+        ownedElements: [berichtenModelPkgData]
+    }
+
+    return api.updateExistingFileInRepo(
+        projectId,
+        branch,
+        `${sourceData.path}/${sourceData.specificModelMetaDataFile}`,
+        utils.jsonToString(specificModelMetaData),
+        commitMessage
+    )
+}
+
+/**
+ * Update StarUML Project Generic Data in Repository
+ * @param {Project} root 
+ * @param {String} rootId 
+ * @param {String} branch 
+ * @param {String | Number} projectId 
+ * @param {String} commitMessage 
+ */
+function updateGenericSourceDataInRepo(root, branch, projectId, commitMessage) {
+    // build gegevens model data
+    const genericPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.GENERIC_MODEL_PACKAGE.name)
+    const genericPkgId = String(genericPkg._id)
+    const gegevensModelPkg = utils.getUMLPackagElementByName(genericPkg.ownedElements, istGlobals.GEGEVENS_MODEL_PACKAGE.name)
+    const gegevensModelPkgId = String(gegevensModelPkg._id)
+    const gegevensModelPkgData = {
+        _type: 'UMLPackage',
+        _id: gegevensModelPkgId,
+        _parent: {
+            $ref: genericPkgId
+        },
+        name: istGlobals.GEGEVENS_MODEL_PACKAGE.name,
+        documentation: istGlobals.GEGEVENS_MODEL_PACKAGE.documentation,
+        ownedElements: buildDataTypeList(gegevensModelPkg.ownedElements)
+    }
+
+    // build primtive types data
+    const primitieveTypenPkg = genericPkg.ownedElements.find(element => element._id == primitiveTypesPkgId && element instanceof type.UMLPackage)
+    const primitieveTypenPkgData = {
+        _type: 'UMLPackage',
+        _id: primitieveTypenPkg._id,
+        _parent: {
+            $ref: genericPkgId
+        },
+        name: String(primitieveTypenPkg.name),
+        documentation: String(primitieveTypenPkg.documentation),
+        ownedElements: buildPrimitieveTypesDataList(primitieveTypenPkg.ownedElements)
+    }
+
+    // build codelijsten data
+    const codeLijstenPkg = genericPkg.ownedElements.find(element => element._id == codelijstenPkgId && element instanceof type.UMLPackage)
+    const codeLijstenPkgData = {
+        _type: 'UMLPackage',
+        _id: codeLijstenPkg._id,
+        _parent: {
+            $ref: genericPkgId
+        },
+        name: String(codeLijstenPkg.name),
+        documentation: String(codeLijstenPkg.documentation),
+        ownedElements: buildCodeLijstDataList(codeLijstenPkg.ownedElements)
+    }
+
+    // build generic model data
+    const genericModelMetaData = {
+        _type: 'UMLPackage',
+        _id: genericPkgId,
+        _parent: {
+            $ref: root._id
+        },
+        name: String(genericPkg.name),
+        documentation: String(genericPkg.documentation),
+        ownedElements: [
+            gegevensModelPkgData,
+            primitieveTypenPkgData,
+            codeLijstenPkgData
+        ]
+    }
+
+    return api.updateExistingFileInRepo(
+        projectId,
+        branch,
+        `${sourceData.path}/${sourceData.genericModelMetaDataFile}`,
+        utils.jsonToString(genericModelMetaData),
+        commitMessage
+    )
+}
+
+/**
+ * Update StarUML Project Root Source Data in Repository
+ * @param {Project} root 
+ * @param {String} rootId 
+ * @param {String} branch 
+ * @param {String | Number} projectId 
+ * @param {String} commitMessage 
+ */
+function updateRootSourceDataInRepo(root, branch, projectId, commitMessage) {
+    const rootMetaDataFilePath = `${sourceData.path}/${sourceData.rootMetaDataFile}`
+    const rootMetaData = {
+        _type: 'Project',
+        _id: String(root._id),
+        name: String(root.name),
+        version: String(root.version)
+    }
+    return api.updateExistingFileInRepo(
+        projectId,
+        branch,
+        rootMetaDataFilePath,
+        utils.jsonToString(rootMetaData),
+        commitMessage)
+}
+
+/**
  * Store StarUML Project Source Data in Repository
  */
 function storeSourceDataInRepo() {
-    // initialize store data
+    // initialize process vars
     const root = app.project.getProject()
     const branch = utils.getTagValue(root, 'branch')
     const projectId = utils.getTagValue(root, 'projectId')
     const commitMessage = 'StarUML.storeSourceDataInRepo-functie d.d. ' + new Date()
 
     // store all source data
-    update_Root_Generic_Specfic_SourceDataInRepo(root, branch, projectId, commitMessage)
+    //update_Root_Generic_Specfic_SourceDataInRepo(root, branch, projectId, commitMessage)
+
+    updateRootSourceDataInRepo(root, branch, projectId, commitMessage)
+        .then(response => {
+            console.log(`update Root source data, status = ${response.status}`)
+            return updateGenericSourceDataInRepo(root, branch, projectId, commitMessage)
+        })
+        .then(response => {
+            console.log(`update Generic source data, status = ${response.status}`)
+            return updateSpecificSourceDataInRepo(root, branch, projectId, commitMessage)
+        })
+        .then(response => {
+            console.log(`update Specific source data, status = ${response.status}`)
+            app.dialogs.showAlertDialog(`Project bewaard in branch[${branch}]. status[${response.status}]`) 
+        })        
+        /**
+         * Handle Rejections
+         */
+        .catch(error => {
+            // handle error
+            console.log(error)
+        })
+
 }
 
 
