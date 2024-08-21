@@ -4,6 +4,13 @@ const sourceData = require('./repo-globals').sourceData
 const repoPrefs = require('./repo-prefs')
 
 /**
+ * Initialize Transaction Connection(s)
+ */
+function init() {
+    api.init()
+}
+
+/**
  * Promise to get Model Data Repositories
  * @returns {Promise<String[]>}
  */
@@ -108,18 +115,53 @@ function getMetaDataRoot(projectId, branche) {
  * Update Root Resource Data in Branch
  * @param {String | Number} projectId 
  * @param {String} branch 
- * @param {{_type: String, _id: String, name: String, version: String}} rootResourceData 
+ * @param {ProjectJson} rootResourceData 
  * @param {String} commitMessage 
  */
-function updateRootSourceData(projectId, branch, rootResourceData, commitMessage) {
+function updateRootSourceData(projectId, branch, rootSourceData, commitMessage) {
     return api.updateExistingFileInRepo(
         projectId,
         branch,
         `${sourceData.path}/${sourceData.rootMetaDataFile}`,
-        utils.jsonToString(rootResourceData),
+        utils.jsonToString(rootSourceData),
         commitMessage)
 }
 
+/**
+ * Update Generic Resource Data in Branch
+ * @param {String | Number} projectId 
+ * @param {String} branch 
+ * @param {UMLPackageJson} genericResourceData 
+ * @param {String} commitMessage 
+ */
+function updateGenericSourceData(projectId, branch, genericSourceData, commitMessage) {
+    return api.updateExistingFileInRepo(
+        projectId,
+        branch,
+        `${sourceData.path}/${sourceData.genericModelMetaDataFile}`,
+        utils.jsonToString(genericSourceData),
+        commitMessage
+    )
+}
+
+/**
+ * Update Specific Resource Data in Branch
+ * @param {String | Number} projectId 
+ * @param {String} branch 
+ * @param {UMLPackageJson} specificResourceData 
+ * @param {String} commitMessage 
+ */
+function updateSpecificSourceData(projectId, branch, specificSourceData, commitMessage) {
+    return api.updateExistingFileInRepo(
+        projectId,
+        branch,
+        `${sourceData.path}/${sourceData.specificModelMetaDataFile}`,
+        utils.jsonToString(specificSourceData),
+        commitMessage
+    )
+}
+
+exports.init = init
 exports.getModelDataRepoList = getModelDataRepoList
 exports.getWorkBranches = getWorkBranches
 exports.addMetaDataSpecficModel = addMetaDataSpecficModel
@@ -129,3 +171,5 @@ exports.getMetaDataGenericModel = getMetaDataGenericModel
 exports.createMetaDataRoot = createMetaDataRoot
 exports.getMetaDataRoot = getMetaDataRoot
 exports.updateRootSourceData = updateRootSourceData
+exports.updateGenericSourceData = updateGenericSourceData
+exports.updateSpecificSourceData = updateSpecificSourceData
