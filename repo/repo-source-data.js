@@ -27,13 +27,13 @@ function getModelDataRepoOptions(repoList) {
 }
 
 function getModelDataRepoBrancheOptions(brancheList) {
-    const workBrancheList = brancheList.filter(item => !item.protected)
     const modelDataRepoBrancheOptions = []
 
-    for (let i = 0; i < workBrancheList.length; i++) {
+    for (let i = 0; i < brancheList.length; i++) {
+        const branchName = String(brancheList[i].name)
         modelDataRepoBrancheOptions.push({
-            text: workBrancheList[i].name,
-            value: workBrancheList[i].name
+            text: branchName,
+            value: branchName
         })
     }
 
@@ -69,16 +69,17 @@ function retrieveSourceDataFromRepo() {
     /**
      * (0) Get available Model Data Repos 
      */
-    trans.getRepoList()
+    trans.getModelDataRepoList()
         /**
          * (1.a) Select a Model Data Repo
          */
-        .then(response => {
-            modelDataRepoOptions = getModelDataRepoOptions(response.data)
+        .then(modelDataRepoList => {
+            //modelDataRepoOptions = getModelDataRepoOptions(response.data)
+            modelDataRepoOptions = getModelDataRepoOptions(modelDataRepoList)
             return selectModelDataRepo(modelDataRepoOptions)
         })
         /**
-         * (1.b) Get available Branches
+         * (1.b) Get available Work Branches
          */
         .then(({ buttonId, returnValue }) => {
 
@@ -86,7 +87,6 @@ function retrieveSourceDataFromRepo() {
                 const option = modelDataRepoOptions.find(item => item.value == returnValue)
                 modelDataRepoSelection.id = option.value
                 modelDataRepoSelection.name = option.text
-                //return api.listRepoBranches(modelDataRepoSelection.id)
                 return trans.getWorkBranches(modelDataRepoSelection.id)
             } else {
                 return Promise.reject('Geen Model Data repository geselecteerd!!')
@@ -96,9 +96,8 @@ function retrieveSourceDataFromRepo() {
         /**
          * (1.c) Select a non-protected Branch 
          */
-        .then(response => {
-            //const brancheOptions = getModelDataRepoBrancheOptions(response.data)
-            const brancheOptions = getModelDataRepoBrancheOptions(response)
+        .then(workBranches => {
+            const brancheOptions = getModelDataRepoBrancheOptions(workBranches)
 
             if (brancheOptions.length > 0) {
                 return app.dialogs.showSelectDropdownDialog(
