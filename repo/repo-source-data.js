@@ -1,8 +1,6 @@
 const istGlobals = require('../istd/istd-globals')
 const codelijstenPkgId = require('../istd/istd-codelijsten').codelijstenPkgId
 const primitiveTypesPkgId = require('../istd/istd-primitive-types').primitiveTypesPkgId
-const sourceData = require('./repo-globals').sourceData
-const api = require('./repo-api')
 const utils = require('../dgpi/dgpi-utils')
 const trans = require('./repo-trans')
 
@@ -65,7 +63,7 @@ function retrieveSourceDataFromRepo() {
     }
     metaModelRoot = undefined
     genericModelPkg = undefined
-    api.init()
+    trans.init()
 
     /**
      * (0) Get available Model Data Repos 
@@ -424,14 +422,14 @@ function buildBerichtPkgDataList(ownedElements) {
 }
 
 /**
- * Update StarUML Project Specific Data in Repository
+ * Store StarUML Project Specific Data in Repository
  * @param {Project} root 
  * @param {String} rootId 
  * @param {String} branch 
  * @param {String | Number} projectId 
  * @param {String} commitMessage 
  */
-function updateSpecificSourceDataInRepo(root, branch, projectId, commitMessage) {
+function storeSpecificSourceDataInRepo(root, branch, projectId, commitMessage) {
     // build bericht model data
     const specificPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.SPECIFIC_MODEL_PACKAGE.name)
     const specificPkgId = String(specificPkg._id)
@@ -450,7 +448,7 @@ function updateSpecificSourceDataInRepo(root, branch, projectId, commitMessage) 
     }
 
     // build specific model data
-    const specificModelMetaData = {
+    const specificSourceData = {
         _type: 'UMLPackage',
         _id: specificPkgId,
         _parent: {
@@ -461,24 +459,19 @@ function updateSpecificSourceDataInRepo(root, branch, projectId, commitMessage) 
         ownedElements: [berichtenModelPkgData]
     }
 
-    return api.updateExistingFileInRepo(
-        projectId,
-        branch,
-        `${sourceData.path}/${sourceData.specificModelMetaDataFile}`,
-        utils.jsonToString(specificModelMetaData),
-        commitMessage
-    )
+    return trans.updateSpecificSourceData(
+        projectId, branch, specificSourceData, commitMessage)
 }
 
 /**
- * Update StarUML Project Generic Data in Repository
+ * Store StarUML Project Generic Data in Repository
  * @param {Project} root 
  * @param {String} rootId 
  * @param {String} branch 
  * @param {String | Number} projectId 
  * @param {String} commitMessage 
  */
-function updateGenericSourceDataInRepo(root, branch, projectId, commitMessage) {
+function storeGenericSourceDataInRepo(root, branch, projectId, commitMessage) {
     // build gegevens model data
     const genericPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.GENERIC_MODEL_PACKAGE.name)
     const genericPkgId = String(genericPkg._id)
@@ -522,7 +515,7 @@ function updateGenericSourceDataInRepo(root, branch, projectId, commitMessage) {
     }
 
     // build generic model data
-    const genericModelMetaData = {
+    const genericSourceData = {
         _type: 'UMLPackage',
         _id: genericPkgId,
         _parent: {
@@ -537,13 +530,8 @@ function updateGenericSourceDataInRepo(root, branch, projectId, commitMessage) {
         ]
     }
 
-    return api.updateExistingFileInRepo(
-        projectId,
-        branch,
-        `${sourceData.path}/${sourceData.genericModelMetaDataFile}`,
-        utils.jsonToString(genericModelMetaData),
-        commitMessage
-    )
+    return trans.updateGenericSourceData(
+        projectId, branch, genericSourceData, commitMessage)
 }
 
 /**
@@ -555,7 +543,7 @@ function updateGenericSourceDataInRepo(root, branch, projectId, commitMessage) {
  * @param {String} commitMessage 
  */
 function storeRootSourceDataInRepo(root, branch, projectId, commitMessage) {
-    const rootResourceData = {
+    const rootSourceData = {
         _type: 'Project',
         _id: String(root._id),
         name: String(root.name),
@@ -564,7 +552,7 @@ function storeRootSourceDataInRepo(root, branch, projectId, commitMessage) {
     return trans.updateRootSourceData(
         projectId,
         branch,
-        rootResourceData,
+        rootSourceData,
         commitMessage)
 }
 
@@ -577,18 +565,16 @@ function storeSourceDataInRepo() {
     const branch = utils.getTagValue(root, 'branch')
     const projectId = utils.getTagValue(root, 'projectId')
     const commitMessage = 'StarUML.storeSourceDataInRepo-functie d.d. ' + new Date()
-
-    // store all source data
-    //update_Root_Generic_Specfic_SourceDataInRepo(root, branch, projectId, commitMessage)
+    trans.init()
 
     storeRootSourceDataInRepo(root, branch, projectId, commitMessage)
         .then(response => {
             console.log(`update Root source data, status = ${response.status}`)
-            return updateGenericSourceDataInRepo(root, branch, projectId, commitMessage)
+            return storeGenericSourceDataInRepo(root, branch, projectId, commitMessage)
         })
         .then(response => {
             console.log(`update Generic source data, status = ${response.status}`)
-            return updateSpecificSourceDataInRepo(root, branch, projectId, commitMessage)
+            return storeSpecificSourceDataInRepo(root, branch, projectId, commitMessage)
         })
         .then(response => {
             console.log(`update Specific source data, status = ${response.status}`)
