@@ -104,6 +104,22 @@ function getMetaDataRoot(projectId, branche) {
     return api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.rootMetaDataFile}`, branche)
 }
 
+/**
+ * Update Root Resource Data in Branch
+ * @param {String | Number} projectId 
+ * @param {String} branch 
+ * @param {{_type: String, _id: String, name: String, version: String}} rootResourceData 
+ * @param {String} commitMessage 
+ */
+function updateRootSourceData(projectId, branch, rootResourceData, commitMessage) {
+    return api.updateExistingFileInRepo(
+        projectId,
+        branch,
+        `${sourceData.path}/${sourceData.rootMetaDataFile}`,
+        utils.jsonToString(rootResourceData),
+        commitMessage)
+}
+
 exports.getModelDataRepoList = getModelDataRepoList
 exports.getWorkBranches = getWorkBranches
 exports.addMetaDataSpecficModel = addMetaDataSpecficModel
@@ -112,3 +128,4 @@ exports.addMetaDataGenericModel = addMetaDataGenericModel
 exports.getMetaDataGenericModel = getMetaDataGenericModel
 exports.createMetaDataRoot = createMetaDataRoot
 exports.getMetaDataRoot = getMetaDataRoot
+exports.updateRootSourceData = updateRootSourceData
