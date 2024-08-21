@@ -10,6 +10,18 @@ function getRepoList() {
 }
 
 /**
+ * Get avlailable Work Branches
+ * @param {String | Number} projectId 
+ */
+function getWorkBranches(projectId) {
+    return api.listRepoBranches(projectId)
+        .then(response => {
+            const branchList = response.data
+            return branchList.filter(item => !item.protected)
+        })
+}
+
+/**
  * Add StarUML UMLPackage from Repository Specific Model Data
  * @param {Project} root 
  * @param {Base64JsonString} specficDataContent 
@@ -73,6 +85,7 @@ function getMetaDataRoot(projectId, branche) {
 }
 
 exports.getRepoList = getRepoList
+exports.getWorkBranches = getWorkBranches
 exports.addMetaDataSpecficModel = addMetaDataSpecficModel
 exports.getMetaDataSpecificModel = getMetaDataSpecificModel
 exports.addMetaDataGenericModel = addMetaDataGenericModel
