@@ -3,10 +3,29 @@ const api = require('./repo-api')
 const sourceData = require('./repo-globals').sourceData
 
 /**
- * Promise to get all available Repositories
+ * Promise to get Model Data Repositories
+ * @returns {Promise<String[]>}
  */
-function getRepoList() {
+function getModelDataRepoList() {
     return api.listProjects(false, undefined, true)
+        .then(response => {
+            const repoList = response.data
+            const modelGroupPath = app.preferences.get(repoPrefs.keys.repoModelGroupPath)
+            return repoList.filter(item => item.namespace.full_path.startsWith(modelGroupPath) && item.name != 'gitlab-profile')
+        })
+}
+
+/**
+ * Get avlailable Work Branches
+ * @param {String | Number} projectId 
+ * @returns {Promise<String[]>}
+ */
+function getWorkBranches(projectId) {
+    return api.listRepoBranches(projectId)
+        .then(response => {
+            const branchList = response.data
+            return branchList.filter(item => !item.protected)
+        })
 }
 
 /**
@@ -84,7 +103,7 @@ function getMetaDataRoot(projectId, branche) {
     return api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.rootMetaDataFile}`, branche)
 }
 
-exports.getRepoList = getRepoList
+exports.getModelDataRepoList = getModelDataRepoList
 exports.getWorkBranches = getWorkBranches
 exports.addMetaDataSpecficModel = addMetaDataSpecficModel
 exports.getMetaDataSpecificModel = getMetaDataSpecificModel
