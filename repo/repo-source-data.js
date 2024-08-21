@@ -86,7 +86,8 @@ function retrieveSourceDataFromRepo() {
                 const option = modelDataRepoOptions.find(item => item.value == returnValue)
                 modelDataRepoSelection.id = option.value
                 modelDataRepoSelection.name = option.text
-                return api.listRepoBranches(modelDataRepoSelection.id)
+                //return api.listRepoBranches(modelDataRepoSelection.id)
+                return trans.getWorkBranches(modelDataRepoSelection.id)
             } else {
                 return Promise.reject('Geen Model Data repository geselecteerd!!')
             }
@@ -96,7 +97,8 @@ function retrieveSourceDataFromRepo() {
          * (1.c) Select a non-protected Branch 
          */
         .then(response => {
-            const brancheOptions = getModelDataRepoBrancheOptions(response.data)
+            //const brancheOptions = getModelDataRepoBrancheOptions(response.data)
+            const brancheOptions = getModelDataRepoBrancheOptions(response)
 
             if (brancheOptions.length > 0) {
                 return app.dialogs.showSelectDropdownDialog(
