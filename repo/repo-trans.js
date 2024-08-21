@@ -1,5 +1,6 @@
 const utils = require('../dgpi/dgpi-utils')
 const api = require('./repo-api')
+const sourceData = require('./repo-globals').sourceData
 
 /**
  * Promise to get all available Repositories
