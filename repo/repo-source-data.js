@@ -2,42 +2,43 @@ const istGlobals = require('../istd/istd-globals')
 const codelijstenPkgId = require('../istd/istd-codelijsten').codelijstenPkgId
 const primitiveTypesPkgId = require('../istd/istd-primitive-types').primitiveTypesPkgId
 const sourceData = require('./repo-globals').sourceData
-const repoPrefs = require('./repo-prefs')
 const api = require('./repo-api')
 const utils = require('../dgpi/dgpi-utils')
 const trans = require('./repo-trans')
 
 /**
- * Get Model Data Repository Selection Options from all avalailable Repositories
- * @param {Array<GitLabRepoData>} repoList all avalailable GitLab Repositories
+ * Get Repository Selection Options from Repo List
+ * @param {String[]} repoList
  */
-function getModelDataRepoOptions(repoList) {
-    const modelGroupPath = app.preferences.get(repoPrefs.keys.repoModelGroupPath)
-    const modelDataRepoList = repoList.filter(item => item.namespace.full_path.startsWith(modelGroupPath) && item.name != 'gitlab-profile')
-    const modelDataRepoOptions = []
+function getRepoOptions(repoList) {
+    const repoOptions = []
 
-    for (let i = 0; i < modelDataRepoList.length; i++) {
-        modelDataRepoOptions.push({
-            text: String(modelDataRepoList[i].name),
-            value: String(modelDataRepoList[i].id)
+    for (let i = 0; i < repoList.length; i++) {
+        repoOptions.push({
+            text: String(repoList[i].name),
+            value: String(repoList[i].id)
         })
     }
 
-    return modelDataRepoOptions
+    return repoOptions
 }
 
-function getModelDataRepoBrancheOptions(brancheList) {
-    const modelDataRepoBrancheOptions = []
+/**
+ * Get Branche Options from Branche List
+ * @param {String[]} brancheList 
+ */
+function getBrancheOptions(brancheList) {
+    const brancheOptions = []
 
     for (let i = 0; i < brancheList.length; i++) {
         const branchName = String(brancheList[i].name)
-        modelDataRepoBrancheOptions.push({
+        brancheOptions.push({
             text: branchName,
             value: branchName
         })
     }
 
-    return modelDataRepoBrancheOptions
+    return brancheOptions
 }
 
 /**
@@ -74,8 +75,7 @@ function retrieveSourceDataFromRepo() {
          * (1.a) Select a Model Data Repo
          */
         .then(modelDataRepoList => {
-            //modelDataRepoOptions = getModelDataRepoOptions(response.data)
-            modelDataRepoOptions = getModelDataRepoOptions(modelDataRepoList)
+            modelDataRepoOptions = getRepoOptions(modelDataRepoList)
             return selectModelDataRepo(modelDataRepoOptions)
         })
         /**
@@ -94,10 +94,10 @@ function retrieveSourceDataFromRepo() {
 
         })
         /**
-         * (1.c) Select a non-protected Branch 
+         * (1.c) Select a Work Branch 
          */
-        .then(workBranches => {
-            const brancheOptions = getModelDataRepoBrancheOptions(workBranches)
+        .then(workBrancheList => {
+            const brancheOptions = getBrancheOptions(workBrancheList)
 
             if (brancheOptions.length > 0) {
                 return app.dialogs.showSelectDropdownDialog(
