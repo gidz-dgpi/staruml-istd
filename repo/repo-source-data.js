@@ -5,72 +5,10 @@ const sourceData = require('./repo-globals').sourceData
 const repoPrefs = require('./repo-prefs')
 const api = require('./repo-api')
 const utils = require('../dgpi/dgpi-utils')
+const trans = require('./repo-trans')
 
 /**
- * Add StarUML UMLPackage from Repository Specific Model Data
- * @param {Project} root 
- * @param {Base64JsonString} specficDataContent 
- * @returns {UMLPackage}
- */
-function addMetaDataSpecficModel(root, specficDataContent) {
-    return app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(specficDataContent))
-}
-
-/**
- * Get Promise to retrieve Meta Data for the Specific Model from selected Branch in Repository
- * @param {String | Number} projectId 
- * @param {String} branche  
- */
-function getMetaDataSpecificModel(projectId, branche) {
-    return api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.specificModelMetaDataFile}`, branche)
-}
-
-/**
- * Add StarUML UMLPackage from Repository Generic Model Data
- * @param {Project} root 
- * @param {Base64JsonString} genericDataContent 
- * @returns {UMLPackage}
- */
-function addMetaDataGenericModel(root, genericDataContent) {
-    return app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(genericDataContent))
-}
-
-/**
- * Get Promise to retrieve Meta Data for the Generic Model from selected Branch in Repository
- * @param {String | Number} projectId 
- * @param {String} branche  
- */
-function getMetaDataGenericModel(projectId, branche) {
-    return api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.genericModelMetaDataFile}`, branche)
-}
-
-/**
- * Create new StarUML Project from Repository Root Data Content
- * @param {Base64JsonString} rootDataContent 
- * @param {String | Number} projectId
- * @param {String} branch
- * @returns {Project}
- */
-function createMetaDataRoot(rootDataContent, projectId, branch) {
-    // create new application root object
-    const root = app.project.loadFromJson(utils.encodeBase64JsonStrToObj(rootDataContent))
-    // add Tags that are used to keep repository storage locations info
-    utils.addStringTag(root, 'projectId', projectId)
-    utils.addStringTag(root, 'branch', branch)
-    return root
-}
-
-/**
- * Get Promise to retrieve Meta Data Root from selected Branch in Repository
- * @param {Strung | Number} projectId 
- * @param {String} branche  
- */
-function getMetaDataRoot(projectId, branche) {
-    return api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.rootMetaDataFile}`, branche)
-}
-
-/**
- * Get Model Data Repository Selection Options from all avalailable GitLab Repositories
+ * Get Model Data Repository Selection Options from all avalailable Repositories
  * @param {Array<GitLabRepoData>} repoList all avalailable GitLab Repositories
  */
 function getModelDataRepoOptions(repoList) {
@@ -102,10 +40,6 @@ function getModelDataRepoBrancheOptions(brancheList) {
     return modelDataRepoBrancheOptions
 }
 
-function getRepoList() {
-    return api.listProjects(false, undefined, true)
-}
-
 /**
  * Select a Model Data Repo Option
  * @param {{text: string, value: string}[]} options 
@@ -118,7 +52,7 @@ function selectModelDataRepo(options) {
 }
 
 /**
- * Retrieve StarUML Source Meta Data from GitLab Repository
+ * Retrieve StarUML Source Meta Data from Repository
  */
 function retrieveSourceDataFromRepo() {
     // Initialize process vars
@@ -135,7 +69,7 @@ function retrieveSourceDataFromRepo() {
     /**
      * (0) Get available Model Data Repos 
      */
-    getRepoList()
+    trans.getRepoList()
         /**
          * (1.a) Select a Model Data Repo
          */
@@ -183,7 +117,7 @@ function retrieveSourceDataFromRepo() {
 
             if (buttonId === 'ok') {
                 modelDataRepoSelection.branch = returnValue
-                return getMetaDataRoot(modelDataRepoSelection.id, modelDataRepoSelection.branch)
+                return trans.getMetaDataRoot(modelDataRepoSelection.id, modelDataRepoSelection.branch)
             } else {
                 return Promise.reject('Geen werk-branche geselecteerd!')
             }
@@ -195,8 +129,8 @@ function retrieveSourceDataFromRepo() {
          * - Retrieve Generic Meta Data Fragment
          */
         .then(response => {
-            metaModelRoot = createMetaDataRoot(response.data.content, modelDataRepoSelection.id, modelDataRepoSelection.branch)
-            return getMetaDataGenericModel(modelDataRepoSelection.id, modelDataRepoSelection.branch)
+            metaModelRoot = trans.createMetaDataRoot(response.data.content, modelDataRepoSelection.id, modelDataRepoSelection.branch)
+            return trans.getMetaDataGenericModel(modelDataRepoSelection.id, modelDataRepoSelection.branch)
         })
         /**
          * (2.c) 
@@ -204,16 +138,16 @@ function retrieveSourceDataFromRepo() {
          * - Retrieve Specific Meta Data Fragment
          */
         .then(response => {
-            genericModelPkg = addMetaDataGenericModel(metaModelRoot, response.data.content)
-            return getMetaDataSpecificModel(modelDataRepoSelection.id, modelDataRepoSelection.branch)
+            genericModelPkg = trans.addMetaDataGenericModel(metaModelRoot, response.data.content)
+            return trans.getMetaDataSpecificModel(modelDataRepoSelection.id, modelDataRepoSelection.branch)
         })
         /**
          * (2.d) 
-         * - Create UMLPacpakge from Generic Meta Data Fragment
-         * - Retrieve Specific Meta Data Fragment
+         * - Create UMLPacpakge from Specific Meta Data Fragment
+         * - Alert Successfull Retrieval
          */
         .then(response => {
-            specficModelPkg = addMetaDataSpecficModel(metaModelRoot, response.data.content)
+            specficModelPkg = trans.addMetaDataSpecficModel(metaModelRoot, response.data.content)
             app.dialogs.showAlertDialog(
                 `Bron Meta Data Model succesvol opgehaald van repository=[${modelDataRepoSelection.name}] branch=[${modelDataRepoSelection.branch}] !`
             )
