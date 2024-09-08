@@ -5,6 +5,7 @@
 	"istd": "https://www.istandaarden.nl/over-istandaarden/istandaarden/begrippenlijst#",
 	"model": "https://www.istandaarden.nl/",
 	"name": "schema:name",
+	"documentation": "schema:description",
 	"version": "schema:version",
 	"multiplicity": "uml:multiplicity",
 	"aggregation": "uml:Aggregation",
