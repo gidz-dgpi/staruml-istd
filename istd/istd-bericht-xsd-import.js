@@ -209,6 +209,9 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
         }
 
         app.modelExplorer.collapse(berichtPkg)
+    } else {
+        // Berich Class already Imported
+        app.dialogs.showAlertDialog(`Bericht ${berichtPkg.name} is al in huidige Project geimpoeteerd!\n\nVerwijder bericht eerst om het opnieuw te importeren.`)
     }
 }
 

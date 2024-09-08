@@ -23,8 +23,13 @@ schema[keys.repoModelGroupPath] = {
     type: 'string',
     default: 'dgpi/modelleren/dgpi-model-data'
 }
-
+/**
+ * StarUML Repository Preferences Keys
+ */
 exports.keys = keys
+/**
+ * StarUML Repository Preferences Schema
+ */
 exports.metaData = {
     id: 'repository',
     name: 'Repository',

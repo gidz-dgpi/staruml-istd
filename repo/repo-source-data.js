@@ -1,3 +1,10 @@
+/**
+ * StarUML iStandaard Source Data Repository Functions
+ */
+
+/**
+ * 
+ */
 const istGlobals = require('../istd/istd-globals')
 const codelijstenPkgId = require('../istd/istd-codelijsten').codelijstenPkgId
 const primitiveTypesPkgId = require('../istd/istd-primitive-types').primitiveTypesPkgId
