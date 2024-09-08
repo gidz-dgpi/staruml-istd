@@ -19,7 +19,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/GedeeldeKlassen/klassen/RetourCodes/elementen/RetourCode",
 							"@type": "uml:Property",
 							"name": "RetourCode",
-							"documentation": "Gecodeerde aanduiding in een retourbericht van het resultaat van de beoordeling van een (deel van het) ontvangen bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_RetourCode",
 							"multiplicity": "1..*"
 						}
@@ -158,7 +157,6 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"documentation": "Bericht voor de toewijzing van Wmo-ondersteuning aan een aanbieder.",
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/relaties/Header",
@@ -201,49 +199,42 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"documentation": "Code ter identificatie van een soort bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een major release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"documentation": "Volgnummer van de formele uitgifte van een minor release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"documentation": "Identificatie van een gemeente die betrokken is bij de uitvoering van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"documentation": "Identificerende code van een aanbieder van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"documentation": "Naam of nummer en dagtekening ter identificatie van een totale aanlevering.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						}
 					]
@@ -252,41 +243,35 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Client",
 					"@type": "uml:Class",
 					"name": "Client",
-					"documentation": "Persoonsgegevens van de client.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Client/elementen/Bsn",
 							"@type": "uml:Property",
 							"name": "Bsn",
-							"documentation": "Een door de overheid toegekend identificerend nummer in het kader van het vereenvoudigen van het contact tussen overheid en burgers en het verminderen van de administratieve lasten.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BurgerServicenummer"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Client/elementen/Geboortedatum",
 							"@type": "uml:Property",
 							"name": "Geboortedatum",
-							"documentation": "Datum waarop een natuurlijk persoon geboren is.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Geboortedatum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Client/elementen/Geslacht",
 							"@type": "uml:Property",
 							"name": "Geslacht",
-							"documentation": "De sekse van een persoon, zoals bij geboorte formeel vastgesteld of nadien formeel gewijzigd.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Geslacht"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Client/elementen/Naam",
 							"@type": "uml:Property",
 							"name": "Naam",
-							"documentation": "Volledige naam van een natuurlijk persoon, aangeduid als Geslachtsnaam, eventueel Partnernaam, Voornamen en/of Voorletters en NaamGebruik.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_VolledigeNaam"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Client/elementen/Communicatie",
 							"@type": "uml:Property",
 							"name": "Communicatie",
-							"documentation": "Aanduiding over bijzondere vorm van communicatie die gebruikt dient te worden.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Communicatie",
 							"multiplicity": "0..1"
 						},
@@ -294,7 +279,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Client/elementen/JuridischeStatus",
 							"@type": "uml:Property",
 							"name": "JuridischeStatus",
-							"documentation": "Juridische situatie die voor de client van toepassing is op het moment van indicatiestelling.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_JuridischeStatus",
 							"multiplicity": "0..1"
 						},
@@ -302,7 +286,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Client/elementen/WettelijkeVertegenwoordiging",
 							"@type": "uml:Property",
 							"name": "WettelijkeVertegenwoordiging",
-							"documentation": "Wettelijke vertegenwoordiging die voor de client van toepassing is op het moment van beoordeling.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_WettelijkeVertegenwoordiging",
 							"multiplicity": "0..1"
 						},
@@ -310,7 +293,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Client/elementen/Commentaar",
 							"@type": "uml:Property",
 							"name": "Commentaar",
-							"documentation": "Vrije tekst (bijvoorbeeld toelichting) in een bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Commentaar",
 							"multiplicity": "0..1"
 						},
@@ -396,20 +378,17 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Relatie",
 					"@type": "uml:Class",
 					"name": "Relatie",
-					"documentation": "Persoonsgegevens van de relatie van de client.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Relatie/elementen/Nummer",
 							"@type": "uml:Property",
 							"name": "Nummer",
-							"documentation": "Identificerend nummer van de relatie van een client.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Persoonsid"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Relatie/elementen/Volgorde",
 							"@type": "uml:Property",
 							"name": "Volgorde",
-							"documentation": "Aanduiding van de prioriteit van de contactpersoon.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_RelatieVolgorde",
 							"multiplicity": "0..1"
 						},
@@ -417,14 +396,12 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Relatie/elementen/Soort",
 							"@type": "uml:Property",
 							"name": "Soort",
-							"documentation": "De soort relatie die een persoon ten opzichte van de client heeft.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_SoortRelatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Relatie/elementen/Geboortedatum",
 							"@type": "uml:Property",
 							"name": "Geboortedatum",
-							"documentation": "Datum waarop een natuurlijk persoon geboren is.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Geboortedatum",
 							"multiplicity": "0..1"
 						},
@@ -432,7 +409,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Relatie/elementen/Geslacht",
 							"@type": "uml:Property",
 							"name": "Geslacht",
-							"documentation": "De sekse van een persoon, zoals bij geboorte formeel vastgesteld of nadien formeel gewijzigd.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Geslacht",
 							"multiplicity": "0..1"
 						},
@@ -440,7 +416,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Relatie/elementen/Naam",
 							"@type": "uml:Property",
 							"name": "Naam",
-							"documentation": "Volledige naam van een natuurlijk persoon, aangeduid als Geslachtsnaam, eventueel Partnernaam, Voornamen en/of Voorletters en NaamGebruik.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_VolledigeNaam"
 						}
 					],
@@ -466,20 +441,17 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Contact",
 					"@type": "uml:Class",
 					"name": "Contact",
-					"documentation": "Gegevens voor de aanduiding van het adres van de client of relatie.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Contact/elementen/Soort",
 							"@type": "uml:Property",
 							"name": "Soort",
-							"documentation": "Nadere typering van het adres.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_AdresSoort"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Contact/elementen/Adres",
 							"@type": "uml:Property",
 							"name": "Adres",
-							"documentation": "Adres van de client of relatie van de client.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Adres",
 							"multiplicity": "0..1"
 						},
@@ -487,7 +459,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Contact/elementen/Organisatie",
 							"@type": "uml:Property",
 							"name": "Organisatie",
-							"documentation": "De naam van een organisatie waar de client of relatie van de client verblijft.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Organisatienaam",
 							"multiplicity": "0..1"
 						},
@@ -495,7 +466,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Contact/elementen/Telefoon",
 							"@type": "uml:Property",
 							"name": "Telefoon",
-							"documentation": "De telefoonnummers waarop de client of relatie van de client te bereiken is.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Telefoonnummers",
 							"multiplicity": "0..1"
 						},
@@ -503,7 +473,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Contact/elementen/Emailadres",
 							"@type": "uml:Property",
 							"name": "Emailadres",
-							"documentation": "Het e-mailadres van de client of relatie van de client.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Emailadres",
 							"multiplicity": "0..1"
 						},
@@ -511,7 +480,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/Contact/elementen/Periode",
 							"@type": "uml:Property",
 							"name": "Periode",
-							"documentation": "Begindatum en/of een einddatum van het verblijf van de client of relatie van de client op een tijdelijk adres.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_OpenPeriode",
 							"multiplicity": "0..1"
 						}
@@ -565,20 +533,17 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct",
 					"@type": "uml:Class",
 					"name": "ToegewezenProduct",
-					"documentation": "Gegevens over een product dat de gemeente toewijst aan een aanbieder.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct/elementen/ToewijzingNummer",
 							"@type": "uml:Property",
 							"name": "ToewijzingNummer",
-							"documentation": "Identificerend nummer van de opdracht om een zorg - of ondersteuningsproduct te leveren, zoals vastgesteld door de gemeente.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Nummer"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct/elementen/ReferentieAanbieder",
 							"@type": "uml:Property",
 							"name": "ReferentieAanbieder",
-							"documentation": "Naam of nummer die als referentie kan worden meegegeven.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Referentie",
 							"multiplicity": "0..1"
 						},
@@ -586,7 +551,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct/elementen/Product",
 							"@type": "uml:Property",
 							"name": "Product",
-							"documentation": "Gecodeerde omschrijving van een product, dienst of resultaat ten behoeve van het leveren van ondersteuning aan een client.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Product",
 							"multiplicity": "0..1"
 						},
@@ -594,28 +558,24 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct/elementen/Toewijzingsdatum",
 							"@type": "uml:Property",
 							"name": "Toewijzingsdatum",
-							"documentation": "De datum waarop de gemeente de toewijzing van de zorg aan de zorgaanbieder definitief heeft vastgesteld.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct/elementen/Toewijzingstijd",
 							"@type": "uml:Property",
 							"name": "Toewijzingstijd",
-							"documentation": "Het tijdstip waarop de gemeente de toewijzing van de zorg aan de zorgaanbieder definitief heeft vastgesteld.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Tijd"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct/elementen/Ingangsdatum",
 							"@type": "uml:Property",
 							"name": "Ingangsdatum",
-							"documentation": "De datum waarop de toegewezen product voor de eerste keer geleverd dient te worden.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct/elementen/Einddatum",
 							"@type": "uml:Property",
 							"name": "Einddatum",
-							"documentation": "De datum waarop de toegewezen product voor de laatste keer geleverd dient te worden.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum",
 							"multiplicity": "0..1"
 						},
@@ -623,7 +583,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct/elementen/RedenWijziging",
 							"@type": "uml:Property",
 							"name": "RedenWijziging",
-							"documentation": "De reden waarom een toewijzing wordt gewijzigd.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_RedenWijziging",
 							"multiplicity": "0..1"
 						},
@@ -631,7 +590,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct/elementen/Omvang",
 							"@type": "uml:Property",
 							"name": "Omvang",
-							"documentation": "Aanduiding van de omvang van de te leveren of geleverde ondersteuning, uitgedrukt in Volume, Eenheid en Frequentie.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Omvang",
 							"multiplicity": "0..1"
 						},
@@ -639,7 +597,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct/elementen/Budget",
 							"@type": "uml:Property",
 							"name": "Budget",
-							"documentation": "Aanduiding van het toegewezen budget",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Budget",
 							"multiplicity": "0..1"
 						},
@@ -647,7 +604,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO301/klassen/ToegewezenProduct/elementen/Commentaar",
 							"@type": "uml:Property",
 							"name": "Commentaar",
-							"documentation": "Vrije tekst (bijvoorbeeld toelichting) in een bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Commentaar",
 							"multiplicity": "0..1"
 						}
@@ -664,7 +620,6 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"documentation": "Bericht voor de toewijzing van Wmo-ondersteuning aan een aanbieder.",
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/relaties/Header",
@@ -707,70 +662,60 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"documentation": "Code ter identificatie van een soort bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een major release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"documentation": "Volgnummer van de formele uitgifte van een minor release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"documentation": "Identificatie van een gemeente die betrokken is bij de uitvoering van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"documentation": "Identificerende code van een aanbieder van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"documentation": "Naam of nummer en dagtekening ter identificatie van een totale aanlevering.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Header/elementen/IdentificatieRetour",
 							"@type": "uml:Property",
 							"name": "IdentificatieRetour",
-							"documentation": "Naam of nummer ter identificatie van een retourbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_IdentificatieBericht"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Header/elementen/DagtekeningRetour",
 							"@type": "uml:Property",
 							"name": "DagtekeningRetour",
-							"documentation": "Dagtekening van het retourbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Header/elementen/XsltVersie",
 							"@type": "uml:Property",
 							"name": "XsltVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSLT's die zijn ingezet voor de controle van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Versie",
 							"multiplicity": "0..1"
 						},
@@ -778,7 +723,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO302/klassen/Header/elementen/XsdVersieRetour",
 							"@type": "uml:Property",
 							"name": "XsdVersieRetour",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het retourbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						}
 					],
@@ -811,7 +755,6 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"documentation": "Bericht voor het melden van de start van levering van Wmo-ondersteuning.",
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/relaties/Header",
@@ -854,49 +797,42 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"documentation": "Code ter identificatie van een soort bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een major release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"documentation": "Volgnummer van de formele uitgifte van een minor release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"documentation": "Identificerende code van een aanbieder van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"documentation": "Identificatie van een gemeente die betrokken is bij de uitvoering van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"documentation": "Naam of nummer en dagtekening ter identificatie van een totale aanlevering.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						}
 					]
@@ -905,34 +841,29 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Client",
 					"@type": "uml:Class",
 					"name": "Client",
-					"documentation": "Persoonsgegevens van de client.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Client/elementen/Bsn",
 							"@type": "uml:Property",
 							"name": "Bsn",
-							"documentation": "Een door de overheid toegekend identificerend nummer in het kader van het vereenvoudigen van het contact tussen overheid en burgers en het verminderen van de administratieve lasten.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BurgerServicenummer"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Client/elementen/Geboortedatum",
 							"@type": "uml:Property",
 							"name": "Geboortedatum",
-							"documentation": "Datum waarop een natuurlijk persoon geboren is.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Geboortedatum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Client/elementen/Geslacht",
 							"@type": "uml:Property",
 							"name": "Geslacht",
-							"documentation": "De sekse van een persoon, zoals bij geboorte formeel vastgesteld of nadien formeel gewijzigd.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Geslacht"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/Client/elementen/Naam",
 							"@type": "uml:Property",
 							"name": "Naam",
-							"documentation": "De naam van een natuurlijk persoon, aangeduid als Geslachtsnaam en eventueel Voornamen en/of Voorletters. ",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_VerkorteNaam"
 						}
 					],
@@ -980,13 +911,11 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/StartProduct",
 					"@type": "uml:Class",
 					"name": "StartProduct",
-					"documentation": "Gegevens over het product waarvan de levering gestart is.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/StartProduct/elementen/ToewijzingNummer",
 							"@type": "uml:Property",
 							"name": "ToewijzingNummer",
-							"documentation": "Identificerend nummer van de opdracht om een zorg - of ondersteuningsproduct te leveren, zoals vastgesteld door de gemeente.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Nummer",
 							"multiplicity": "0..1"
 						},
@@ -994,7 +923,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/StartProduct/elementen/Product",
 							"@type": "uml:Property",
 							"name": "Product",
-							"documentation": "Gecodeerde omschrijving van een product, dienst of resultaat ten behoeve van het leveren van ondersteuning aan een client.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Product",
 							"multiplicity": "0..1"
 						},
@@ -1002,7 +930,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/StartProduct/elementen/ToewijzingIngangsdatum",
 							"@type": "uml:Property",
 							"name": "ToewijzingIngangsdatum",
-							"documentation": "De datum waarop de toegewezen product voor de eerste keer geleverd dient te worden (gelijk aan de Ingangsdatum van het toegewezen product in het Toewijzingbericht).",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum",
 							"multiplicity": "0..1"
 						},
@@ -1010,14 +937,12 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/StartProduct/elementen/Begindatum",
 							"@type": "uml:Property",
 							"name": "Begindatum",
-							"documentation": "Datum vanaf wanneer een ondersteuningsproduct wordt geleverd.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO305/klassen/StartProduct/elementen/StatusAanlevering",
 							"@type": "uml:Property",
 							"name": "StatusAanlevering",
-							"documentation": "Indicatie over de status van de informatie in de berichtklasse.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_StatusAanlevering"
 						}
 					]
@@ -1033,7 +958,6 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"documentation": "Bericht voor het melden van de start van levering van Wmo-ondersteuning.",
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/relaties/Header",
@@ -1076,70 +1000,60 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"documentation": "Code ter identificatie van een soort bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een major release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"documentation": "Volgnummer van de formele uitgifte van een minor release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"documentation": "Identificerende code van een aanbieder van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"documentation": "Identificatie van een gemeente die betrokken is bij de uitvoering van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"documentation": "Naam of nummer en dagtekening ter identificatie van een totale aanlevering.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Header/elementen/IdentificatieRetour",
 							"@type": "uml:Property",
 							"name": "IdentificatieRetour",
-							"documentation": "Naam of nummer ter identificatie van een retourbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_IdentificatieBericht"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Header/elementen/DagtekeningRetour",
 							"@type": "uml:Property",
 							"name": "DagtekeningRetour",
-							"documentation": "Dagtekening van het retourbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Header/elementen/XsltVersie",
 							"@type": "uml:Property",
 							"name": "XsltVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSLT's die zijn ingezet voor de controle van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Versie",
 							"multiplicity": "0..1"
 						},
@@ -1147,7 +1061,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO306/klassen/Header/elementen/XsdVersieRetour",
 							"@type": "uml:Property",
 							"name": "XsdVersieRetour",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het retourbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						}
 					],
@@ -1180,7 +1093,6 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"documentation": "Bericht voor het melden van de stop van levering van Wmo-ondersteuning.",
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/relaties/Header",
@@ -1223,49 +1135,42 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"documentation": "Code ter identificatie van een soort bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een major release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"documentation": "Volgnummer van de formele uitgifte van een minor release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"documentation": "Identificerende code van een aanbieder van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"documentation": "Identificatie van een gemeente die betrokken is bij de uitvoering van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"documentation": "Naam of nummer en dagtekening ter identificatie van een totale aanlevering.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						}
 					]
@@ -1274,34 +1179,29 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Client",
 					"@type": "uml:Class",
 					"name": "Client",
-					"documentation": "Persoonsgegevens van de client.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Client/elementen/Bsn",
 							"@type": "uml:Property",
 							"name": "Bsn",
-							"documentation": "Een door de overheid toegekend identificerend nummer in het kader van het vereenvoudigen van het contact tussen overheid en burgers en het verminderen van de administratieve lasten.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BurgerServicenummer"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Client/elementen/Geboortedatum",
 							"@type": "uml:Property",
 							"name": "Geboortedatum",
-							"documentation": "Datum waarop een natuurlijk persoon geboren is.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Geboortedatum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Client/elementen/Geslacht",
 							"@type": "uml:Property",
 							"name": "Geslacht",
-							"documentation": "De sekse van een persoon, zoals bij geboorte formeel vastgesteld of nadien formeel gewijzigd.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Geslacht"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/Client/elementen/Naam",
 							"@type": "uml:Property",
 							"name": "Naam",
-							"documentation": "De naam van een natuurlijk persoon, aangeduid als Geslachtsnaam en eventueel Voornamen en/of Voorletters. ",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_VerkorteNaam"
 						}
 					],
@@ -1349,13 +1249,11 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/StopProduct",
 					"@type": "uml:Class",
 					"name": "StopProduct",
-					"documentation": "Gegevens over het beeindigen van de levering van ondersteuning.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/StopProduct/elementen/ToewijzingNummer",
 							"@type": "uml:Property",
 							"name": "ToewijzingNummer",
-							"documentation": "Identificerend nummer van de opdracht om een zorg - of ondersteuningsproduct te leveren, zoals vastgesteld door de gemeente.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Nummer",
 							"multiplicity": "0..1"
 						},
@@ -1363,7 +1261,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/StopProduct/elementen/Product",
 							"@type": "uml:Property",
 							"name": "Product",
-							"documentation": "Gecodeerde omschrijving van een product, dienst of resultaat ten behoeve van het leveren van ondersteuning aan een client.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Product",
 							"multiplicity": "0..1"
 						},
@@ -1371,7 +1268,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/StopProduct/elementen/ToewijzingIngangsdatum",
 							"@type": "uml:Property",
 							"name": "ToewijzingIngangsdatum",
-							"documentation": "De datum waarop de toegewezen product voor de eerste keer geleverd dient te worden (gelijk aan de Ingangsdatum van het toegewezen product in het Toewijzingbericht).",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum",
 							"multiplicity": "0..1"
 						},
@@ -1379,28 +1275,24 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/StopProduct/elementen/Begindatum",
 							"@type": "uml:Property",
 							"name": "Begindatum",
-							"documentation": "Datum vanaf wanneer een ondersteuningsproduct wordt geleverd.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/StopProduct/elementen/RedenBeeindiging",
 							"@type": "uml:Property",
 							"name": "RedenBeeindiging",
-							"documentation": "De reden van beeindiging van de Wmo-ondersteuning bij de client.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_RedenBeeindiging"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/StopProduct/elementen/Einddatum",
 							"@type": "uml:Property",
 							"name": "Einddatum",
-							"documentation": "De datum waarop de Wmo-ondersteuning bij client wordt beeindigd.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO307/klassen/StopProduct/elementen/StatusAanlevering",
 							"@type": "uml:Property",
 							"name": "StatusAanlevering",
-							"documentation": "Indicatie over de status van de informatie in de berichtklasse.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_StatusAanlevering"
 						}
 					]
@@ -1416,7 +1308,6 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"documentation": "Bericht voor het melden van de stop van levering van Wmo-ondersteuning.",
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/relaties/Header",
@@ -1459,70 +1350,60 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"documentation": "Code ter identificatie van een soort bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een major release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"documentation": "Volgnummer van de formele uitgifte van een minor release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"documentation": "Identificerende code van een aanbieder van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"documentation": "Identificatie van een gemeente die betrokken is bij de uitvoering van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"documentation": "Naam of nummer en dagtekening ter identificatie van een totale aanlevering.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Header/elementen/IdentificatieRetour",
 							"@type": "uml:Property",
 							"name": "IdentificatieRetour",
-							"documentation": "Naam of nummer ter identificatie van een retourbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_IdentificatieBericht"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Header/elementen/DagtekeningRetour",
 							"@type": "uml:Property",
 							"name": "DagtekeningRetour",
-							"documentation": "Dagtekening van het retourbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Header/elementen/XsltVersie",
 							"@type": "uml:Property",
 							"name": "XsltVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSLT's die zijn ingezet voor de controle van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Versie",
 							"multiplicity": "0..1"
 						},
@@ -1530,7 +1411,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO308/klassen/Header/elementen/XsdVersieRetour",
 							"@type": "uml:Property",
 							"name": "XsdVersieRetour",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het retourbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						}
 					],
@@ -1563,7 +1443,6 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"documentation": "Bericht voor het aanvragen van een toewijzing voor Wmo-ondersteuning.",
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/relaties/Header",
@@ -1606,49 +1485,42 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"documentation": "Code ter identificatie van een soort bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een major release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"documentation": "Volgnummer van de formele uitgifte van een minor release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"documentation": "Identificerende code van een aanbieder van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"documentation": "Identificatie van een gemeente die betrokken is bij de uitvoering van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"documentation": "Naam of nummer en dagtekening ter identificatie van een totale aanlevering.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						}
 					]
@@ -1657,41 +1529,35 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Client",
 					"@type": "uml:Class",
 					"name": "Client",
-					"documentation": "Persoonsgegevens van de client.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Client/elementen/Bsn",
 							"@type": "uml:Property",
 							"name": "Bsn",
-							"documentation": "Een door de overheid toegekend identificerend nummer in het kader van het vereenvoudigen van het contact tussen overheid en burgers en het verminderen van de administratieve lasten.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BurgerServicenummer"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Client/elementen/Geboortedatum",
 							"@type": "uml:Property",
 							"name": "Geboortedatum",
-							"documentation": "Datum waarop een natuurlijk persoon geboren is.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Geboortedatum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Client/elementen/Geslacht",
 							"@type": "uml:Property",
 							"name": "Geslacht",
-							"documentation": "De sekse van een persoon, zoals bij geboorte formeel vastgesteld of nadien formeel gewijzigd.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Geslacht"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Client/elementen/Naam",
 							"@type": "uml:Property",
 							"name": "Naam",
-							"documentation": "De achternaam van een natuurlijk persoon, aangeduid als Naam en Voorvoegsel.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_VerkorteNaam"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/Client/elementen/Commentaar",
 							"@type": "uml:Property",
 							"name": "Commentaar",
-							"documentation": "Vrije tekst (bijvoorbeeld toelichting) in een bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Commentaar",
 							"multiplicity": "0..1"
 						}
@@ -1740,20 +1606,17 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct",
 					"@type": "uml:Class",
 					"name": "AangevraagdProduct",
-					"documentation": "Gegevens over het product waarvoor een toewijzing wordt aangevraagd.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct/elementen/ReferentieAanbieder",
 							"@type": "uml:Property",
 							"name": "ReferentieAanbieder",
-							"documentation": "Naam of nummer die als referentie kan worden meegegeven.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Referentie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct/elementen/BeschikkingNummer",
 							"@type": "uml:Property",
 							"name": "BeschikkingNummer",
-							"documentation": "Identificerend nummer van een beschikking zoals vastgesteld door de gemeente.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Nummer",
 							"multiplicity": "0..1"
 						},
@@ -1761,7 +1624,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct/elementen/Product",
 							"@type": "uml:Property",
 							"name": "Product",
-							"documentation": "Gecodeerde omschrijving van een product, dienst of resultaat ten behoeve van het leveren van ondersteuning aan een client.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Product",
 							"multiplicity": "0..1"
 						},
@@ -1769,7 +1631,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct/elementen/BeschikkingIngangsdatum",
 							"@type": "uml:Property",
 							"name": "BeschikkingIngangsdatum",
-							"documentation": "Ingangsdatum van een afgegeven beschikking.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum",
 							"multiplicity": "0..1"
 						},
@@ -1777,14 +1638,12 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct/elementen/ToewijzingIngangsdatum",
 							"@type": "uml:Property",
 							"name": "ToewijzingIngangsdatum",
-							"documentation": "De aangevraagde Ingangsdatum van het toe te wijzen Product.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct/elementen/ToewijzingEinddatum",
 							"@type": "uml:Property",
 							"name": "ToewijzingEinddatum",
-							"documentation": "De aangevraagde Einddatum van het toe te wijzen Product.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum",
 							"multiplicity": "0..1"
 						},
@@ -1792,7 +1651,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct/elementen/Omvang",
 							"@type": "uml:Property",
 							"name": "Omvang",
-							"documentation": "Aanduiding van de omvang van de te leveren of geleverde ondersteuning, uitgedrukt in Volume, Eenheid en Frequentie.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Omvang",
 							"multiplicity": "0..1"
 						},
@@ -1800,7 +1658,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct/elementen/Budget",
 							"@type": "uml:Property",
 							"name": "Budget",
-							"documentation": "Aanduiding van het aangevraagde budget",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Budget",
 							"multiplicity": "0..1"
 						},
@@ -1808,14 +1665,12 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct/elementen/Verwijzer",
 							"@type": "uml:Property",
 							"name": "Verwijzer",
-							"documentation": "Gegevens over de persoon of instantie die een client heeft doorverwezen naar ondersteuning, aangeduid als Type en Naam of ZorgverlenerCode.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Verwijzer"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct/elementen/Raamcontract",
 							"@type": "uml:Property",
 							"name": "Raamcontract",
-							"documentation": "Indicator of de aanbieder voor de te leveren ondersteuning beroep doet op een landelijk raamcontract.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_JaNee",
 							"multiplicity": "0..1"
 						},
@@ -1823,7 +1678,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO315/klassen/AangevraagdProduct/elementen/Commentaar",
 							"@type": "uml:Property",
 							"name": "Commentaar",
-							"documentation": "Vrije tekst (bijvoorbeeld toelichting) in een bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Commentaar",
 							"multiplicity": "0..1"
 						}
@@ -1840,7 +1694,6 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"documentation": "Bericht voor antwoordinformatie over het Verzoek om toewijzing of Verzoek om wijziging Wmo-hulp.",
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO319/relaties/Header",
@@ -1883,49 +1736,42 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"documentation": "Code ter identificatie van een soort bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een major release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"documentation": "Volgnummer van de formele uitgifte van een minor release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"documentation": "Identificatie van een gemeente die betrokken is bij de uitvoering van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"documentation": "Identificerende code van een aanbieder van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"documentation": "Naam of nummer en dagtekening ter identificatie van een totale aanlevering.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						}
 					]
@@ -1934,7 +1780,6 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Antwoord",
 					"@type": "uml:Class",
 					"name": "Antwoord",
-					"documentation": "Gegevens over het antwoord dat de gemeente geeft op een verzoek van de aanbieder.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Antwoord/elementen/ReferentieAanbieder",
@@ -1946,14 +1791,12 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Antwoord/elementen/VerzoekAntwoord",
 							"@type": "uml:Property",
 							"name": "VerzoekAntwoord",
-							"documentation": "Het antwoord op een verzoek. ",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_VerzoekAntwoord"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO319/klassen/Antwoord/elementen/RedenAfwijzingVerzoek",
 							"@type": "uml:Property",
 							"name": "RedenAfwijzingVerzoek",
-							"documentation": "De reden waarom een verzoek van een zorgaanbieder wordt afgewezen door de gemeente.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_RedenAfwijzingVerzoek",
 							"multiplicity": "0..1"
 						}
@@ -1970,7 +1813,6 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"documentation": "Bericht voor declaratie Wmo-hulp.",
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/relaties/Header",
@@ -2013,49 +1855,42 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"documentation": "Code ter identificatie van een soort bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een major release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"documentation": "Volgnummer van de formele uitgifte van een minor release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"documentation": "Identificerende code van een aanbieder van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"documentation": "Identificatie van een gemeente die betrokken is bij de uitvoering van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"documentation": "Naam of nummer en dagtekening ter identificatie van een totale aanlevering.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						}
 					]
@@ -2064,34 +1899,29 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Declaratie",
 					"@type": "uml:Class",
 					"name": "Declaratie",
-					"documentation": "Gegevens over de ingediende declaratie.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Declaratie/elementen/DeclaratieNummer",
 							"@type": "uml:Property",
 							"name": "DeclaratieNummer",
-							"documentation": "Unieke identificatie van een declaratie",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_IdentificatieDeclaratie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Declaratie/elementen/DeclaratiePeriode",
 							"@type": "uml:Property",
 							"name": "DeclaratiePeriode",
-							"documentation": "Eerste en laatste dag van een administratieve periode waarop de gegevensuitwisseling betrekking heeft.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_GeslotenPeriode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Declaratie/elementen/DeclaratieDagtekening",
 							"@type": "uml:Property",
 							"name": "DeclaratieDagtekening",
-							"documentation": "Datum van ondertekening van een declaratie door de declarant.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Datum"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Declaratie/elementen/TotaalIngediendBedrag",
 							"@type": "uml:Property",
 							"name": "TotaalIngediendBedrag",
-							"documentation": "Het bedrag dat in zijn totaliteit gedeclareerd is.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_TotaalBedragMetDC"
 						}
 					],
@@ -2144,7 +1974,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Client/elementen/Bsn",
 							"@type": "uml:Property",
 							"name": "Bsn",
-							"documentation": "Een door de overheid toegekend identificerend nummer in het kader van het vereenvoudigen van het contact tussen overheid en burgers en het verminderen van de administratieve lasten.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BurgerServicenummer"
 						}
 					],
@@ -2197,56 +2026,48 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Prestatie/elementen/ProductReferentie",
 							"@type": "uml:Property",
 							"name": "ProductReferentie",
-							"documentation": "Identificerende referentie van de declaratie van een zorg - of ondersteuningsprestatie.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Referentie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Prestatie/elementen/ToewijzingNummer",
 							"@type": "uml:Property",
 							"name": "ToewijzingNummer",
-							"documentation": "Identificerend nummer van de opdracht om een zorg - of ondersteuningsproduct te leveren, zoals vastgesteld door de gemeente.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Nummer"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Prestatie/elementen/ProductCategorie",
 							"@type": "uml:Property",
 							"name": "ProductCategorie",
-							"documentation": "Gecodeerde aanduiding van hoofdcategorieen van producten in het kader van de Wet maatschappelijke ondersteuning (Wmo).",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_ProductCategorie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Prestatie/elementen/ProductCode",
 							"@type": "uml:Property",
 							"name": "ProductCode",
-							"documentation": "Gecodeerde aanduiding van producten in het kader van de Wet maatschappelijke ondersteuning (Wmo).",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_ProductCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Prestatie/elementen/ProductPeriode",
 							"@type": "uml:Property",
 							"name": "ProductPeriode",
-							"documentation": "Periode binnen de declaratieperiode waarop het product feitelijk is of wordt uitgevoerd.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_GeslotenPeriode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Prestatie/elementen/GeleverdVolume",
 							"@type": "uml:Property",
 							"name": "GeleverdVolume",
-							"documentation": "Hoeveelheid verricht product in een prestatieperiode.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Volume"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Prestatie/elementen/Eenheid",
 							"@type": "uml:Property",
 							"name": "Eenheid",
-							"documentation": "De eenheid waarin de zorg/behandeling wordt uitgedrukt.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Eenheid"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Prestatie/elementen/ProductTarief",
 							"@type": "uml:Property",
 							"name": "ProductTarief",
-							"documentation": "Tarief van een individueel product.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Bedrag",
 							"multiplicity": "0..1"
 						},
@@ -2254,7 +2075,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO323/klassen/Prestatie/elementen/IngediendBedrag",
 							"@type": "uml:Property",
 							"name": "IngediendBedrag",
-							"documentation": "Het bedrag dat gedeclareerd wordt.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BedragMetDC"
 						}
 					]
@@ -2270,7 +2090,6 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Root",
 					"@type": "uml:Class",
 					"name": "Root",
-					"documentation": "Bericht met retourinformatie voor declaratie Wmo-hulp.",
 					"relaties": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/relaties/Header",
@@ -2313,56 +2132,48 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Header/elementen/BerichtCode",
 							"@type": "uml:Property",
 							"name": "BerichtCode",
-							"documentation": "Code ter identificatie van een soort bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Header/elementen/BerichtVersie",
 							"@type": "uml:Property",
 							"name": "BerichtVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een major release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Header/elementen/BerichtSubversie",
 							"@type": "uml:Property",
 							"name": "BerichtSubversie",
-							"documentation": "Volgnummer van de formele uitgifte van een minor release van een iStandaard.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BerichtSubversie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Header/elementen/Afzender",
 							"@type": "uml:Property",
 							"name": "Afzender",
-							"documentation": "Identificatie van een gemeente die betrokken is bij de uitvoering van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Gemeente"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Header/elementen/Ontvanger",
 							"@type": "uml:Property",
 							"name": "Ontvanger",
-							"documentation": "Identificerende code van een aanbieder van zorg of ondersteuning.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_AgbCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Header/elementen/BerichtIdentificatie",
 							"@type": "uml:Property",
 							"name": "BerichtIdentificatie",
-							"documentation": "Naam of nummer en dagtekening ter identificatie van een totale aanlevering.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Header/elementen/XsdVersie",
 							"@type": "uml:Property",
 							"name": "XsdVersie",
-							"documentation": "Volgnummer van de formele uitgifte van een versie van de XSD's die zijn ingezet voor het opstellen van het heenbericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_XsdVersie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Header/elementen/DeclaratieIdentificatie",
 							"@type": "uml:Property",
 							"name": "DeclaratieIdentificatie",
-							"documentation": "DeclaratieIdentificatie dient om het declaratie-antwoordbericht en het eerder verstuurde declaratiebericht aan elkaar te koppelen. ",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BerichtIdentificatie"
 						},
 						{
@@ -2406,7 +2217,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/RetourCodes/elementen/RetourCode",
 							"@type": "uml:Property",
 							"name": "RetourCode",
-							"documentation": "Gecodeerde aanduiding in een retourbericht van het resultaat van de beoordeling van een (deel van het) ontvangen bericht.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_RetourCode",
 							"multiplicity": "1..*"
 						}
@@ -2416,27 +2226,23 @@
 					"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/DeclaratieAntwoord",
 					"@type": "uml:Class",
 					"name": "DeclaratieAntwoord",
-					"documentation": "Gegevens over het antwoord op een ingediende declaratie.",
 					"elementen": [
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/DeclaratieAntwoord/elementen/DeclaratieNummer",
 							"@type": "uml:Property",
 							"name": "DeclaratieNummer",
-							"documentation": "Unieke identificatie van een declaratie",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_IdentificatieDeclaratie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/DeclaratieAntwoord/elementen/TotaalIngediendBedrag",
 							"@type": "uml:Property",
 							"name": "TotaalIngediendBedrag",
-							"documentation": "Het bedrag dat in zijn totaliteit gedeclareerd is.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_TotaalBedragMetDC"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/DeclaratieAntwoord/elementen/TotaalToegekendBedrag",
 							"@type": "uml:Property",
 							"name": "TotaalToegekendBedrag",
-							"documentation": "Het bedrag dat in zijn totaliteit toegekend is.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_TotaalBedragMetDC"
 						}
 					],
@@ -2504,7 +2310,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Client/elementen/Bsn",
 							"@type": "uml:Property",
 							"name": "Bsn",
-							"documentation": "Een door de overheid toegekend identificerend nummer in het kader van het vereenvoudigen van het contact tussen overheid en burgers en het verminderen van de administratieve lasten.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_BurgerServicenummer"
 						}
 					],
@@ -2572,56 +2377,48 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Prestatie/elementen/ProductReferentie",
 							"@type": "uml:Property",
 							"name": "ProductReferentie",
-							"documentation": "Identificerende referentie van de declaratie van een zorg - of ondersteuningsprestatie.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_Referentie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Prestatie/elementen/ToewijzingNummer",
 							"@type": "uml:Property",
 							"name": "ToewijzingNummer",
-							"documentation": "Identificerend nummer van de opdracht om een zorg - of ondersteuningsproduct te leveren, zoals vastgesteld door de gemeente.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Nummer"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Prestatie/elementen/ProductCategorie",
 							"@type": "uml:Property",
 							"name": "ProductCategorie",
-							"documentation": "Gecodeerde aanduiding van hoofdcategorieen van producten in het kader van de Wet maatschappelijke ondersteuning (Wmo).",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_ProductCategorie"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Prestatie/elementen/ProductCode",
 							"@type": "uml:Property",
 							"name": "ProductCode",
-							"documentation": "Gecodeerde aanduiding van producten in het kader van de Wet maatschappelijke ondersteuning (Wmo).",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_ProductCode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Prestatie/elementen/ProductPeriode",
 							"@type": "uml:Property",
 							"name": "ProductPeriode",
-							"documentation": "Periode binnen de declaratie-/factuurperiode waarop het product feitelijk is of wordt uitgevoerd.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_GeslotenPeriode"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Prestatie/elementen/GeleverdVolume",
 							"@type": "uml:Property",
 							"name": "GeleverdVolume",
-							"documentation": "Hoeveelheid verricht product in een prestatieperiode.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Volume"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Prestatie/elementen/Eenheid",
 							"@type": "uml:Property",
 							"name": "Eenheid",
-							"documentation": "De eenheid waarin de zorg/behandeling wordt uitgedrukt.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Eenheid"
 						},
 						{
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Prestatie/elementen/ProductTarief",
 							"@type": "uml:Property",
 							"name": "ProductTarief",
-							"documentation": "Tarief van een individueel product.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/LDT_Bedrag",
 							"multiplicity": "0..1"
 						},
@@ -2629,7 +2426,6 @@
 							"@id": "model:iWmo/3.2/specific/berichten/WMO325/klassen/Prestatie/elementen/IngediendBedrag",
 							"@type": "uml:Property",
 							"name": "IngediendBedrag",
-							"documentation": "Het bedrag dat gedeclareerd wordt.",
 							"dataType": "model:iWmo/3.2/generic/gegevens/CDT_BedragMetDC"
 						}
 					],

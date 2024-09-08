@@ -19,6 +19,7 @@ const jsonLdContext = {
     "istd": "https://www.istandaarden.nl/over-istandaarden/istandaarden/begrippenlijst#",
     "model": "https://www.istandaarden.nl/",
     "name": "schema:name",
+    "documentation": "schema:description",
     "version": "schema:version",
     "multiplicity": "uml:multiplicity",
     "aggregation": "uml:Aggregation",
@@ -125,6 +126,14 @@ function setGenericModelId(project) {
 function getGenericModelId() { return genericModelId }
 
 /**
+ * Get UML Element Documentation (when available)
+ * @param {UMLElement} element 
+ */
+function buildDocumentation(element) {
+    return element.documentation ? String(element.documentation): undefined
+}
+
+/**
  * Build a JSON-export relaties Meta Data
  * @param {String} berichtId 
  * @param {Class} berichtKlasse 
@@ -141,6 +150,7 @@ function buildRelatiesJson(berichtId, berichtKlasse) {
             "@id": associationId,
             "@type": jsonLdType.Association,
             name: relatie.name,
+            documentation: buildDocumentation(relatie),
             parent: {
                 "@id": berichtId + "/klassen/" + relatie.end1.reference.name,
                 aggregation: relatie.end1.aggregation,
@@ -170,6 +180,7 @@ function buildElementJson(elementenId, attribute) {
         "@id": elementenId + "/" + name,
         "@type": jsonLdType.Property,
         name: name,
+        documentation: buildDocumentation(attribute),
         dataType: getGenericModelId() + "/gegevens/" + attribute.type.name,
         isID: attribute.isID ? Boolean(attribute.isID) : undefined,
         multiplicity: attribute.multiplicity ? String(attribute.multiplicity) : undefined
@@ -217,6 +228,7 @@ function buildBerichtKlassenJson(berichtId, berichtPkg) {
             "@id": elementId,
             "@type": jsonLdType.Class,
             name: String(berichtKlasse.name), 
+            documentation: buildDocumentation(berichtKlasse),
             elementen: buildElementenJson(elementId, berichtKlasse),
             relaties: buildRelatiesJson(berichtId, berichtKlasse),
         })
@@ -243,6 +255,7 @@ function buildBerichtenPkgJson(berichtenPkg) {
             "@id": berichtId,
             "@type": jsonLdType.Package,
             name: berichtPkg.name,
+            documentation: buildDocumentation(berichtPkg),
             klassen: buildBerichtKlassenJson(berichtId, berichtPkg)
         })
     }
@@ -308,6 +321,7 @@ function buildGegegevensJson(primitieveDataTypenPkg, codelijstenPkg, gegevensPkg
             "@id": dataTypeId,
             "@type": jsonLdType.DataType,
             name: name,
+            documentation: buildDocumentation(dataType),
             dataWaarden: buildDataWaardenJson(dataTypeId, primitieveDataTypenPkg, codelijstenPkg, dataType),
             elementen: buildElementenJson(gegevensId, dataType),
         })
@@ -333,7 +347,8 @@ function buildPrimitieveDataTypenJson(genericPkg) {
         json.push({
             "@id": primitieveTypenId + "/" + name,
             "@type": jsonLdType[name],
-            name: name
+            name: name,
+            documentation: buildDocumentation(primitieveType)
         })
     }
 
@@ -357,7 +372,8 @@ function buildCodelijstenJson(genericPkg) {
         json.push({
             "@id": codelijstenId + "/" + name,
             "@type": jsonLdType.Enumeration,
-            name: name
+            name: name,
+            documentation: buildDocumentation(codelijst)
         })
     }
 
