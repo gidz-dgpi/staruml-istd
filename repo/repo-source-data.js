@@ -68,8 +68,9 @@ function retrieveSourceDataFromRepo() {
         name: undefined,
         branch: undefined,
     }
-    metaModelRoot = undefined
-    genericModelPkg = undefined
+    let metaModelRoot = undefined
+    let metaModelGenericPkg = undefined
+    let metaSpecficModelPkg = undefined
     trans.init()
 
     /**
@@ -132,7 +133,7 @@ function retrieveSourceDataFromRepo() {
         /**
          * (2.b) 
          * - Create Project from Root Meta Data
-         * - Retrieve Generic Meta Data Fragment
+         * - Retrieve Generic Source Data Fragment
          */
         .then(response => {
             metaModelRoot = trans.createMetaDataRoot(response.data.content, modelDataRepoSelection.id, modelDataRepoSelection.branch)
@@ -144,7 +145,7 @@ function retrieveSourceDataFromRepo() {
          * - Retrieve Specific Meta Data Fragment
          */
         .then(response => {
-            genericModelPkg = trans.addMetaDataGenericModel(metaModelRoot, response.data.content)
+            metaModelGenericPkg = trans.addMetaDataGenericModel(metaModelRoot, response.data.content)
             return trans.getMetaDataSpecificModel(modelDataRepoSelection.id, modelDataRepoSelection.branch)
         })
         /**
@@ -153,7 +154,7 @@ function retrieveSourceDataFromRepo() {
          * - Alert Successfull Retrieval
          */
         .then(response => {
-            specficModelPkg = trans.addMetaDataSpecficModel(metaModelRoot, response.data.content)
+            metaSpecficModelPkg = trans.addMetaDataSpecficModel(metaModelRoot, response.data.content)
             app.dialogs.showAlertDialog(
                 `Bron Meta Data Model succesvol opgehaald van repository=[${modelDataRepoSelection.name}] branch=[${modelDataRepoSelection.branch}] !`
             )
@@ -198,6 +199,10 @@ function buildAttributeDataList(attributes) {
             }
         }
 
+        if (attribute.isID) {
+            attributeData['isID'] = attribute.isID
+        }
+
         attributDataList.push(attributeData)
     }
 
@@ -221,10 +226,10 @@ function buildDependencyDataList(ownedElements) {
             _parent: {
                 $ref: String(dependency._parent._id)
             },
-            _source: {
+            source: {
                 $ref: String(dependency.source._id)
             },
-            _target: {
+            target: {
                 $ref: String(dependency.target._id)
             },
         }
@@ -256,10 +261,16 @@ function buildDataTypeList(ownedElements) {
         }
         // only Complex DataTypes can have Attributes (Elementen)
         const attributes = buildAttributeDataList(dataType.attributes)
-        if (attributes) dataTypeData['attributes'] = attributes
+        if (attributes) {
+            dataTypeData['attributes'] = attributes
+        }
+
         // only Simple DataTypes can have Dependencies (DataWaarden)
         const ownedElements = buildDependencyDataList(dataType.ownedElements)
-        if (ownedElements) dataTypeData['ownedElements'] = ownedElements
+        if (ownedElements) {
+            dataTypeData['ownedElements'] = ownedElements
+        }
+
         // add element with the relevant data for the standaard
         dataTypeDataList.push(dataTypeData)
     }
@@ -531,9 +542,9 @@ function storeGenericSourceDataInRepo(root, branch, projectId, commitMessage) {
         name: String(genericPkg.name),
         documentation: String(genericPkg.documentation),
         ownedElements: [
-            gegevensModelPkgData,
             primitieveTypenPkgData,
-            codeLijstenPkgData
+            codeLijstenPkgData,
+            gegevensModelPkgData
         ]
     }
 
