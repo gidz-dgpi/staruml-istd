@@ -87,6 +87,7 @@ function createMetaDataRoot(rootDataContent, projectId, branch) {
     // add Tags that are used to keep repository storage locations info
     utils.addStringTag(root, 'projectId', projectId)
     utils.addStringTag(root, 'branch', branch)
+    console.log(root)
     return root
 }
 
