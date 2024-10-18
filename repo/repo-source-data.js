@@ -2,14 +2,11 @@
  * StarUML iStandaard Source Data Repository Functions
  */
 
-/**
- * 
- */
 const istGlobals = require('../istd/istd-globals')
 const codelijstenPkgId = require('../istd/istd-codelijsten').codelijstenPkgId
 const primitiveTypesPkgId = require('../istd/istd-primitive-types').primitiveTypesPkgId
 const utils = require('../dgpi/dgpi-utils')
-const trans = require('./repo-trans')
+const trans = require('./repo-trans-source-data')
 
 /**
  * Get Repository Selection Options from Repo List

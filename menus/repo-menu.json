@@ -13,6 +13,11 @@
             "label": "Model Data bewaren",
             "id": "repo.model.data.bewaren",
             "command": "repo:store:model:data"
+          },
+          {
+            "label": "Meta Data publiceren",
+            "id": "repo.model.data.publiceren",
+            "command": "repo:publish:meta:data"
           }
         ]
       }
