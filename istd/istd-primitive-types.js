@@ -31,6 +31,14 @@ const primitiveTypeElements = [
             $ref: primitiveTypesPkgId
         },
         name: 'time'
+    },
+    {
+        _type: 'UMLPrimitiveType',
+        _id: 'iStandaardDateTimeType',
+        _parent: {
+            $ref: primitiveTypesPkgId
+        },
+        name: 'dateTime'
     }
 ]
 

@@ -99,12 +99,6 @@ function getXsdBerichtMetaData(xsAppinfo) {
         standaard: xsdMetaData.standaard,
         bericht: xsdMetaData.bericht,
         release: xsdMetaData.release,
-        berichtXsdVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BerichtXsdVersie')),
-        berichtXsdMinVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BerichtXsdMinVersie')),
-        berichtXsdMaxVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BerichtXsdMaxVersie')),
-        basisschemaXsdVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdVersie')),
-        basisschemaXsdMinVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdMinVersie')),
-        basisschemaXsdMaxVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdMaxVersie')),
     }
 }
 
@@ -137,14 +131,6 @@ function importBerichtKlassen(gegevensModelPkg, berichtenPkg, bericht) {
                 elem.name = berichtName
             }
         })
-        utils.addStringTag(berichtPkg, 'standaard', xsdMetaData.standaard)
-        utils.addStringTag(berichtPkg, 'releaseNummer', xsdMetaData.release)
-        utils.addStringTag(berichtPkg, 'versieBerichtXsd', xsdMetaData.berichtXsdVersie)
-        utils.addStringTag(berichtPkg, 'minVersieBerichtXsd', xsdMetaData.berichtXsdMinVersie)
-        utils.addStringTag(berichtPkg, 'maxVersieBerichtXsd', xsdMetaData.berichtXsdMaxVersie)
-        utils.addStringTag(berichtPkg, 'versieBasisschema', xsdMetaData.basisschemaXsdVersie)
-        utils.addStringTag(berichtPkg, 'minVersieBasisschema', xsdMetaData.basisschemaXsdMinVersie)
-        utils.addStringTag(berichtPkg, 'maxVersieBasisschema', xsdMetaData.basisschemaXsdMaxVersie)
         const complexElems = xsSchema.elements.filter(element => element.name == 'xs:complexType')
         const relationElems = []
 

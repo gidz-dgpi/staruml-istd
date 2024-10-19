@@ -66,6 +66,7 @@ function addSimpleType(gegevensModelPkg, codelijstenPkg, standaardId, simpleType
         documentation: dataTypeDocumentation,
         ownedElements: dataTypeElements
     }
+    
     return app.project.importFromJson(gegevensModelPkg, dataTypeElem) 
 }
 
@@ -132,9 +133,6 @@ function getXsdBasisSchemaMetaData(xsAppinfo) {
         standaard: xsdMetaData.standaard,
         bericht: xsdMetaData.bericht,
         release: xsdMetaData.release,
-        basisschemaXsdVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdVersie')),
-        basisschemaXsdMinVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdMinVersie')),
-        basisschemaXsdMaxVersie: utils.getAppInfoElementText(xsAppinfo.elements.find(element => element.name == xsdMetaData.standaard + ':BasisschemaXsdMaxVersie')),
     }
 }
 
@@ -152,12 +150,6 @@ function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
     const xsAppinfo = xsAnnotation.elements.find(element => element.name == 'xs:appinfo')
     const xsdMetaData = getXsdBasisSchemaMetaData(xsAppinfo)
     console.log(xsdMetaData)
-    utils.addStringTag(gegevensModelPkg, 'standaard', xsdMetaData.standaard)
-    utils.addStringTag(gegevensModelPkg, 'releaseNummer', xsdMetaData.release)
-    utils.addStringTag(gegevensModelPkg, 'versieBasisschema', xsdMetaData.basisschemaXsdVersie)
-    utils.addStringTag(gegevensModelPkg, 'minVersieBasisschema', xsdMetaData.basisschemaXsdMinVersie)
-    utils.addStringTag(gegevensModelPkg, 'maxVersieBasisschema', xsdMetaData.basisschemaXsdMaxVersie)
-
 
     const simpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
     for (let i = 0; i < simpleTypes.length; i++) {
