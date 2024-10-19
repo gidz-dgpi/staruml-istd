@@ -81,7 +81,6 @@
 			<xs:documentation>Identificerende code van een instelling of aanbieder van zorg of ondersteuning (zie https://www.agbcode.nl)</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="8"/>
 			<xs:pattern value="[0-9]{8}"/>
 		</xs:restriction>
@@ -572,17 +571,15 @@
 			<xs:documentation>Een door de overheid toegekend identificerend nummer in het kader van het vereenvoudigen van het contact tussen overheid en burgers en het verminderen van de administratieve lasten.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="9"/>
 			<xs:pattern value="[0-9]{9}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="LDT_Commentaar">
 		<xs:annotation>
-			<xs:documentation>Vrije tekst (bijvoorbeeld een toelichting) in een bericht.</xs:documentation>
+			<xs:documentation>Vrije tekst (bijvoorbeeld een toelichting).</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="LDT_Communicatievorm">
@@ -618,7 +615,6 @@
 			<xs:documentation>Datum</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:date">
-			<xs:pattern value="[^:Z]*"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="LDT_DatumGebruik">
@@ -651,7 +647,6 @@
 	</xs:simpleType>
 	<xs:simpleType name="LDT_DatumTijd">
 		<xs:restriction base="xs:dateTime">
-			<xs:pattern value="^([0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.([0-9]{3}))$"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="LDT_DiagnoseCodelijst">
@@ -813,7 +808,6 @@
 			<xs:documentation>Emailadres van een client of relatie.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="80"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -959,7 +953,6 @@
 			<xs:documentation>Een alfabetisch teken achter het huisnummer zoals dit door het gemeentebestuur is toegekend.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="1"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -977,7 +970,6 @@
 			<xs:documentation>Die letters of tekens die noodzakelijk zijn om, naast huisnummer en -letter, de brievenbus te vinden.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="4"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -986,7 +978,6 @@
 			<xs:documentation>Identificerende code van een contract in het kader van de Wlz tussen een zorgkantoor en een zorginstelling</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="8"/>
 			<xs:pattern value="[0-9]{8}"/>
 		</xs:restriction>
@@ -2277,7 +2268,6 @@
 			<xs:documentation>Het telefoonnummer van een land, vanuit Nederland benaderd.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="4"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -2548,7 +2538,6 @@
 			<xs:documentation>De naam van een persoon, indien nodig verkort weergegeven.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="200"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -2595,15 +2584,6 @@
 			<xs:maxLength value="1"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="LDT_Organisatienaam">
-		<xs:annotation>
-			<xs:documentation>De naam van een organisatie waar de client of relatie client verblijft.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
-			<xs:maxLength value="35"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="LDT_Percentage">
 		<xs:annotation>
 			<xs:documentation>Percentage in honderdste procenten. Bijvoorbeeld 9000 is negenduizend honderdste procent, is 90%.</xs:documentation>
@@ -2618,7 +2598,6 @@
 			<xs:documentation>Identificerend nummer van een natuurlijk persoon.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="20"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -2627,7 +2606,6 @@
 			<xs:documentation>De door de gemeente vastgestelde naam van een woonplaats.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="80"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -2636,7 +2614,6 @@
 			<xs:documentation>Aanduiding van de (inter)nationale postcode. Dit veld is geschikt voor zowel de Nederlandse als niet-Nederlandse postcodes.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="8"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -2729,6 +2706,29 @@
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:maxLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LDT_Regierol">
+		<xs:annotation>
+			<xs:documentation>Gecodeerde aanduiding van de rol van de aanbieder in de coordinatie, organisatie en/of afstemming aan de client of patient. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:appinfo>
+					<iwlz:codelijstNaam>COD1004: Regierol</iwlz:codelijstNaam>
+				</xs:appinfo>
+			</xs:annotation>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Coordinator zorg thuis</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Dossierhouder</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:maxLength value="3"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="LDT_Relatie">
@@ -3218,7 +3218,6 @@
 			<xs:documentation>Code die het ziektebeeld of de stoornis van een client identificeert.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="8"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -3428,7 +3427,6 @@
 			<xs:documentation>De officiele door de gemeente vastgestelde naam van een straat.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="24"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -3437,7 +3435,6 @@
 			<xs:documentation>De taal van de client waarin met de client wordt gecommuniceerd.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="25"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -3446,14 +3443,12 @@
 			<xs:documentation>Het telefoonnummer waarop de client of relatie van de client te bereiken is.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="15"/>
 			<xs:pattern value="[0-9]*"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="LDT_UUID">
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="36"/>
 			<xs:pattern value="[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}"/>
 		</xs:restriction>
@@ -3530,7 +3525,6 @@
 			<xs:documentation>De verzameling van letters die wordt gevormd door de eerste letter van alle in volgorde voorkomende voornamen van een persoon.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="6"/>
 			<xs:pattern value="([a-zA-ZÀ-ỳ])+"/>
 		</xs:restriction>
@@ -3540,7 +3534,6 @@
 			<xs:documentation>Verzameling van een of meer voorzetsels/lidwoorden, die aan het significante deel van de achternaam van een persoon vooraf gaat en daar een onderdeel van is.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="10"/>
 		</xs:restriction>
 	</xs:simpleType>

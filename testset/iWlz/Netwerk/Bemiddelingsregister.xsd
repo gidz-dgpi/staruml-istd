@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:iwlz="http://www.istandaarden.nl/iwlz/2_3/basisschema/schema" xmlns:bemiddelingsregister="http://www.istandaarden.nl/iwlz/2_3/bemiddelingsregister/schema" targetNamespace="http://www.istandaarden.nl/iwlz/2_3/bemiddelingsregister/schema" elementFormDefault="qualified">
+	<xs:import namespace="http://www.istandaarden.nl/iwlz/2_3/basisschema/schema" schemaLocation="basisschema.xsd"></xs:import>
+	<xs:annotation>
+		<xs:appinfo>
+			<iwlz:standaard>iwlz</iwlz:standaard>
+			<iwlz:bericht>bemiddelingsregister</iwlz:bericht>
+			<iwlz:release>2.3</iwlz:release>
+			<iwlz:BerichtXsdVersie></iwlz:BerichtXsdVersie>
+			<iwlz:BerichtXsdMinVersie></iwlz:BerichtXsdMinVersie>
+			<iwlz:BerichtXsdMaxVersie></iwlz:BerichtXsdMaxVersie>
+			<iwlz:BasisschemaXsdVersie></iwlz:BasisschemaXsdVersie>
+			<iwlz:BasisschemaXsdMinVersie></iwlz:BasisschemaXsdMinVersie>
+			<iwlz:BasisschemaXsdMaxVersie></iwlz:BasisschemaXsdMaxVersie>
+		</xs:appinfo>
+	</xs:annotation>
+	<xs:element name="Bericht" type="bemiddelingsregister:Root"></xs:element>
+	<xs:complexType name="Root">
+		<xs:annotation>
+			<xs:documentation>Het Bemiddelingsregister bevat gegevens over de toegewezen Wlz-zorg. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Client" type="bemiddelingsregister:Client"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Client">
+		<xs:annotation>
+			<xs:documentation>Persoon met een Wlz-indicatie voor wie een bemiddeling is vastgelegd.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="clientID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel client</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bsn" type="iwlz:LDT_BurgerServicenummer">
+				<xs:annotation>
+					<xs:documentation>Burgerservicenummer van de client.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="leefeenheid" type="iwlz:LDT_Leefeenheid" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de woonsituatie en / of de samenstelling van het huishouden van de client.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="huisarts" type="iwlz:LDT_AgbCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de huisarts van de client.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="communicatievorm" type="iwlz:LDT_Communicatievorm" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de bijzondere vorm van communicatie die gebruikt moet worden om met de client te communiceren.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="taal" type="iwlz:LDT_Taal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Taal waarin met de client wordt gecommuniceerd.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Bemiddelingen" type="bemiddelingsregister:Bemiddelingen"></xs:element>
+			<xs:element name="GGs" type="bemiddelingsregister:GGs" minOccurs="0"></xs:element>
+			<xs:element name="CPs" type="bemiddelingsregister:CPs" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Bemiddelingen">
+		<xs:sequence>
+			<xs:element name="Bemiddeling" type="bemiddelingsregister:Bemiddeling"  maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Bemiddeling">
+		<xs:annotation>
+			<xs:documentation>Gegevens over de verantwoordelijkheid voor het toeleiden van de client naar zorg in natura, pgb of een combinatie daarvan. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="bemiddelingID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel bemiddeling</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="clientID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel client</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="wlzIndicatieID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel wlzIndicatie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="verantwoordelijkZorgkantoor" type="iwlz:LDT_ZorgkantoorCode">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van het zorgkantoor dat verantwoordelijk is voor het uitvoeren van de Wlz voor de client. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="verantwoordelijkheidIngangsdatum" type="iwlz:LDT_Datum">
+				<xs:annotation>
+					<xs:documentation>Eerste datum waarop het zorgkantoor verantwoordelijk is voor het uitvoeren van de Wlz voor de client. </xs:documentation>
+					<xs:documentation>* Bij de afgifte van een nieuw indicatiebesluit is dat de afgiftedatum WlzIndicatie. </xs:documentation>
+					<xs:documentation>* Bij dossieroverdracht vanuit een ander zorgkantoor is dat de overdrachtdatum.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="verantwoordelijkheidEinddatum" type="iwlz:LDT_Datum" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Laatste datum waarop het zorgkantoor verantwoordelijk is voor het uitvoeren van de Wlz voor de client.</xs:documentation>
+					<xs:documentation>Een verantwoordelijkheid eindigt (uiterlijk) op de einddatum WlzIndicatie.  </xs:documentation>
+					<xs:documentation>Een verantwoordelijkheid eindigt eerder</xs:documentation>
+					<xs:documentation>* als een indicatiebesluit vervalt (door de afgifte van een nieuw indicatiebesluit of door het overlijden van de client). De verantwoordelijkheid eindigt dan op de vervaldatum WlzIndicatie.</xs:documentation>
+					<xs:documentation>* als er sprake is van dossieroverdracht als gevolg van verhuizing van de client naar een andere zorgkantoorregio. De verantwoordelijkheid eindigt dan op de dag voorafgaand aan de overdrachtdatum</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Bemiddelingspecificaties" type="bemiddelingsregister:Bemiddelingspecificaties" minOccurs="0"></xs:element>
+			<xs:element name="Overdracht" type="bemiddelingsregister:Overdracht" minOccurs="0"></xs:element>
+			<xs:element name="DHs" type="bemiddelingsregister:DHs" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Bemiddelingspecificaties">
+		<xs:sequence>
+			<xs:element name="Bemiddelingspecificatie" type="bemiddelingsregister:Bemiddelingspecificatie"  maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Bemiddelingspecificatie">
+		<xs:annotation>
+			<xs:documentation>Toewijzing voor zorg in natura of pgb.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="bemiddelingspecificatieID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel bemiddelingspecificatie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bemiddelingID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel bemiddeling</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="leveringsvorm" type="iwlz:LDT_Leveringsvorm">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de vorm waarin de zorg geleverd moet worden. Bij zorg in natura geeft de leveringsvorm tevens aan  waar de zorg geleverd moet worden (thuis, in de instelling of deels thuis en deels in de instelling).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="zzpCode" type="iwlz:LDT_ZzpCode">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van het toegewezen zorgzwaartepakket.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="toewijzingIngangsdatum" type="iwlz:LDT_Datum">
+				<xs:annotation>
+					<xs:documentation>Eerste datum waarop de toegewezen zorg geleverd mag worden of het persoonsgebonden budget aangesproken mag worden.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="instelling" type="iwlz:LDT_iWlzAgbCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de instelling die de zorg levert of gaat leveren.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="uitvoerendZorgkantoor" type="iwlz:LDT_ZorgkantoorCode">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van het zorgkantoor waarmee de instelling die de zorg levert of gaat leveren een contract heeft. Bij pgb: aanduiding van het zorgkantoor dat het persoonsgebonden budget heeft toegekend. </xs:documentation>
+					<xs:documentation>N.B. Bij pgb is het verantwoordelijke zorgkantoor meestal ook het uitvoerende zorgkantoor.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vaststellingMoment" type="iwlz:LDT_DatumTijd">
+				<xs:annotation>
+					<xs:documentation>Datum en tijdstip waarop het zorgkantoor de toewijzing heeft vastgesteld. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="toewijzingEinddatum" type="iwlz:LDT_Datum" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Laatste datum waarop de toegewezen zorg geleverd mag worden of het persoonsgebonden budget aangesproken mag worden.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="percentage" type="iwlz:LDT_Percentage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Toegewezen deel van het budget dat geldt voor het betreffende zorgprofiel (zorgzwaartepakket) uitgedrukt in een percentage. Geeft de hoeveelheid zorg aan die deze aanbieder mag leveren als deel van het geheel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="opname" type="iwlz:LDT_JaNee" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding die aangeeft of de client wel of niet wordt opgenomen bij deze instelling.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="redenIntrekking" type="iwlz:LDT_RedenIntrekking" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de reden voor het intrekken van de toewijzing.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="etmalen" type="iwlz:LDT_Etmalen" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van het aantal etmalen per week dat een client die deeltijdverblijf ontvangt in de instelling woont.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="instellingBestemming" type="iwlz:LDT_iWlzAgbCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de instelling die de zorglevering aan de client overneemt.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="soortToewijzing" type="iwlz:LDT_SoortToewijzing">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de soort toewijzing.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pgbPercentage" type="iwlz:LDT_Percentage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Toegewezen deel van het budget dat geldt voor het betreffende zorgprofiel (zorgzwaartepakket) uitgedrukt in een percentage. Geeft aan welk deel van de zorg bekostigd mag worden vanuit het pgb.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Overdrachtspecificatie" type="bemiddelingsregister:Overdrachtspecificatie" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Overdrachtspecificatie">
+		<xs:annotation>
+			<xs:documentation>Wachtsituatie van de client en einddatum van de zorgtoewijzing op moment van overdracht, per toewijzing voor zorg in natura of pgb. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="overdrachtspecificatieID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel overdrachtspecificatie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bemiddelingspecificatieID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel bemiddelingspecificatie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="overdrachtID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel overdracht</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="leveringsstatus" type="iwlz:LDT_Leveringsstatus">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de status van de geleverde zorg. Wordt gebruikt bij het samenstellen van de wachtlijst en geeft inzicht in wensen en behoeften van de client en de urgentie van de zorgvraag.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="leveringsstatusClassificatie" type="iwlz:LDT_LeveringsstatusClassificatie" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van een nadere classificatie van de leveringsstatus; geeft duidelijker beeld van de situatie van de client (wens van de klant en noodzaak tot plaatsing) en biedt meer inzicht in de wachtlijsten.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="oorspronkelijkeToewijzingEinddatum" type="iwlz:LDT_Datum" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Einddatum die de oorspronkelijke toewijzing had voordat deze als gevolg van de overdracht naar het andere zorgkantoor werd ingetrokken. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Overdracht">
+		<xs:annotation>
+			<xs:documentation>Overdracht van de verantwoordelijkheid voor de client aan een ander zorgkantoor als gevolg van de verhuizing van de client naar een andere zorgkantoorregio.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="overdrachtID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel overdracht</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bemiddelingID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel bemiddeling</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="verantwoordelijkZorgkantoor" type="iwlz:LDT_ZorgkantoorCode">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van het nieuwe zorgkantoor dat vanaf de overdracht verantwoordelijk is voor het uitvoeren van de Wlz voor de client.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vaststellingMoment" type="iwlz:LDT_DatumTijd">
+				<xs:annotation>
+					<xs:documentation>Datum en tijdstip waarop het zorgkantoor de dossieroverdracht heeft vastgesteld.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="overdrachtdatum" type="iwlz:LDT_Datum">
+				<xs:annotation>
+					<xs:documentation>Datum waarop het dossier van de client wordt overgedragen aan het nieuwe zorgkantoor. </xs:documentation>
+					<xs:documentation>Dit is de eerste dag waarop het nieuwe zorgkantoor verantwoordelijk is voor de client. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="verhuisdatum" type="iwlz:LDT_Datum">
+				<xs:annotation>
+					<xs:documentation>Ingangsdatum van het nieuwe adres van de client zoals vastgelegd in de Basis Registratie Personen (BRP).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Overdrachtspecificaties" type="bemiddelingsregister:Overdrachtspecificaties" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Overdrachtspecificaties">
+		<xs:sequence>
+			<xs:element name="Overdrachtspecificatie" type="bemiddelingsregister:Overdrachtspecificatie"  maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DHs">
+		<xs:sequence>
+			<xs:element name="Regiehouder" type="bemiddelingsregister:Regiehouder"  maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Regiehouder">
+		<xs:annotation>
+			<xs:documentation>De instelling die bepaalde verantwoordelijkheid heeft richting de client of patient, overeenkomstig de geselecteerde regierol. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="regiehouderID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel Regiehouder</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bemiddelingID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel bemiddeling</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="instelling" type="iwlz:LDT_iWlzAgbCode">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de instelling die de geselecteerde regierol heeft.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regierol" type="iwlz:LDT_Regierol">
+				<xs:annotation>
+					<xs:documentation>De aan de instelling toegekende regierol</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ingangsdatum" type="iwlz:LDT_Datum">
+				<xs:annotation>
+					<xs:documentation>Eerste datum waarop de instelling de geselecteerde regierol heeft.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="einddatum" type="iwlz:LDT_Datum" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Laatste datum waarop de instelling de geselecteerde regierol heeft. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GGs">
+		<xs:sequence>
+			<xs:element name="Contactgegevens" type="bemiddelingsregister:Contactgegevens"  maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Contactgegevens">
+		<xs:annotation>
+			<xs:documentation>Adres, telefoonnummer(s) en e-mailadres van de client of een contactpersoon.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contactgegevensID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel contactgegevens</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="clientID" type="iwlz:LDT_UUID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel client</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="contactpersoonID" type="iwlz:LDT_UUID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel contactpersoon</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="straatnaam" type="iwlz:LDT_Straatnaam" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Naam van de straat.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="huisnummer" type="iwlz:LDT_Huisnummer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Nummer van het huis in de straat.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="huisletter" type="iwlz:LDT_Huisnummer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Alfabetisch teken achter het huisnummer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="huisnummertoevoeging" type="iwlz:LDT_HuisnummerToevoeging" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Letters of tekens die noodzakelijk zijn om, naast huisnummer en -letter, de brievenbus te vinden.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="aanduidingWoonadres" type="iwlz:LDT_AanduidingWoonadres" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding die wordt gebruikt voor adressen die niet zijn voorzien van de gebruikelijke straatnaam en huisnummeraanduidingen.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="postcode" type="iwlz:LDT_Postcode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Nationale of internationale postcode.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="plaatsnaam" type="iwlz:LDT_Plaatsnaam" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Naam van de woonplaats.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="land" type="iwlz:LDT_LandCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van het land dat bij het adres hoort.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adressoort" type="iwlz:LDT_AdresSoort">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van het soort adres. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="telefoonnummer01" type="iwlz:LDT_Telefoonnummer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Telefoonnummer waarop de client of relatie van de client te bereiken is.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="landnummer01" type="iwlz:LDT_Landnummer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Landnummer van het land dat hoort bij telefoonnummer 01.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="telefoonnummer02" type="iwlz:LDT_Telefoonnummer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Telefoonnummer waarop de client of relatie van de client te bereiken is.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="landnummer02" type="iwlz:LDT_Landnummer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Landnummer van het land dat hoort bij telefoonnummer 02.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="emailadres" type="iwlz:LDT_Emailadres" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>E-mailadres van een client of relatie.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ingangsdatum" type="iwlz:LDT_Datum">
+				<xs:annotation>
+					<xs:documentation>Eerste datum waarop de contactgegevens geldig zijn.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="einddatum" type="iwlz:LDT_Datum" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Laatste datum waarop de contactgegevens geldig zijn.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CPs">
+		<xs:sequence>
+			<xs:element name="Contactpersoon" type="bemiddelingsregister:Contactpersoon"  maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Contactpersoon">
+		<xs:annotation>
+			<xs:documentation>Relatie van de client die als contactpersoon optreedt.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contactpersoonID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel contactpersoon</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="clientID" type="iwlz:LDT_UUID">
+				<xs:annotation>
+					<xs:documentation>Technische sleutel client</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="relatienummer" type="iwlz:LDT_Persoonsid">
+				<xs:annotation>
+					<xs:documentation>Identificerend nummer van de relatie van de client.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="volgorde" type="iwlz:LDT_Volgorde" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de prioriteit van de contactpersoon.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="soortRelatie" type="iwlz:LDT_SoortRelatie">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de soort relatie die een persoon heeft ten opzichte van de client.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rol" type="iwlz:LDT_Rol" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de rol die een contactpersoon heeft ten opzichte van de client. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="relatie" type="iwlz:LDT_Relatie" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van de familiaire relatie die een contactpersoon heeft ten opzichte van de client. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="geslachtsnaam" type="iwlz:LDT_Naam" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Wettelijk vastgelegde achternaam die iemand bij de geboorte erft van de vader of moeder of van beide.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="voorvoegselGeslachtsnaam" type="iwlz:LDT_Voorvoegsel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Verzameling van een of meer voorzetsels/lidwoorden, die aan het significante deel van de achternaam van een persoon vooraf gaat en daar een onderdeel van is. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="partnernaam" type="iwlz:LDT_Naam" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Na het voltrekken van een huwelijk of na een officiele partnerregistratievan de partner aangenomen familienaam.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="voorvoegselPartnernaam" type="iwlz:LDT_Voorvoegsel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Verzameling van een of meer voorzetsels/lidwoorden, die aan het significante deel van de achternaam van een persoon vooraf gaat en daar een onderdeel van is. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="voornamen" type="iwlz:LDT_Naam" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Verzameling namen die, gescheiden door spaties, aan de geslachtsnaam voorafgaat.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="voorletters" type="iwlz:LDT_Voorletters" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>De verzameling van letters die wordt gevormd door de eerste letter van alle in volgorde voorkomende voornamen van een persoon.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="roepnaam" type="iwlz:LDT_Naam" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Voornaam waarmee je iemand aanspreekt.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="naamgebruik" type="iwlz:LDT_NaamGebruik" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding die de volgorde van geslachtsnaam en partnernaam aangeeft.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="geslacht" type="iwlz:LDT_Geslacht" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van het geslacht van de contactpersoon.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="geboortedatum" type="iwlz:LDT_Datum" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Geboortedatum van de contactpersoon.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="geboortedatumgebruik" type="iwlz:LDT_DatumGebruik" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Aanduiding van het deel van de geboortedatum dat gebruikt mag worden. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ingangsdatum" type="iwlz:LDT_Datum">
+				<xs:annotation>
+					<xs:documentation>Eerste datum waarop de contactpersoon benaderd kan worden.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="einddatum" type="iwlz:LDT_Datum" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Laatste datum waarop de contactpersoon benaderd kan worden.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Contactgegevens" type="bemiddelingsregister:Contactgegevens"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
