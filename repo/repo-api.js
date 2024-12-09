@@ -45,18 +45,12 @@ function listSubGroups(groupPath) {
 
 /**
  * Based on https://docs.gitlab.com/ee/api/projects.html#list-all-projects
- * @param {Boolean} searchNamespaces 
- * @param {String} search 
- * @param {Boolean} simple 
+ * @param {Attributes} params 
  * @returns {Promise<axios.get>}
  */
-function listProjects(searchNamespaces, search, simple) {
-    const url = `/projects`
-    var params = {}
-    if (searchNamespaces) params['searchNamespaces'] = searchNamespaces
-    if (search) params['search'] = search
-    if (simple) params['simple'] = simple
-    const config = params != {} ? { params: params } : undefined
+function listProjects(params) {
+    const url = `/projects?pagination=keyset&per_page=100&order_by=id&sort=asc`
+    const config = params ? { params: params } : undefined
     return gitLabApi.get(url, config)
 }
 
