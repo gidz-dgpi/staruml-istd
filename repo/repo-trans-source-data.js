@@ -18,7 +18,12 @@ function init() {
  * @returns {Promise<String[]>}
  */
 function getModelDataRepoList() {
-    return api.listProjects(false, undefined, true)
+    return api.listProjects({
+        archived: false,
+        searchNamespaces: false, 
+        topic: 'modeldata', 
+        simple: true
+    })
         .then(response => {
             const repoList = response.data
             const modelGroupPath = app.preferences.get(repoPrefs.keys.repoModelGroupPath)
