@@ -2,18 +2,19 @@
     "name": "gidz-dgpi.staruml-istd",
     "title": "StarUML iStd Extension",
     "description": "Import en Export van iStandaard Modellen.",
-    "homepage": "https://github.com/gidz-dgpi/staruml-istd",
-    "issues": "https://github.com/gidz-dgpi/staruml-istd/issues",
     "keywords": [
         "uml",
         "json",
         "xsd"
     ],
-    "version": "0.9.0",
+    "version": "0.10.0",
     "author": {
-        "name": "Onnno Haldar",
+        "name": "Onno Haldar",
         "email": "ohaldar@zinl.nl"
     },
+    "contributors": [
+        "Koen Schonhoven <kschonhoven@zinl.nl>"
+    ],
     "license": "MIT",
     "engines": {
         "staruml": ">=3.0.0"
