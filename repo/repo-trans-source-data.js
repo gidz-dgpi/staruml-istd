@@ -18,21 +18,14 @@ function init() {
  * @returns {Promise<String[]>}
  */
 function getModelDataRepoList() {
-    return api.listProjects({
-        archived: false,
-        searchNamespaces: false, 
-        topic: 'modeldata', 
-        simple: true
-    })
+    return api.listProjectsForGroup(app.preferences.get(repoPrefs.keys.repoModelGroupPath))
         .then(response => {
-            const repoList = response.data
-            const modelGroupPath = app.preferences.get(repoPrefs.keys.repoModelGroupPath)
-            return repoList.filter(item => item.namespace.full_path.startsWith(modelGroupPath) && item.name != 'gitlab-profile')
+            return response.data.filter(item => item.name != 'gitlab-profile')
         })
 }
 
 /**
- * Get avlailable Work Branches
+ * Get available Work Branches
  * @param {String | Number} projectId 
  * @returns {Promise<String[]>}
  */

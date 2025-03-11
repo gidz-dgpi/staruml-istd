@@ -67,6 +67,40 @@ function listRepoBranches(projectId) {
 
 
 /**
+ * Get the id of the group which has given namespace
+ * @param {string} namespace
+ * @returns {number}
+ */
+function getGroupId(namespace) {
+    console.log('getGroupId(' + namespace + ')')
+    const url = '/groups'
+    var params = {}
+    params['search'] = namespace
+    return gitLabApi.get(url, { params: params })
+        .then(response => {
+            return response.data[0].id
+        })
+}
+
+/**
+ * List the projects belonging to given group (namespace)
+ * @param {string} namespace
+ * @returns {Promise<axios.get>}
+ */
+function listProjectsForGroup(namespace) {
+    console.log('listProjectsForGroup(' + namespace + ')')
+    return getGroupId(namespace)
+        .then(groupId => {
+            console.log('listProjectsForGroup => getGroupId yielded ' + groupId)
+            const url = '/groups/' + groupId + '/projects?pagination=keyset&per_page=100&order_by=id&sort=asc'
+            console.log('listProjectsForGroup => using url ' + url)
+            var params = {}
+            params['include_subgroups'] = 'true'
+            return gitLabApi.get(url, { params: params })
+        })
+}
+
+/**
  * Based on: https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree
  * @param {String} projectId 
  * @param {String | undefined} filePath 
@@ -149,6 +183,7 @@ exports.init = init
 exports.listCurrentUser = listCurrentUser
 exports.listSubGroups = listSubGroups
 exports.listProjects = listProjects
+exports.listProjectsForGroup = listProjectsForGroup
 exports.listRepoBranches = listRepoBranches
 exports.listRepoFileTree = listRepoFileTree
 exports.getFileFromRepo = getFileFromRepo
