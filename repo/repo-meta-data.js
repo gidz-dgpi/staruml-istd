@@ -4,12 +4,12 @@
 
 const utils = require('../dgpi/dgpi-utils')
 const trans = require('./repo-trans-meta-data')
+const pub = require('./repo-trans-pub-data')
 const jsonExport = require('../istd/istd-json-export')
 
 /**
  * Publish Specific Meta Data in Repository
  * @param {Project} root 
- * @param {String} rootId 
  * @param {String} branch 
  * @param {String | Number} projectId 
  * @param {String} commitMessage 
@@ -21,7 +21,36 @@ function publishSpecificMetaDataInRepo(root, branch, projectId, commitMessage) {
         projectId,
         branch,
         specificMetaData,
-        commitMessage)
+        commitMessage
+    )
+}
+
+/**
+ * 
+ * @param {Project} root 
+ * @param {String} branch 
+ * @param {String | Number} projectId 
+ * @param {String} commitMessage 
+ * @returns 
+ */
+function publishBerichtTitleAndReplyInRepo(root, branch, projectId, commitMessage) {
+    const berichtenTitleAndReply = jsonExport.buildBerichtenTitleAndReply(root)
+
+    return pub.updateBerichtenTitleAndReplyData(
+        projectId,
+        branch,
+        berichtenTitleAndReply,
+        commitMessage
+    )
+    .catch(error => {
+        // Okay, that failed... Then try to post the file as a new one.
+        return pub.createBerichtenTitleAndReplyData(
+            projectId,
+            branch,
+            berichtenTitleAndReply,
+            commitMessage
+        )
+    })
 }
 
 /**
@@ -81,6 +110,9 @@ function publishMetaDataInRepo() {
         })
         .then(response => {
             console.log(`update Specific Meta Data, status = ${response.status}`)
+            return publishBerichtTitleAndReplyInRepo(root, branch, projectId, commitMessage)
+        })
+        .then(response => {
             app.dialogs.showAlertDialog(`Meta Data gepubliceerd in branch[${branch}]. status[${response.status}]`) 
         })
         /**

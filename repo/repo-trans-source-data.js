@@ -40,11 +40,24 @@ function getWorkBranches(projectId) {
 /**
  * Add StarUML UMLPackage from Repository Specific Model Data
  * @param {Project} root 
- * @param {Base64JsonString} specficDataContent 
+ * @param {Base64JsonString} specificDataContent 
  * @returns {UMLPackage}
  */
-function addMetaDataSpecficModel(root, specficDataContent) {
-    return app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(specficDataContent))
+function addMetaDataSpecificModel(root, specificDataContent) {
+    const imported = app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(specificDataContent))
+    const berichten = imported.lookup('Berichten', null, null)
+    console.log(berichten)
+    const taggedBerichten = berichten.ownedElements.filter(ownedElement => {
+        ownedElement.type == 'UMLPackage' &&
+        Object.hasOwn(ownedElement, 'tags')
+    })
+    console.log(taggedBerichten)
+    taggedBerichten.forEach(taggedBericht => {
+        taggedBericht.tags.forEach(savedTag => 
+            utils.addSavedTag(imported.lookup(taggedBericht.name, null, null), savedTag)
+        )
+    })
+    return imported
 }
 
 /**
@@ -154,7 +167,7 @@ function updateSpecificSourceData(projectId, branch, specificSourceData, commitM
 exports.init = init
 exports.getModelDataRepoList = getModelDataRepoList
 exports.getWorkBranches = getWorkBranches
-exports.addMetaDataSpecficModel = addMetaDataSpecficModel
+exports.addMetaDataSpecificModel = addMetaDataSpecificModel
 exports.getMetaDataSpecificModel = getMetaDataSpecificModel
 exports.addMetaDataGenericModel = addMetaDataGenericModel
 exports.getMetaDataGenericModel = getMetaDataGenericModel
