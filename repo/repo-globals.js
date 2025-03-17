@@ -27,15 +27,9 @@ const metaData = {
     path: 'meta-data',
     contextModelMetaDataFile: 'context-model-meta-data.jsonld',
     genericModelMetaDataFile: 'generic-model-meta-data.json',
-    specificModelMetaDataFile: 'specific-model-meta-data.json',
-}
-
-const pubData = {
-    path: 'pub-data',
-    berichtenTitleAndReplyDataFile: 'berichten_title_and_reply.json',
+    specificModelMetaDataFile: 'specific-model-meta-data.json'
 }
 
 exports.configData = configData
 exports.sourceData = sourceData
 exports.metaData = metaData
-exports.pubData = pubData

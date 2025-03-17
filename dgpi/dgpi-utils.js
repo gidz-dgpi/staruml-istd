@@ -152,24 +152,6 @@ function addStringTag(parent, tagName, tagValue) {
 }
 
 /**
- * Add a typed Tag to a Project or UMLObjectType
- * @param {UMLObjectType} parent 
- * @param {Object} savedTag 
- */
-function addSavedTag(parent, savedTag) {
-    return app.factory.createModel({
-        id: "Tag",
-        parent: parent,
-        field: "tags",
-        modelInitializer: tag => {
-            tag.name = savedTag.name,
-            tag.kind = savedTag.kind,
-            tag.value = savedTag.value
-        }
-    })
-}
-
-/**
  * Get the Value from a Tag
  * @param {UMLObjectType} parent 
  * @param {String} tagName 

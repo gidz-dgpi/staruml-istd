@@ -147,11 +147,11 @@ function retrieveSourceDataFromRepo() {
         })
         /**
          * (2.d) 
-         * - Create UMLPackage from Specific Meta Data Fragment
+         * - Create UMLPacpakge from Specific Meta Data Fragment
          * - Alert Successfull Retrieval
          */
         .then(response => {
-            metaSpecficModelPkg = trans.addMetaDataSpecificModel(metaModelRoot, response.data.content)
+            metaSpecficModelPkg = trans.addMetaDataSpecficModel(metaModelRoot, response.data.content)
             app.dialogs.showAlertDialog(
                 `Bron Meta Data Model succesvol opgehaald van repository=[${modelDataRepoSelection.name}] branch=[${modelDataRepoSelection.branch}] !`
             )
@@ -410,31 +410,6 @@ function buildBerichtClassDataList(ownedElements) {
 }
 
 /**
- * Build array of Tag for the given berichtPackage
- * @param {UMLPackage} berichtPackage 
- */
-function buildBerichtTagsList(berichtPackage) {
-    if (Object.hasOwn(berichtPackage, "tags")) {
-        const tags = []
-        berichtPackage.tags.forEach(tag => {
-            tags.push({
-                name: tag.name,
-                kind: tag.kind,
-                value: tag.value,
-                _type: 'Tag',
-                _id: String(tag._id),
-                parent: {
-                    $ref: String(berichtPackage._id)
-                }
-            })
-        })
-        return tags
-    } else {
-        return null
-    }
-}
-
-/**
  * Build Source Bericht Package Data Array
  * @param {Array<UMLPackage>} ownedElements 
  * @returns 
@@ -443,20 +418,20 @@ function buildBerichtPkgDataList(ownedElements) {
     const berichtPkgDataList = []
     const berichtPkgList = ownedElements.filter(element => element instanceof type.UMLPackage)
 
-    berichtPkgList.forEach(item => {
+    for (let i = 0; i < berichtPkgList.length; i++) {
+        const berichtPkg = berichtPkgList[i]
         const berichtPkgData = {
             _type: 'UMLPackage',
-            _id: String(item._id),
+            _id: String(berichtPkg._id),
             _parent: {
-                $ref: String(item._parent._id)
+                $ref: String(berichtPkg._parent._id)
             },
-            name: String(item.name),
-            documentation: String(item.documentation),
-            tags: buildBerichtTagsList(item),
-            ownedElements: buildBerichtClassDataList(item.ownedElements)
+            name: String(berichtPkg.name),
+            documentation: String(berichtPkg.documentation),
+            ownedElements: buildBerichtClassDataList(berichtPkg.ownedElements)
         }
         berichtPkgDataList.push(berichtPkgData)
-    })
+    }
 
     return berichtPkgDataList
 }
