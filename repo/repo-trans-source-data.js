@@ -2,6 +2,7 @@
  * iStandaard Repository Source Data Transactions
  */
 const utils = require('../dgpi/dgpi-utils')
+const GitLabCommitAction = require('./gitlab-commit-action.js')
 const api = require('./repo-api')
 const sourceData = require('./repo-globals').sourceData
 const repoPrefs = require('./repo-prefs')
@@ -43,7 +44,7 @@ function getWorkBranches(projectId) {
  * @param {Base64JsonString} specficDataContent 
  * @returns {UMLPackage}
  */
-function addMetaDataSpecficModel(root, specficDataContent) {
+function addMetaDataSpecificModel(root, specficDataContent) {
     return app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(specficDataContent))
 }
 
@@ -88,7 +89,6 @@ function createMetaDataRoot(rootDataContent, projectId, branch) {
     // add Tags that are used to keep repository storage locations info
     utils.addStringTag(root, 'projectId', projectId)
     utils.addStringTag(root, 'branch', branch)
-    console.log(root)
     return root
 }
 
@@ -102,64 +102,53 @@ function getMetaDataRoot(projectId, branche) {
 }
 
 /**
- * Update Root Resource Data in Branch
- * @param {String | Number} projectId 
- * @param {String} branch 
- * @param {ProjectJson} rootResourceData 
- * @param {String} commitMessage 
+ * Setup commit action for root source data
+ * @param {ProjectJson} rootSourceData 
+ * @returns {GitLabCommitAction}
  */
-function updateRootSourceData(projectId, branch, rootSourceData, commitMessage) {
-    return api.updateExistingFileInRepo(
-        projectId,
-        branch,
+function getRootSourceDataActions(rootSourceData) {
+    return new GitLabCommitAction(
         `${sourceData.path}/${sourceData.rootMetaDataFile}`,
-        utils.jsonToString(rootSourceData),
-        commitMessage)
+        'update',
+        utils.jsonToString(rootSourceData)
+    )
 }
 
 /**
- * Update Generic Resource Data in Branch
- * @param {String | Number} projectId 
- * @param {String} branch 
- * @param {UMLPackageJson} genericResourceData 
- * @param {String} commitMessage 
+ * 
+ * @param {Object} genericSourceData 
+ * @returns {GitLabCommitAction}
  */
-function updateGenericSourceData(projectId, branch, genericSourceData, commitMessage) {
-    return api.updateExistingFileInRepo(
-        projectId,
-        branch,
+function getGenericSourceDataActions(genericSourceData) {
+    return new GitLabCommitAction(
         `${sourceData.path}/${sourceData.genericModelMetaDataFile}`,
-        utils.jsonToString(genericSourceData),
-        commitMessage
+        'update',
+        utils.jsonToString(genericSourceData)
     )
 }
 
 /**
- * Update Specific Resource Data in Branch
- * @param {String | Number} projectId 
- * @param {String} branch 
- * @param {UMLPackageJson} specificResourceData 
- * @param {String} commitMessage 
+ * 
+ * @param {Object} specificSourceData 
+ * @returns {GitLabCommitAction}
  */
-function updateSpecificSourceData(projectId, branch, specificSourceData, commitMessage) {
-    return api.updateExistingFileInRepo(
-        projectId,
-        branch,
+function getSpecificSourceDataActions(specificSourceData) {
+    return new GitLabCommitAction(
         `${sourceData.path}/${sourceData.specificModelMetaDataFile}`,
-        utils.jsonToString(specificSourceData),
-        commitMessage
+        'update',
+        utils.jsonToString(specificSourceData)
     )
 }
 
-exports.init = init
-exports.getModelDataRepoList = getModelDataRepoList
-exports.getWorkBranches = getWorkBranches
-exports.addMetaDataSpecficModel = addMetaDataSpecficModel
-exports.getMetaDataSpecificModel = getMetaDataSpecificModel
 exports.addMetaDataGenericModel = addMetaDataGenericModel
-exports.getMetaDataGenericModel = getMetaDataGenericModel
+exports.addMetaDataSpecificModel = addMetaDataSpecificModel
 exports.createMetaDataRoot = createMetaDataRoot
+exports.init = init
+exports.getGenericSourceDataActions = getGenericSourceDataActions
+exports.getMetaDataGenericModel = getMetaDataGenericModel
+exports.getMetaDataSpecificModel = getMetaDataSpecificModel
+exports.getModelDataRepoList = getModelDataRepoList
+exports.getRootSourceDataActions = getRootSourceDataActions
+exports.getSpecificSourceDataActions = getSpecificSourceDataActions
+exports.getWorkBranches = getWorkBranches
 exports.getMetaDataRoot = getMetaDataRoot
-exports.updateRootSourceData = updateRootSourceData
-exports.updateGenericSourceData = updateGenericSourceData
-exports.updateSpecificSourceData = updateSpecificSourceData

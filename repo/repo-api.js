@@ -4,6 +4,7 @@
  */
 
 const axios = require('axios')
+const GitLabCommitAction = require('./gitlab-commit-action.js')
 const preferenceKeys = require('./repo-prefs').keys
 const apiPath = '/api/v4'
 var gitLabApi = undefined
@@ -25,36 +26,6 @@ function init() {
 }
 
 /**
- * Based on https://docs.gitlab.com/ee/api/users.html#list-current-user
- * @returns {Promise<axios.get>}
- */
-function listCurrentUser() {
-    return gitLabApi.get('/user')
-}
-
-/**
- * Based on https://docs.gitlab.com/ee/api/groups.html#list-a-groups-subgroups
- * @param {String} groupPath 
- * @returns {Promise<axios.get>}
- */
-function listSubGroups(groupPath) {
-    const id = encodeURIComponent(groupPath)
-    const url = `/groups/${id}/subgroups`
-    return gitLabApi.get(url)
-}
-
-/**
- * Based on https://docs.gitlab.com/ee/api/projects.html#list-all-projects
- * @param {Attributes} params 
- * @returns {Promise<axios.get>}
- */
-function listProjects(params) {
-    const url = `/projects?pagination=keyset&per_page=100&order_by=id&sort=asc`
-    const config = params ? { params: params } : undefined
-    return gitLabApi.get(url, config)
-}
-
-/**
  * Based on https://docs.gitlab.com/ee/api/branches.html#list-repository-branches
  * @param {String} projectId 
  * @returns {Promise<axios.get>}
@@ -64,7 +35,6 @@ function listRepoBranches(projectId) {
     const url = `/projects/${id}/repository/branches`
     return gitLabApi.get(url)
 }
-
 
 /**
  * Get the id of the group which has given namespace
@@ -91,32 +61,11 @@ function listProjectsForGroup(namespace) {
     console.log('listProjectsForGroup(' + namespace + ')')
     return getGroupId(namespace)
         .then(groupId => {
-            console.log('listProjectsForGroup => getGroupId yielded ' + groupId)
             const url = '/groups/' + groupId + '/projects?pagination=keyset&per_page=100&order_by=id&sort=asc'
-            console.log('listProjectsForGroup => using url ' + url)
             var params = {}
             params['include_subgroups'] = 'true'
             return gitLabApi.get(url, { params: params })
         })
-}
-
-/**
- * Based on: https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree
- * @param {String} projectId 
- * @param {String | undefined} filePath 
- * @param {Boolean | undefined} recursive 
- * @param {String | undefined} ref 
- * @returns {Promise<axios.get>}
- */
-function listRepoFileTree(projectId, filePath, recursive, ref) {
-    const id = encodeURIComponent(projectId)
-    const url = `/projects/${id}/repository/tree`
-    var params = {}
-    if (filePath) params['path'] = encodeURIComponent(filePath)
-    if (recursive) params['recursive'] = recursive
-    if (ref) params['ref'] = ref
-    const config = params != {} ? { params: params } : undefined
-    return gitLabApi.get(url, config)
 }
 
 /**
@@ -179,13 +128,93 @@ function updateExistingFileInRepo(projectId, branch, filePath, content, commitMe
     return gitLabApi.put(buildRepoFilesPath(projectId, filePath), data)
 }
 
+/**
+ * Build the API url for the commits API
+ * @param {String | Number} projectId 
+ * @returns 
+ */
+function buildCommitUrl(projectId) {
+    return `/projects/${projectId}/repository/commits`
+}
+
+/**
+ * Determines the action GitLab should perform on the given file.
+ * @param {String | Number} projectId 
+ * @param {String} branch 
+ * @param {GitLabCommitAction} path 
+ * @returns 'update' when the file needs to be updated, 'create' when the file needs to be created
+ */
+function determineActionForCommitAction(projectId, branch, commitAction) {
+    return getFileFromRepo(projectId, commitAction.filePath, branch)
+        .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                console.log(`determineActionForCommitAction(${projectId}, ${branch}, ${commitAction.filePath}) => 'update'`)
+                return {
+                    file_path: commitAction.filePath,
+                    content: commitAction.content,
+                    action: 'update'
+                }
+            } else {
+                throw `Cannot determine action for file ${path}: API returned status ${response.status}`
+            }
+        })
+        .catch(error => {
+            if (error.status == 404) {
+                console.log(`determineActionForCommitAction(${projectId}, ${branch}, ${commitAction.filePath}) => 'create''`)
+                return {
+                    file_path: commitAction.filePath,
+                    content: commitAction.content,
+                    action: 'create'
+                }
+            } else {
+                throw error
+            }
+        })
+}
+
+/**
+ * For each commitAction, set the correct action: update if the file exists, or create if it doesn't exist.
+ * @param {String | Number} projectId 
+ * @param {String} branch 
+ * @param {Array} commitActions 
+ * @returns {Array[GitLabCommitAction]}
+ */
+function determineActionForCommitActions(projectId, branch, commitActions) {
+    return Promise.allSettled(
+        commitActions.map(action => determineActionForCommitAction(projectId, branch, action))
+    )
+        .then(results => {
+            return results.map(result => (result.value))
+        })
+        .catch(error => {
+            throw error.reason
+        })
+}
+
+/**
+ * 
+ * @param {String | Number} projectId 
+ * @param {String} branch 
+ * @param {String} commitMessage 
+ * @param {Array[GitLabCommitAction]} commitActions 
+ */
+function commitToRepo(projectId, branch, commitMessage, commitActions) {
+    return determineActionForCommitActions(projectId, branch, commitActions)
+        .then((actions) => {
+            const data = {
+                branch: branch,
+                commit_message: commitMessage,
+                actions: actions
+            }
+            const url = buildCommitUrl(projectId)
+            return gitLabApi.post(url, data)
+        })
+}
+
+exports.commitToRepo = commitToRepo
 exports.init = init
-exports.listCurrentUser = listCurrentUser
-exports.listSubGroups = listSubGroups
-exports.listProjects = listProjects
 exports.listProjectsForGroup = listProjectsForGroup
 exports.listRepoBranches = listRepoBranches
-exports.listRepoFileTree = listRepoFileTree
 exports.getFileFromRepo = getFileFromRepo
 exports.createNewFileInRepo = createNewFileInRepo
 exports.updateExistingFileInRepo = updateExistingFileInRepo
