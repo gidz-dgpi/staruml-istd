@@ -2,95 +2,58 @@
  * StarUML iStandaard Meta Data Repository Functions
  */
 
-const utils = require('../dgpi/dgpi-utils')
 const trans = require('./repo-trans-meta-data')
 const jsonExport = require('../istd/istd-json-export')
 
+const GitLabCommitAction = require('./gitlab-commit-action.js')
+
 /**
- * Publish Specific Meta Data in Repository
+ * 
  * @param {Project} root 
- * @param {String} rootId 
- * @param {String} branch 
- * @param {String | Number} projectId 
- * @param {String} commitMessage 
+ * @param {GitLabCommitAction}
  */
-function publishSpecificMetaDataInRepo(root, branch, projectId, commitMessage) {
-    const specificMetaData = jsonExport.buildSpecificMetaDataJson(root)
-
-    return trans.updateSpecificMetaData(
-        projectId,
-        branch,
-        specificMetaData,
-        commitMessage)
+function prepSpecificMetaDataInRepo(root) {
+    return trans.getSpecificMetaDataActions(jsonExport.buildSpecificMetaDataJson(root))
 }
 
 /**
- * Publish Generic Meta Data in Repository
+ * 
  * @param {Project} root 
- * @param {String} rootId 
- * @param {String} branch 
- * @param {String | Number} projectId 
- * @param {String} commitMessage 
+ * @returns {GitLabCommitAction}
  */
-function publishGenericMetaDataInRepo(root, branch, projectId, commitMessage) {
-    const genericMetaData = jsonExport.buildGenericMetaDataJson(root)
-
-    return trans.updateGenericMetaData(
-        projectId,
-        branch,
-        genericMetaData,
-        commitMessage)
+function prepBerichtTitleAndReplyInRepo(root) {
+    return pub.getBerichtTitleAndReplyActions(jsonExport.buildBerichtenTitleAndReply(root))
 }
 
 /**
- * Publish Context Meta Data in Repository
- * @param {String} rootId 
- * @param {String} branch 
- * @param {String | Number} projectId 
- * @param {String} commitMessage 
+ * Prepares required commit actions for creating a commitset containing the Generic Meta Data
+ * @param {Project} root 
+ * @returns {GitLabCommitAction}
  */
-function publishContextMetaDataInRepo(branch, projectId, commitMessage) {
-    const contextMetaData = jsonExport.jsonLdContext
-    
-    return trans.updateContextMetaData(
-        projectId,
-        branch,
-        contextMetaData,
-        commitMessage)
+function prepCommitGenericMetaDataInRepo(root) {
+    return trans.getGenericMetaDataActions(jsonExport.buildGenericMetaDataJson(root))
 }
 
 /**
- * Publish iStandaard Project Meta Data in Repository
+ * Prepares required commit actions for creating a commitset containing the Context Meta Data
+ * @returns {GitLabCommitAction}
  */
-function publishMetaDataInRepo() {
-    // initialize process vars
-    const root = app.project.getProject()
-    const branch = utils.getTagValue(root, 'branch')
-    const projectId = utils.getTagValue(root, 'projectId')
-    const commitMessage = 'StarUML.publishMetaDataInRepo-functie d.d. ' + new Date()
-    trans.init()
-
-    publishContextMetaDataInRepo(branch, projectId, commitMessage)
-        .then(response => {
-            console.log(`update Context Meta Data, status = ${response.status}`)
-            return publishGenericMetaDataInRepo(root, branch, projectId, commitMessage)
-        })
-        .then(response => {
-            console.log(`update Generic Meta Data, status = ${response.status}`)
-            return publishSpecificMetaDataInRepo(root, branch, projectId, commitMessage)
-        })
-        .then(response => {
-            console.log(`update Specific Meta Data, status = ${response.status}`)
-            app.dialogs.showAlertDialog(`Meta Data gepubliceerd in branch[${branch}]. status[${response.status}]`) 
-        })
-        /**
-         * Handle Rejections
-         */
-        .catch(error => {
-            // handle error
-            console.log(error)
-        })
-
+function prepCommitContextMetaDataToRep() {
+    return trans.getContextMetaDataActions(jsonExport.jsonLdContext)
 }
 
-exports.publish = publishMetaDataInRepo
+/**
+ * Prepares commit actions for storing the source data to the repository
+ * @param {Project} root 
+ * @returns {Array[GitLabCommitAction]}
+ */
+function prepCommitActions(root) {
+    return [
+        prepCommitContextMetaDataToRep(),
+        prepCommitGenericMetaDataInRepo(root),
+        prepSpecificMetaDataInRepo(root),
+        prepBerichtTitleAndReplyInRepo(root)
+    ]
+}
+
+exports.prepCommitActions = prepCommitActions

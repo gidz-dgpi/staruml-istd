@@ -109,7 +109,6 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
 
     for (let i = 0; i < seqElems.length; i++) {
         const seqElem = seqElems[i]
-        //console.log(seqElem)
         const attrName = seqElem.attributes.name
         const attrTypeName = utils.getDataTypeName(seqElem.attributes.type)
         const attrType = utils.getUMLDataType(gegevensModelPkg, attrTypeName)

@@ -8,6 +8,8 @@ const primitiveTypesPkgId = require('../istd/istd-primitive-types').primitiveTyp
 const utils = require('../dgpi/dgpi-utils')
 const trans = require('./repo-trans-source-data')
 
+const GitLabCommitAction = require('./gitlab-commit-action.js')
+
 /**
  * Get Repository Selection Options from Repo List
  * @param {String[]} repoList
@@ -66,8 +68,6 @@ function retrieveSourceDataFromRepo() {
         branch: undefined,
     }
     let metaModelRoot = undefined
-    let metaModelGenericPkg = undefined
-    let metaSpecficModelPkg = undefined
     trans.init()
 
     /**
@@ -151,8 +151,8 @@ function retrieveSourceDataFromRepo() {
          * - Alert Successfull Retrieval
          */
         .then(response => {
-            metaSpecficModelPkg = trans.addMetaDataSpecficModel(metaModelRoot, response.data.content)
-            app.dialogs.showAlertDialog(
+            metaSpecficModelPkg = trans.addMetaDataSpecificModel(metaModelRoot, response.data.content)
+            app.dialogs.showInfoDialog(
                 `Bron Meta Data Model succesvol opgehaald van repository=[${modelDataRepoSelection.name}] branch=[${modelDataRepoSelection.branch}] !`
             )
         })
@@ -437,56 +437,11 @@ function buildBerichtPkgDataList(ownedElements) {
 }
 
 /**
- * Store StarUML Project Specific Data in Repository
+ * Get the generic source data (codelijsten, primitive data types, datatypes, and so on)
  * @param {Project} root 
- * @param {String} rootId 
- * @param {String} branch 
- * @param {String | Number} projectId 
- * @param {String} commitMessage 
+ * @returns 
  */
-function storeSpecificSourceDataInRepo(root, branch, projectId, commitMessage) {
-    // build bericht model data
-    const specificPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.SPECIFIC_MODEL_PACKAGE.name)
-    const specificPkgId = String(specificPkg._id)
-    const berichtenModelPkg = utils.getUMLPackagElementByName(specificPkg.ownedElements, istGlobals.BERICHTEN_PACKAGE.name)
-    const berichtenModelPkgId = String(berichtenModelPkg._id)
-
-    const berichtenModelPkgData = {
-        _type: 'UMLPackage',
-        _id: berichtenModelPkgId,
-        _parent: {
-            $ref: specificPkgId
-        },
-        name: istGlobals.BERICHTEN_PACKAGE.name,
-        documentation: istGlobals.BERICHTEN_PACKAGE.documentation,
-        ownedElements: buildBerichtPkgDataList(berichtenModelPkg.ownedElements)
-    }
-
-    // build specific model data
-    const specificSourceData = {
-        _type: 'UMLPackage',
-        _id: specificPkgId,
-        _parent: {
-            $ref: root._id
-        },
-        name: String(specificPkg.name),
-        documentation: String(specificPkg.documentation),
-        ownedElements: [berichtenModelPkgData]
-    }
-
-    return trans.updateSpecificSourceData(
-        projectId, branch, specificSourceData, commitMessage)
-}
-
-/**
- * Store StarUML Project Generic Data in Repository
- * @param {Project} root 
- * @param {String} rootId 
- * @param {String} branch 
- * @param {String | Number} projectId 
- * @param {String} commitMessage 
- */
-function storeGenericSourceDataInRepo(root, branch, projectId, commitMessage) {
+function getGenericSourceData(root) {
     // build gegevens model data
     const genericPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.GENERIC_MODEL_PACKAGE.name)
     const genericPkgId = String(genericPkg._id)
@@ -530,7 +485,7 @@ function storeGenericSourceDataInRepo(root, branch, projectId, commitMessage) {
     }
 
     // build generic model data
-    const genericSourceData = {
+    return {
         _type: 'UMLPackage',
         _id: genericPkgId,
         _parent: {
@@ -544,66 +499,98 @@ function storeGenericSourceDataInRepo(root, branch, projectId, commitMessage) {
             gegevensModelPkgData
         ]
     }
-
-    return trans.updateGenericSourceData(
-        projectId, branch, genericSourceData, commitMessage)
 }
 
 /**
- * Store StarUML Project Root Source Data in Repository
+ * Get the project (root) source data
  * @param {Project} root 
- * @param {String} rootId 
- * @param {String} branch 
- * @param {String | Number} projectId 
- * @param {String} commitMessage 
+ * @returns 
  */
-function storeRootSourceDataInRepo(root, branch, projectId, commitMessage) {
-    const rootSourceData = {
+function getRootSourceData(root) {
+    return {
         _type: 'Project',
         _id: String(root._id),
         name: String(root.name),
         version: String(root.version)
     }
-    return trans.updateRootSourceData(
-        projectId,
-        branch,
-        rootSourceData,
-        commitMessage)
 }
 
 /**
- * Store StarUML Project Source Data in Repository
+ * Get the specific source data (berichten)
+ * @param {Project} root 
+ * @returns 
  */
-function storeSourceDataInRepo() {
-    // initialize process vars
-    const root = app.project.getProject()
-    const branch = utils.getTagValue(root, 'branch')
-    const projectId = utils.getTagValue(root, 'projectId')
-    const commitMessage = 'StarUML.storeSourceDataInRepo-functie d.d. ' + new Date()
-    trans.init()
+function getSpecificSourceData(root) {
+    // build bericht model data
+    const specificPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.SPECIFIC_MODEL_PACKAGE.name)
+    const specificPkgId = String(specificPkg._id)
+    const berichtenModelPkg = utils.getUMLPackagElementByName(specificPkg.ownedElements, istGlobals.BERICHTEN_PACKAGE.name)
+    const berichtenModelPkgId = String(berichtenModelPkg._id)
 
-    storeRootSourceDataInRepo(root, branch, projectId, commitMessage)
-        .then(response => {
-            console.log(`update Root source data, status = ${response.status}`)
-            return storeGenericSourceDataInRepo(root, branch, projectId, commitMessage)
-        })
-        .then(response => {
-            console.log(`update Generic source data, status = ${response.status}`)
-            return storeSpecificSourceDataInRepo(root, branch, projectId, commitMessage)
-        })
-        .then(response => {
-            console.log(`update Specific source data, status = ${response.status}`)
-            app.dialogs.showAlertDialog(`Project bewaard in branch[${branch}]. status[${response.status}]`) 
-        })        
-        /**
-         * Handle Rejections
-         */
-        .catch(error => {
-            // handle error
-            console.log(error)
-        })
+    const berichtenModelPkgData = {
+        _type: 'UMLPackage',
+        _id: berichtenModelPkgId,
+        _parent: {
+            $ref: specificPkgId
+        },
+        name: istGlobals.BERICHTEN_PACKAGE.name,
+        documentation: istGlobals.BERICHTEN_PACKAGE.documentation,
+        ownedElements: buildBerichtPkgDataList(berichtenModelPkg.ownedElements)
+    }
+    console.log(berichtenModelPkgData)
 
+    // build specific model data
+    return {
+        _type: 'UMLPackage',
+        _id: specificPkgId,
+        _parent: {
+            $ref: root._id
+        },
+        name: String(specificPkg.name),
+        documentation: String(specificPkg.documentation),
+        ownedElements: [berichtenModelPkgData]
+    }
 }
 
+/**
+ * 
+ * @param {Project} root 
+ * @returns {GitLabCommitAction}
+ */
+function prepCommitGenericSourceDataToRepo(root) {
+    return trans.getGenericSourceDataActions(getGenericSourceData(root))
+}
+
+/**
+ * 
+ * @param {Project} root 
+ * @returns {GitLabCommitAction}
+ */
+function prepCommitRootSourceDataToRepo(root) {
+    return trans.getRootSourceDataActions(getRootSourceData(root))
+}
+
+/**
+ * 
+ * @param {Project} root 
+ * @returns {GitLabCommitAction}
+ */
+function prepCommitSpecificSourceDataToRepo(root) {
+    return trans.getSpecificSourceDataActions(getSpecificSourceData(root))
+}
+
+/**
+ * Prepares commit actions for storing the source data to the repository
+ * @param {Project} root 
+ * @returns {Array[GitLabCommitAction]}
+ */
+function prepCommitActions(root) {
+    return [
+        prepCommitRootSourceDataToRepo(root),
+        prepCommitGenericSourceDataToRepo(root),
+        prepCommitSpecificSourceDataToRepo(root)
+    ]
+}
+
+exports.prepCommitActions = prepCommitActions
 exports.retrieve = retrieveSourceDataFromRepo
-exports.store = storeSourceDataInRepo

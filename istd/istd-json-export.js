@@ -250,7 +250,7 @@ function buildBerichtenPkgJson(berichtenPkg) {
 
     for (let i = 0; i < berichtPkgs.length; i++) {
         const berichtPkg = berichtPkgs[i]
-        const berichtId =berichtPkgsId + "/" + berichtPkg.name
+        const berichtId = berichtPkgsId + "/" + berichtPkg.name
         json.push({
             "@id": berichtId,
             "@type": jsonLdType.Package,
@@ -389,8 +389,7 @@ function buildCodelijstenJson(genericPkg) {
 function buildSpecificMetaDataJson(project) {
     setGenericModelId(project)
     setSpecificModelId(project) 
-    const specificPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.SPECIFIC_MODEL_PACKAGE.name)
-    const berichtenPkg = utils.getUMLPackagElementByName(specificPkg.ownedElements, globals.BERICHTEN_PACKAGE.name)
+    const berichtenPkg = getSpecificBerichtenPackage(project)
     const json = {
         "@context": globals.jsonLdContextFileName,
         "@id": getSpecificModelId(),
@@ -398,10 +397,53 @@ function buildSpecificMetaDataJson(project) {
         name: String(project.name),
         version: String(project.version),
         berichten: buildBerichtenPkgJson(berichtenPkg)
-  }
+    }
 
     return json
 }
+
+/**
+ * Build a JSON object from the tags contained in the packages below the 'Berichten' package.
+ * If `berichtenPackage` is not named 'Berichten', then do nothing as we don't need this for registers.
+ * @param {Project} root 
+ */
+function buildBerichtenTitleAndReply(root) {
+    const berichtenPackage = getSpecificBerichtenPackage(root)
+    
+    if (berichtenPackage.name != 'Berichten') {
+        return null
+    }
+
+    const json = []
+    berichtenPackage.ownedElements.filter(ownedElement =>
+        ownedElement.constructor.name == 'UMLPackage' && Object.hasOwn(ownedElement, "tags")
+    ).forEach(taggedPackage => {
+        const tags = taggedPackage.tags
+        let titleTag = tags.find(tag => tag.name == 'titel')
+        let replyTag = tags.find(tag => tag.name == 'retourbericht')
+        if (titleTag != undefined && replyTag != undefined)
+        {
+            // Add the bericht defined in UML
+            json.push({
+                name: taggedPackage.name,
+                title: titleTag.value,
+                reply: replyTag.value,
+                isOutgoing: true
+            })
+            // If defined, add return bericht
+            if (replyTag != undefined) {
+                json.push({
+                    name: replyTag.value,
+                    title: titleTag.value + ' Retour',
+                    isOutgoing: false
+                })
+            }
+        }
+    })
+
+    return json
+}
+
 
 /**
  * Build a JSON-export Object from iStandaard UML Generic Model MetaData (DataTypen, Codelijsten, ...)
@@ -429,6 +471,6 @@ function buildGenericMetaDataJson(project) {
     return json
 }
 
-exports.jsonLdContext = jsonLdContext
 exports.buildSpecificMetaDataJson = buildSpecificMetaDataJson
 exports.buildGenericMetaDataJson = buildGenericMetaDataJson
+exports.buildBerichtenTitleAndReply = buildBerichtenTitleAndReply

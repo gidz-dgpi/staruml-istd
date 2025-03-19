@@ -4,7 +4,8 @@
 const utils = require('../dgpi/dgpi-utils')
 const api = require('./repo-api')
 const metaData = require('./repo-globals').metaData
-const repoPrefs = require('./repo-prefs')
+
+const GitLabCommitAction = require('./gitlab-commit-action.js')
 
 /**
  * Initialize Transaction Connection(s)
@@ -14,54 +15,45 @@ function init() {
 }
 
 /**
- * Update Specific Meta Data in Branch
- * @param {String | Number} projectId 
- * @param {String} branch 
- * @param {JsonObject} specificMetaData 
- * @param {String} commitMessage 
- */
-function updateSpecificMetaData(projectId, branch, specificMetaData, commitMessage) {
-    return api.updateExistingFileInRepo(
-        projectId,
-        branch,
-        `${metaData.path}/${metaData.specificModelMetaDataFile}`,
-        utils.jsonToString(specificMetaData),
-        commitMessage)
-}
-
-/**
- * Update Generic Meta Data in Branch
- * @param {String | Number} projectId 
- * @param {String} branch 
- * @param {JsonObject} genericMetaData 
- * @param {String} commitMessage 
- */
-function updateGenericMetaData(projectId, branch, genericMetaData, commitMessage) {
-    return api.updateExistingFileInRepo(
-        projectId,
-        branch,
-        `${metaData.path}/${metaData.genericModelMetaDataFile}`,
-        utils.jsonToString(genericMetaData),
-        commitMessage)
-}
-
-/**
- * Update Context Meta Data in Branch
- * @param {String | Number} projectId 
- * @param {String} branch 
+ * Prepare commit actions for updating Context Meta Data in branch
  * @param {LdJsonObject} contextMetaData 
- * @param {String} commitMessage 
+ * @returns {GitLabCommitAction}
  */
-function updateContextMetaData(projectId, branch, contextMetaData, commitMessage) {
-    return api.updateExistingFileInRepo(
-        projectId,
-        branch,
+function getContextMetaDataActions(contextMetaData) {
+    return new GitLabCommitAction(
         `${metaData.path}/${metaData.contextModelMetaDataFile}`,
-        utils.jsonToString(contextMetaData),
-        commitMessage)
+        'update',
+        utils.jsonToString(contextMetaData)
+    )
 }
 
+/**
+ * Prepare commit actions for updating Generic Meta Data in branch
+ * @param {JsonObject} genericMetaData 
+ * @returns {GitLabCommitAction}
+ */
+function getGenericMetaDataActions(genericMetaData) {
+    return new GitLabCommitAction(
+        `${metaData.path}/${metaData.genericModelMetaDataFile}`,
+        'update',
+        utils.jsonToString(genericMetaData)
+    )
+}
+
+/**
+ * Prepare commit actions for updating Specific Meta Data in branch
+ * @param {JsonObject} specificMetaData 
+ * @returns {GitLabCommitAction}
+ */
+function getSpecificMetaDataActions(specificMetaData) {
+    return new GitLabCommitAction(
+        `${metaData.path}/${metaData.specificModelMetaDataFile}`,
+        'update',
+        utils.jsonToString(specificMetaData)
+    )
+}
+
+exports.getContextMetaDataActions = getContextMetaDataActions
+exports.getGenericMetaDataActions = getGenericMetaDataActions
+exports.getSpecificMetaDataActions = getSpecificMetaDataActions
 exports.init = init
-exports.updateContextMetaData = updateContextMetaData
-exports.updateGenericMetaData = updateGenericMetaData
-exports.updateSpecificMetaData = updateSpecificMetaData

@@ -10,14 +10,9 @@
             "command": "repo:retrieve:model:data"
           },
           {
-            "label": "Model Data bewaren",
-            "id": "repo.model.data.bewaren",
-            "command": "repo:store:model:data"
-          },
-          {
-            "label": "Meta Data publiceren",
-            "id": "repo.model.data.publiceren",
-            "command": "repo:publish:meta:data"
+            "label": "Model data bewaren en publiceren",
+            "id": "repo.model.data.bewaren-en-publiceren",
+            "command": "repo:store-and-publish:model:data"
           }
         ]
       }
