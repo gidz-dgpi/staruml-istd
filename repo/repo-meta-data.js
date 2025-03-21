@@ -4,6 +4,7 @@
 
 const trans = require('./repo-trans-meta-data')
 const jsonExport = require('../istd/istd-json-export')
+const pub = require('./repo-trans-pub-data')
 
 const GitLabCommitAction = require('./gitlab-commit-action.js')
 
@@ -39,7 +40,8 @@ function prepCommitGenericMetaDataInRepo(root) {
  * @returns {GitLabCommitAction}
  */
 function prepCommitContextMetaDataToRep() {
-    return trans.getContextMetaDataActions(jsonExport.jsonLdContext)
+    console.log(jsonExport.jsonLdContext())
+    return trans.getContextMetaDataActions(jsonExport.jsonLdContext())
 }
 
 /**

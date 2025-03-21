@@ -12,73 +12,77 @@ const utils = require('../dgpi/dgpi-utils')
 const globals = require('./istd-globals')
 const primitiveTypesPkgId = require('./istd-primitive-types').primitiveTypesPkgId
 const codelijstenPkgId = require('./istd-codelijsten').codelijstenPkgId
-const jsonLdContext = {
-    "schema": "https://schema.org",
-    "xs": "http://www.w3.org/2001/XMLSchema#",
-    "uml": "https://www.omg.org/spec/UML/20161101/UML.xmi#",
-    "istd": "https://www.istandaarden.nl/over-istandaarden/istandaarden/begrippenlijst#",
-    "model": "https://www.istandaarden.nl/",
-    "name": "schema:name",
-    "documentation": "schema:description",
-    "version": "schema:version",
-    "multiplicity": "uml:multiplicity",
-    "aggregation": "uml:Aggregation",
-    "isID": "uml:isID",
-    "dataType": "uml:DataType",
-    "primitiveType": "uml:PrimitiveType",
-    "target": "uml:target",
-    "dependency": "uml:Dependency",
-    "parent": {
-        "@id": "istd:BerichtKlasseRelatieParentEnd",
-        "@type": "uml:AssociationEnd"
+const _jsonLdContext = {
+    schema: 'https://schema.org',
+    xs: 'http://www.w3.org/2001/XMLSchema#',
+    uml: 'https://www.omg.org/spec/UML/20161101/UML.xmi#',
+    istd: 'https://www.istandaarden.nl/over-istandaarden/istandaarden/begrippenlijst#',
+    model: 'https://www.istandaarden.nl/',
+    name: 'schema:name',
+    documentation: 'schema:description',
+    version: 'schema:version',
+    multiplicity: 'uml:multiplicity',
+    aggregation: 'uml:Aggregation',
+    isID: 'uml:isID',
+    dataType: 'uml:DataType',
+    primitiveType: 'uml:PrimitiveType',
+    target: 'uml:target',
+    dependency: 'uml:Dependency',
+    parent: {
+        '@id': 'istd:BerichtKlasseRelatieParentEnd',
+        '@type': 'uml:AssociationEnd'
     },
-    "child": {
-        "@id": "istd:BerichtKlasseRelatieChildEnd",
-        "@type": "uml:AssociationEnd"
+    child: {
+        '@id': 'istd:BerichtKlasseRelatieChildEnd',
+        '@type': 'uml:AssociationEnd'
     },
-    "berichten": {
-        "@id": "istd:berichten",
-        "@type": "uml:Package",
-        "@container": "@list"
+    berichten: {
+        '@id': 'istd:berichten',
+        '@type': 'uml:Package',
+        '@container': '@list'
     },
-    "klassen": {
-        "@id": "istd:berichtklassen",
-        "@type": "uml:Package",
-        "@container": "@list"
+    klassen: {
+        '@id': 'istd:berichtklassen',
+        '@type': 'uml:Package',
+        '@container': '@list'
     },
-    "elementen": {
-        "@id": "istd:elementen",
-        "@type": "uml:Attributes",
-        "@container": "@list"
+    elementen: {
+        '@id': 'istd:elementen',
+        '@type': 'uml:Attributes',
+        '@container': '@list'
     },
-    "relaties": {
-        "@id": "istd:relaties",
-        "@type": "uml:Associations",
-        "@container": "@list"
+    relaties: {
+        '@id': 'istd:relaties',
+        '@type': 'uml:Associations',
+        '@container': '@list'
     },
-    "gegevens": {
-        "@id": "istd:gegevensmodel",
-        "@type": "uml:Package",
-        "@container": "@list"
+    gegevens: {
+        '@id': 'istd:gegevensmodel',
+        '@type': 'uml:Package',
+        '@container': '@list'
     },
-    "primitieveDataTypen": {
-        "@id": "istd:primitieveDataTypen",
-        "@type": "uml:Package",
-        "@container": "@list"
+    primitieveDataTypen: {
+        '@id': 'istd:primitieveDataTypen',
+        '@type': 'uml:Package',
+        '@container': '@list'
     },
-    "codelijsten": {
-        "@id": "istd:codelijsten",
-        "@type": "uml:Package",
-        "@container": "@list"
+    codelijsten: {
+        '@id': 'istd:codelijsten',
+        '@type': 'uml:Package',
+        '@container': '@list'
     },
-    "dataWaarden": {
-        "@id": "istd:dataWaarden",
-        "@type": "uml:Dependencies",
-        "@container": "@list"
+    dataWaarden: {
+        '@id': 'istd:dataWaarden',
+        '@type': 'uml:Dependencies',
+        '@container': '@list'
     }
 }
 
-const jsonLdType = {
+function jsonLdContext() {
+    return _jsonLdContext
+}
+
+const _jsonLdType = {
     Model: 'istd:informatiemodel',
     Package: 'uml:Package',
     Class: 'uml:Class',
@@ -93,6 +97,10 @@ const jsonLdType = {
     date: 'xs:date',
     time: 'xs:time',
     integer: 'xs:integer'
+}
+
+function jsonLdType() {
+    return _jsonLdType
 }
 
 var specificModelId
@@ -403,6 +411,18 @@ function buildSpecificMetaDataJson(project) {
 }
 
 /**
+ * Get the package containing all defined Berichten
+ * @param {Project} project 
+ */
+function getSpecificBerichtenPackage(project) {
+    return utils.getUMLPackagElementByName(
+        utils.getUMLPackagElementByName(
+            project.ownedElements, globals.SPECIFIC_MODEL_PACKAGE.name
+        ).ownedElements, globals.BERICHTEN_PACKAGE.name
+    )
+}
+
+/**
  * Build a JSON object from the tags contained in the packages below the 'Berichten' package.
  * If `berichtenPackage` is not named 'Berichten', then do nothing as we don't need this for registers.
  * @param {Project} root 
@@ -474,3 +494,5 @@ function buildGenericMetaDataJson(project) {
 exports.buildSpecificMetaDataJson = buildSpecificMetaDataJson
 exports.buildGenericMetaDataJson = buildGenericMetaDataJson
 exports.buildBerichtenTitleAndReply = buildBerichtenTitleAndReply
+exports.jsonLdContext = jsonLdContext
+exports.jsonLdType = jsonLdType

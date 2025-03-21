@@ -17,13 +17,18 @@ function _handleRepoStoreAndPublishModelData() {
                 app.dialogs.showAlertDialog('De commit message mag niet leeg zijn!')
                 return
             } else {
+                commitMessage = dialogResult.returnValue.trim()
+
                 const root = app.project.getProject()
                 const branch = utils.getTagValue(root, 'branch')
                 const projectId = utils.getTagValue(root, 'projectId')
 
-                const commitActions = repoSourceData.prepCommitActions(root).concat(
-                    repoMetaData.prepCommitActions(root)
-                )
+                const commitActions = repoSourceData.prepCommitActions(root)
+                repoMetaData.prepCommitActions(root).forEach(metaItem => {
+                    commitActions.push(metaItem)
+                })                
+
+                console.log(commitActions)
 
                 api.commitToRepo(projectId, branch, commitMessage, commitActions)
                     .then(response => {
