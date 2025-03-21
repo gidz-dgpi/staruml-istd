@@ -32,7 +32,7 @@ function saveJsonToFile(json, filePath) {
  */
 function saveLdContextMetaDataToFile(filePath) {
   console.log(`Saving Linked Data Context To ${filePath}`)
-  saveJsonToFile(jsonExport.jsonLdContext, filePath)
+  saveJsonToFile(jsonExport.jsonLdContext(), filePath)
 }
 
 /**

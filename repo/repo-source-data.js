@@ -152,7 +152,7 @@ function retrieveSourceDataFromRepo() {
          */
         .then(response => {
             metaSpecficModelPkg = trans.addMetaDataSpecificModel(metaModelRoot, response.data.content)
-            app.dialogs.showInfoDialog(
+            return app.dialogs.showInfoDialog(
                 `Bron Meta Data Model succesvol opgehaald van repository=[${modelDataRepoSelection.name}] branch=[${modelDataRepoSelection.branch}] !`
             )
         })
@@ -163,6 +163,10 @@ function retrieveSourceDataFromRepo() {
         .catch(error => {
             // handle error
             console.log(error)
+            return app.dialogs.showAlertDialog(
+                `Fout bij ophalen brondata Meta Model van repository=[${modelDataRepoSelection.name}] branch=[${modelDataRepoSelection.branch}]\n${error}`
+            )
+            .then(() => { return })
         })
 
 }

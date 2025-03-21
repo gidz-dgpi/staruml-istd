@@ -205,6 +205,10 @@ function jsonToString(json) {
     return JSON.stringify(json, null, '\t')
 }
 
+function jsonToStringCompact(json) {
+    return JSON.stringify(json)
+}
+
 exports.getUMLPackagElementByName = getUMLPackagElementByName
 exports.getUMLClassElementByName = getUMLClassElementByName
 exports.getXsAnnotation = getXsAnnotation
@@ -220,3 +224,4 @@ exports.getXsdMetaData = getXsdMetaData
 exports.buildUMLMultiplicityFromXsOccursAttr = buildUMLMultiplicityFromXsOccursAttr
 exports.encodeBase64JsonStrToObj = encodeBase64JsonStrToObj
 exports.jsonToString = jsonToString
+exports.jsonToStringCompact = jsonToStringCompact

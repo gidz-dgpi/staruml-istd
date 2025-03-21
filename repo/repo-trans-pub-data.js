@@ -11,7 +11,7 @@ function getBerichtTitleAndReplyActions(berichtenTitleAndReplyData) {
     return new GitLabCommitAction(
         `${pubData.path}/${pubData.berichtenTitleAndReplyDataFile}`,
         'update',
-        utils.jsonToString(berichtenTitleAndReplyData)
+        utils.jsonToStringCompact(berichtenTitleAndReplyData)
     )
 }
 
