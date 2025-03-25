@@ -28,8 +28,6 @@ function _handleRepoStoreAndPublishModelData() {
                     commitActions.push(metaItem)
                 })                
 
-                console.log(commitActions)
-
                 api.commitToRepo(projectId, branch, commitMessage, commitActions)
                     .then(response => {
                         app.dialogs.showInfoDialog(`Project bewaard en gepubliceerd in branch[${branch}]. status[${response.status}]`)

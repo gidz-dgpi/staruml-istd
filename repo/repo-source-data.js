@@ -414,6 +414,29 @@ function buildBerichtClassDataList(ownedElements) {
 }
 
 /**
+ * Build Array of Tag
+ * @param {Tag} tags 
+ * @param {String} packageId 
+ * @returns {Array}
+ */
+function buildBerichtPkgTagList(tags, packageId) {
+    const result = []
+
+    tags.forEach(tag => {
+        result.push({
+            _parent: {
+                $ref: String(packageId)
+            },
+            name: tag.name,
+            value: tag.value,
+            _type: "Tag"
+        })
+    })
+
+    return result
+}
+
+/**
  * Build Source Bericht Package Data Array
  * @param {Array<UMLPackage>} ownedElements 
  * @returns 
@@ -422,20 +445,20 @@ function buildBerichtPkgDataList(ownedElements) {
     const berichtPkgDataList = []
     const berichtPkgList = ownedElements.filter(element => element instanceof type.UMLPackage)
 
-    for (let i = 0; i < berichtPkgList.length; i++) {
-        const berichtPkg = berichtPkgList[i]
+    berichtPkgList.forEach(berichtPkg => {
         const berichtPkgData = {
             _type: 'UMLPackage',
             _id: String(berichtPkg._id),
             _parent: {
                 $ref: String(berichtPkg._parent._id)
             },
+            tags: buildBerichtPkgTagList(berichtPkg.tags, berichtPkg._id),
             name: String(berichtPkg.name),
             documentation: String(berichtPkg.documentation),
             ownedElements: buildBerichtClassDataList(berichtPkg.ownedElements)
         }
         berichtPkgDataList.push(berichtPkgData)
-    }
+    })
 
     return berichtPkgDataList
 }
@@ -541,7 +564,6 @@ function getSpecificSourceData(root) {
         documentation: istGlobals.BERICHTEN_PACKAGE.documentation,
         ownedElements: buildBerichtPkgDataList(berichtenModelPkg.ownedElements)
     }
-    console.log(berichtenModelPkgData)
 
     // build specific model data
     return {

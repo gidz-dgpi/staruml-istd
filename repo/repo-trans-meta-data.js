@@ -23,7 +23,7 @@ function getContextMetaDataActions(contextMetaData) {
     return new GitLabCommitAction(
         `${metaData.path}/${metaData.contextModelMetaDataFile}`,
         'update',
-        utils.jsonToStringCompact(contextMetaData)
+        utils.jsonToString(contextMetaData)
     )
 }
 
@@ -36,7 +36,7 @@ function getGenericMetaDataActions(genericMetaData) {
     return new GitLabCommitAction(
         `${metaData.path}/${metaData.genericModelMetaDataFile}`,
         'update',
-        utils.jsonToStringCompact(genericMetaData)
+        utils.jsonToString(genericMetaData)
     )
 }
 
@@ -49,7 +49,7 @@ function getSpecificMetaDataActions(specificMetaData) {
     return new GitLabCommitAction(
         `${metaData.path}/${metaData.specificModelMetaDataFile}`,
         'update',
-        utils.jsonToStringCompact(specificMetaData)
+        utils.jsonToString(specificMetaData)
     )
 }
 

@@ -40,7 +40,6 @@ function prepCommitGenericMetaDataInRepo(root) {
  * @returns {GitLabCommitAction}
  */
 function prepCommitContextMetaDataToRep() {
-    console.log(jsonExport.jsonLdContext())
     return trans.getContextMetaDataActions(jsonExport.jsonLdContext())
 }
 

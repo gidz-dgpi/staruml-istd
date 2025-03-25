@@ -110,7 +110,7 @@ function getRootSourceDataActions(rootSourceData) {
     return new GitLabCommitAction(
         `${sourceData.path}/${sourceData.rootMetaDataFile}`,
         'update',
-        utils.jsonToStringCompact(rootSourceData)
+        utils.jsonToString(rootSourceData)
     )
 }
 
@@ -123,7 +123,7 @@ function getGenericSourceDataActions(genericSourceData) {
     return new GitLabCommitAction(
         `${sourceData.path}/${sourceData.genericModelMetaDataFile}`,
         'update',
-        utils.jsonToStringCompact(genericSourceData)
+        utils.jsonToString(genericSourceData)
     )
 }
 
@@ -136,7 +136,7 @@ function getSpecificSourceDataActions(specificSourceData) {
     return new GitLabCommitAction(
         `${sourceData.path}/${sourceData.specificModelMetaDataFile}`,
         'update',
-        utils.jsonToStringCompact(specificSourceData)
+        utils.jsonToString(specificSourceData)
     )
 }
 

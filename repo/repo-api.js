@@ -42,7 +42,6 @@ function listRepoBranches(projectId) {
  * @returns {number}
  */
 function getGroupId(namespace) {
-    console.log('getGroupId(' + namespace + ')')
     const url = '/groups'
     var params = {}
     params['search'] = namespace
@@ -58,7 +57,6 @@ function getGroupId(namespace) {
  * @returns {Promise<axios.get>}
  */
 function listProjectsForGroup(namespace) {
-    console.log('listProjectsForGroup(' + namespace + ')')
     return getGroupId(namespace)
         .then(groupId => {
             const url = '/groups/' + groupId + '/projects?pagination=keyset&per_page=100&order_by=id&sort=asc'
@@ -148,7 +146,6 @@ function determineActionForCommitAction(projectId, branch, commitAction) {
     return getFileFromRepo(projectId, commitAction.filePath, branch)
         .then(response => {
             if (response.status >= 200 && response.status < 300) {
-                console.log(`determineActionForCommitAction(${projectId}, ${branch}, ${commitAction.filePath}) => 'update'`)
                 return {
                     file_path: commitAction.filePath,
                     content: commitAction.content,
@@ -160,7 +157,6 @@ function determineActionForCommitAction(projectId, branch, commitAction) {
         })
         .catch(error => {
             if (error.status == 404) {
-                console.log(`determineActionForCommitAction(${projectId}, ${branch}, ${commitAction.filePath}) => 'create''`)
                 return {
                     file_path: commitAction.filePath,
                     content: commitAction.content,

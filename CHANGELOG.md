@@ -15,6 +15,24 @@ en dit project conformeert aan [Semantic Versioning](https://semver.org/spec/v2.
 
 ### Removed
 
+## [0.13.3] - 2025-03-25
+
+### Added
+
+### Fixed
+
+- Bericht titel en bijbehorend retourbericht worden niet gepersisteerd in GitLab
+
+### Changed
+
+- Pretty print .json files zodat ze te vergelijken zijn in GitLab UI
+
+### Deprecated
+
+### Removed
+
+- Diverse debug logging naar console.
+
 ## [0.13.2] - 2025-03-21
 
 ### Added
