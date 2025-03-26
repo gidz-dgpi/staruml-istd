@@ -138,20 +138,29 @@ function retrieveSourceDataFromRepo() {
         })
         /**
          * (2.c) 
-         * - Create UMLPacpakge from Generic Meta Data Fragment
+         * - Create UMLPackage from Generic Meta Data Fragment
          * - Retrieve Specific Meta Data Fragment
          */
         .then(response => {
-            metaModelGenericPkg = trans.addMetaDataGenericModel(metaModelRoot, response.data.content)
+            metaModelGenericPkg = trans.addMetaDataToRoot(metaModelRoot, response.data.content)
             return trans.getMetaDataSpecificModel(modelDataRepoSelection.id, modelDataRepoSelection.branch)
         })
         /**
          * (2.d) 
-         * - Create UMLPacpakge from Specific Meta Data Fragment
-         * - Alert Successfull Retrieval
+         * - Create UMLPackage from Specific Meta Data Fragment
+         * - Retrieve Release Info Data Fragment
          */
         .then(response => {
-            metaSpecficModelPkg = trans.addMetaDataSpecificModel(metaModelRoot, response.data.content)
+            metaSpecficModelPkg = trans.addMetaDataToRoot(metaModelRoot, response.data.content)
+            return trans.getReleaseInfoModel(modelDataRepoSelection.id, modelDataRepoSelection.branch)
+        })
+        /**
+         * (2.e)
+         * = Create UMLPackage from Release Info Data Fragment
+         * - Alert Successful Retrieval
+         */
+        .then(response => {
+            trans.addMetaDataToRoot(metaModelRoot, response.data.content)
             return app.dialogs.showInfoDialog(
                 `Bron Meta Data Model succesvol opgehaald van repository=[${modelDataRepoSelection.name}] branch=[${modelDataRepoSelection.branch}] !`
             )
@@ -416,16 +425,16 @@ function buildBerichtClassDataList(ownedElements) {
 /**
  * Build Array of Tag
  * @param {Tag} tags 
- * @param {String} packageId 
+ * @param {String} parentId 
  * @returns {Array}
  */
-function buildBerichtPkgTagList(tags, packageId) {
+function buildPackageTagList(tags, parentId) {
     const result = []
 
     tags.forEach(tag => {
         result.push({
             _parent: {
-                $ref: String(packageId)
+                $ref: String(parentId)
             },
             name: tag.name,
             value: tag.value,
@@ -452,7 +461,7 @@ function buildBerichtPkgDataList(ownedElements) {
             _parent: {
                 $ref: String(berichtPkg._parent._id)
             },
-            tags: buildBerichtPkgTagList(berichtPkg.tags, berichtPkg._id),
+            tags: buildPackageTagList(berichtPkg.tags, berichtPkg._id),
             name: String(berichtPkg.name),
             documentation: String(berichtPkg.documentation),
             ownedElements: buildBerichtClassDataList(berichtPkg.ownedElements)
@@ -581,6 +590,47 @@ function getSpecificSourceData(root) {
 /**
  * 
  * @param {Project} root 
+ * @returns {UMLPackage}
+ */
+function getReleaseInfoData(root) {
+    const releaseInfoPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.RELEASE_INFO_PACKAGE.name)
+    const releaseInfoPkgId = String(releaseInfoPkg._id)
+
+    return {
+        _type: 'UMLPackage',
+        _id: releaseInfoPkgId,
+        _parent: {
+            $ref: root._id
+        },
+        name: String(releaseInfoPkg.name),
+        documentation: String(releaseInfoPkg.documentation),
+        tags: buildPackageTagList(releaseInfoPkg.tags, releaseInfoPkgId),
+        ownedElements: () => {
+            // Only save the child packages and their tags.
+            const result = []
+            releaseInfoPkg.ownedElements.filter(
+                item => item instanceof UMLPackage
+            ).forEach(
+                packageItem => {
+                    result.push({
+                        _type: 'UMLPackage',
+                        _id: packageItem._id,
+                        _parent: {
+                            $ref: releaseInfoPkgId,
+                        },
+                        name: String(packageItem.name),
+                        documentation: String(packageItem.documentation),
+                        tags: buildPackageTagList(packageItem.tags, packageItem._id)
+                    })
+                }
+            )
+        }
+    }
+}
+
+/**
+ * 
+ * @param {Project} root 
  * @returns {GitLabCommitAction}
  */
 function prepCommitGenericSourceDataToRepo(root) {
@@ -606,6 +656,15 @@ function prepCommitSpecificSourceDataToRepo(root) {
 }
 
 /**
+ * 
+ * @param {Project} root 
+ * @returns {GitLabCommitAction}
+ */
+function prepCommitReleaseInfoSourceDataToRepo(root) {
+    return trans.getReleaseInfoSourceDataActions(getReleaseInfoData(root))
+}
+
+/**
  * Prepares commit actions for storing the source data to the repository
  * @param {Project} root 
  * @returns {Array[GitLabCommitAction]}
@@ -614,7 +673,8 @@ function prepCommitActions(root) {
     return [
         prepCommitRootSourceDataToRepo(root),
         prepCommitGenericSourceDataToRepo(root),
-        prepCommitSpecificSourceDataToRepo(root)
+        prepCommitSpecificSourceDataToRepo(root),
+        prepCommitReleaseInfoSourceDataToRepo(root),
     ]
 }
 

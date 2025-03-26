@@ -9,7 +9,8 @@ const sourceData = {
     path: 'source-data',
     rootMetaDataFile: 'root-meta-data.mdj',
     genericModelMetaDataFile: 'generic-model-meta-data.mfj',
-    specificModelMetaDataFile: 'specific-model-meta-data.mfj'
+    specificModelMetaDataFile: 'specific-model-meta-data.mfj',
+    releaseInfoMetaDataFile: 'release-info-model-meta-data.mfj',
 }
 
 /**
@@ -27,7 +28,8 @@ const metaData = {
  */
 const pubData = {
     path: 'pub-data',
-    berichtenTitleAndReplyDataFile: 'berichten_title_and_reply.json',
+    berichtenTitleAndReplyFile: 'berichten_title_and_reply.json',
+    releaseInfoFile: 'release-info.json',
 }
 
 exports.pubData = pubData
