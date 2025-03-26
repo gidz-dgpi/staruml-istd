@@ -15,6 +15,20 @@ en dit project conformeert aan [Semantic Versioning](https://semver.org/spec/v2.
 
 ### Removed
 
+## [0.14.1] - 2025-03-26
+
+### Added
+
+### Fixed
+
+- Packages below "Release info" package aren't persisted to GitLab
+
+### Changed
+
+### Deprecated
+
+### Removed
+
 ## [0.14.0] - 2025-03-26
 
 ### Added
