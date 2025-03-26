@@ -422,6 +422,128 @@ function getSpecificBerichtenPackage(project) {
     )
 }
 
+function getReleaseInfoPackage(project) {
+    return utils.getUMLPackagElementByName(
+            project.ownedElements, globals.RELEASE_INFO_PACKAGE.name
+    )
+}
+
+/**
+ * Adds a new property to target, and set the value
+ * @param {String} name The name of the new property. If it contains slashes (/) then this property is an Object as opposed to a simple String attribute.
+ * @param {String} value The value of the new property.
+ * @param {Object} target The target to which the new property must be added
+ * @returns {Object} Based on target, expanded with the new properties for which the name and value are derived from params.
+ */
+function tagNameAndValueToObjectProperties(name, value, target) {
+    let result = target
+
+    if (name.includes("/")) {
+        const names = name.split("/")
+        const property = names[0]
+        if (!Object.hasOwn(result, property)) {
+            result[property] = {}
+        }
+        result[property] = tagNameAndValueToObjectProperties(names.splice(0, 1).join('/'), value, result[property])
+    } else {
+        result[name] = value
+    }
+
+    return result
+}
+
+/**
+ * Translates the tag to a property + value which will be added to target
+ * @param {Tag} tag 
+ * @param {Object} target
+ * @returns {Object} which is target expanded with the property + value contained in tag
+ */
+function tagToReleaseInfo(tag, target) {
+    return tagNameAndValueToObjectProperties(tag.name, tag.value, target)
+}
+
+/**
+ * 
+ * @param {Tag[]} tags 
+ * @param {Array} target 
+ */
+function packageNameAndTagsToArrayItems(tags, target) {
+    let worker = {}
+    tags.forEach(tag => {
+        tagNameAndValueToObjectProperties(tag.name, tag.value, worker)
+    })
+    target.push(worker)
+}
+
+/**
+ * Creates a new Array property on target, based on the "path" specified in name.
+ * 
+ * name contains at least one slash. When splitting the name by slash, the last item contains the array index, and the previous
+ * items contain the property value. If name contains more than 2 items, a nested property is created, each effectively being a
+ * new Object on which the property is created.
+ * @param {String} name 
+ * @param {Tag[]} tags the Tag items which contain the information which needs to be added
+ * @param {Object} target 
+ * @returns {Object} target expanded with the new property.
+ */
+function packageNameToArrayProperty(name, tags, target) {
+    let result = target
+    const path = name.split('/')
+    if (path.length < 2) {
+        throw 'packageNameToArrayProperty: name needs to contain at least two path elements'
+    }
+
+    let worker = result
+    while(path.length > 2) {
+        if (!Object.hasOwn(result, path[0])) {
+            worker[path[0]] = {}
+        }
+        worker = worker[path[0]]
+        path.splice(0, 1)
+    }
+
+    if (!Object.hasOwn(worker, path[0])) {
+        worker[path[0]] = []
+    }
+
+    packageNameAndTagsToArrayItems(tags, worker[path[0]])
+
+    return result
+}
+
+/**
+ * Transforms a package to an Array property of target.
+ * @param {UMLPackage} package The package which is to be converted to an Array property on target; the property name equals the name of the package.
+ * @param {Object} target The object on which the property must be set / expanded
+ * @returns {Object} target which has been expanded with the new Array property
+ */
+function packageToReleaseInfo(package, target) {
+    let result = target
+
+    result = packageNameToArrayProperty(package.name, package.tags, result)
+
+    return result
+}
+
+/**
+ * 
+ * @param {Project} root 
+ * @returns {Object} containing the publishable release-info
+ */
+function buildReleaseInfo(root) {
+    const releaseInfoPackage = getReleaseInfoPackage(root)
+
+    let result = {}
+    
+    releaseInfoPackage.tags
+        .forEach(tag => result = tagToReleaseInfo(tag, result))
+    releaseInfoPackage.ownedElements
+        .filter(ownedElement => ownedElement.constructor.name == 'UMLPackage')
+        .forEach(ownedUmlPackage => result = packageToReleaseInfo(ownedUmlPackage, result))
+
+    return result
+}
+
 /**
  * Build a JSON object from the tags contained in the packages below the 'Berichten' package.
  * If `berichtenPackage` is not named 'Berichten', then do nothing as we don't need this for registers.
@@ -496,3 +618,4 @@ exports.buildGenericMetaDataJson = buildGenericMetaDataJson
 exports.buildBerichtenTitleAndReply = buildBerichtenTitleAndReply
 exports.jsonLdContext = jsonLdContext
 exports.jsonLdType = jsonLdType
+exports.buildReleaseInfo = buildReleaseInfo

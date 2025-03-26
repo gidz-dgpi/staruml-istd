@@ -15,6 +15,20 @@ en dit project conformeert aan [Semantic Versioning](https://semver.org/spec/v2.
 
 ### Removed
 
+## [0.14.0] - 2025-03-26
+
+### Added
+
+- Release info package en tags laden en opslaan.
+
+### Fixed
+
+### Changed
+
+### Deprecated
+
+### Removed
+
 ## [0.13.3] - 2025-03-25
 
 ### Added

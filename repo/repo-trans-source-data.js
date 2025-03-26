@@ -41,11 +41,11 @@ function getWorkBranches(projectId) {
 /**
  * Add StarUML UMLPackage from Repository Specific Model Data
  * @param {Project} root 
- * @param {Base64JsonString} specficDataContent 
+ * @param {Base64JsonString} content 
  * @returns {UMLPackage}
  */
-function addMetaDataSpecificModel(root, specficDataContent) {
-    return app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(specficDataContent))
+function addMetaDataToRoot(root, content) {
+    return app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(content))
 }
 
 /**
@@ -57,14 +57,8 @@ function getMetaDataSpecificModel(projectId, branche) {
     return api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.specificModelMetaDataFile}`, branche)
 }
 
-/**
- * Add StarUML UMLPackage from Repository Generic Model Data
- * @param {Project} root 
- * @param {Base64JsonString} genericDataContent 
- * @returns {UMLPackage}
- */
-function addMetaDataGenericModel(root, genericDataContent) {
-    return app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(genericDataContent))
+function getReleaseInfoModel(projectId, branche) {
+    return api.getFileFromRepo(projectId, `${sourceData.path}/${sourceData.releaseInfoMetaDataFile}`, branche)
 }
 
 /**
@@ -140,8 +134,20 @@ function getSpecificSourceDataActions(specificSourceData) {
     )
 }
 
-exports.addMetaDataGenericModel = addMetaDataGenericModel
-exports.addMetaDataSpecificModel = addMetaDataSpecificModel
+/**
+ * 
+ * @param {Object} releaseInfoSourceData 
+ * @returns {GitLabCommitAction}
+ */
+function getReleaseInfoSourceDataActions(releaseInfoSourceData) {
+    return new GitLabCommitAction(
+        `${sourceData.path}/${sourceData.releaseInfoMetaDataFile}`,
+        'update',
+        utils.jsonToString(releaseInfoSourceData)
+    )
+}
+
+exports.addMetaDataToRoot = addMetaDataToRoot
 exports.createMetaDataRoot = createMetaDataRoot
 exports.init = init
 exports.getGenericSourceDataActions = getGenericSourceDataActions
@@ -150,5 +156,7 @@ exports.getMetaDataSpecificModel = getMetaDataSpecificModel
 exports.getModelDataRepoList = getModelDataRepoList
 exports.getRootSourceDataActions = getRootSourceDataActions
 exports.getSpecificSourceDataActions = getSpecificSourceDataActions
+exports.getReleaseInfoSourceDataActions = getReleaseInfoSourceDataActions
 exports.getWorkBranches = getWorkBranches
 exports.getMetaDataRoot = getMetaDataRoot
+exports.getReleaseInfoModel = getReleaseInfoModel

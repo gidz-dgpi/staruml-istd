@@ -9,10 +9,19 @@ const GitLabCommitAction = require('./gitlab-commit-action.js')
  */
 function getBerichtTitleAndReplyActions(berichtenTitleAndReplyData) {
     return new GitLabCommitAction(
-        `${pubData.path}/${pubData.berichtenTitleAndReplyDataFile}`,
+        `${pubData.path}/${pubData.berichtenTitleAndReplyFile}`,
         'update',
         utils.jsonToString(berichtenTitleAndReplyData)
     )
 }
 
+function getReleaseInfoActions(releaseInfoData) {
+    return new GitLabCommitAction(
+        `${pubData.path}/${pubData.releaseInfoFile}`,
+        'update',
+        utils.jsonToString(releaseInfoData)
+    )
+}
+
 exports.getBerichtTitleAndReplyActions = getBerichtTitleAndReplyActions
+exports.getReleaseInfoActions = getReleaseInfoActions
