@@ -596,6 +596,29 @@ function getReleaseInfoData(root) {
     const releaseInfoPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.RELEASE_INFO_PACKAGE.name)
     const releaseInfoPkgId = String(releaseInfoPkg._id)
 
+    console.log(releaseInfoPkg)
+
+    const ownedElements = []
+    // Only save the child packages and their tags.
+    console.log('Start building ownedElements for Release info package...')
+    releaseInfoPkg.ownedElements.filter(
+        item => item.constructor.name == 'UMLPackage'
+    ).forEach(
+        packageItem => {
+            console.log(`Processing UMLPackage ${packageItem.name}`)
+            ownedElements.push({
+                _type: 'UMLPackage',
+                _id: packageItem._id,
+                _parent: {
+                    $ref: releaseInfoPkgId,
+                },
+                name: String(packageItem.name),
+                documentation: String(packageItem.documentation),
+                tags: buildPackageTagList(packageItem.tags, packageItem._id)
+            })
+        }
+    )
+
     return {
         _type: 'UMLPackage',
         _id: releaseInfoPkgId,
@@ -605,26 +628,7 @@ function getReleaseInfoData(root) {
         name: String(releaseInfoPkg.name),
         documentation: String(releaseInfoPkg.documentation),
         tags: buildPackageTagList(releaseInfoPkg.tags, releaseInfoPkgId),
-        ownedElements: () => {
-            // Only save the child packages and their tags.
-            const result = []
-            releaseInfoPkg.ownedElements.filter(
-                item => item instanceof UMLPackage
-            ).forEach(
-                packageItem => {
-                    result.push({
-                        _type: 'UMLPackage',
-                        _id: packageItem._id,
-                        _parent: {
-                            $ref: releaseInfoPkgId,
-                        },
-                        name: String(packageItem.name),
-                        documentation: String(packageItem.documentation),
-                        tags: buildPackageTagList(packageItem.tags, packageItem._id)
-                    })
-                }
-            )
-        }
+        ownedElements: ownedElements
     }
 }
 
