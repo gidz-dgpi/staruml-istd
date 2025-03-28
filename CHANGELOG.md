@@ -15,6 +15,20 @@ en dit project conformeert aan [Semantic Versioning](https://semver.org/spec/v2.
 
 ### Removed
 
+## [0.14.2] - 2025-03-28
+
+### Added
+
+### Fixed
+
+- `releaseInfo.standaard` and `releaseInfo.releaseNaam` are missing from published `release-info.json`
+
+### Changed
+
+### Deprecated
+
+### Removed
+
 ## [0.14.1] - 2025-03-26
 
 ### Added

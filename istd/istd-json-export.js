@@ -540,6 +540,9 @@ function buildReleaseInfo(root) {
     releaseInfoPackage.ownedElements
         .filter(ownedElement => ownedElement.constructor.name == 'UMLPackage')
         .forEach(ownedUmlPackage => result = packageToReleaseInfo(ownedUmlPackage, result))
+    // Fix: add 'standaard' and 'releaseNaam' attributes to 'releaseInfo' property
+    result.releaseInfo.standaard = root.name
+    result.releaseInfo.releaseNaam = root.version
 
     return result
 }
