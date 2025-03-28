@@ -26,10 +26,6 @@ function prepBerichtTitleAndReplyInRepo(root) {
     return pub.getBerichtTitleAndReplyActions(jsonExport.buildBerichtenTitleAndReply(root))
 }
 
-function prepReleaseInfoInRepo(root) {
-    return pub.getReleaseInfoActions(jsonExport.buildReleaseInfo(root))
-}
-
 /**
  * Prepares required commit actions for creating a commitset containing the Generic Meta Data
  * @param {Project} root 
@@ -58,7 +54,6 @@ function prepCommitActions(root) {
         prepCommitGenericMetaDataInRepo(root),
         prepSpecificMetaDataInRepo(root),
         prepBerichtTitleAndReplyInRepo(root),
-        prepReleaseInfoInRepo(root),
     ]
 }
 
