@@ -152,15 +152,6 @@ function retrieveSourceDataFromRepo() {
          */
         .then(response => {
             metaSpecficModelPkg = trans.addMetaDataToRoot(metaModelRoot, response.data.content)
-            return trans.getReleaseInfoModel(modelDataRepoSelection.id, modelDataRepoSelection.branch)
-        })
-        /**
-         * (2.e)
-         * = Create UMLPackage from Release Info Data Fragment
-         * - Alert Successful Retrieval
-         */
-        .then(response => {
-            trans.addMetaDataToRoot(metaModelRoot, response.data.content)
             return app.dialogs.showInfoDialog(
                 `Bron Meta Data Model succesvol opgehaald van repository=[${modelDataRepoSelection.name}] branch=[${modelDataRepoSelection.branch}] !`
             )
@@ -590,51 +581,6 @@ function getSpecificSourceData(root) {
 /**
  * 
  * @param {Project} root 
- * @returns {UMLPackage}
- */
-function getReleaseInfoData(root) {
-    const releaseInfoPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.RELEASE_INFO_PACKAGE.name)
-    const releaseInfoPkgId = String(releaseInfoPkg._id)
-
-    console.log(releaseInfoPkg)
-
-    const ownedElements = []
-    // Only save the child packages and their tags.
-    console.log('Start building ownedElements for Release info package...')
-    releaseInfoPkg.ownedElements.filter(
-        item => item.constructor.name == 'UMLPackage'
-    ).forEach(
-        packageItem => {
-            console.log(`Processing UMLPackage ${packageItem.name}`)
-            ownedElements.push({
-                _type: 'UMLPackage',
-                _id: packageItem._id,
-                _parent: {
-                    $ref: releaseInfoPkgId,
-                },
-                name: String(packageItem.name),
-                documentation: String(packageItem.documentation),
-                tags: buildPackageTagList(packageItem.tags, packageItem._id)
-            })
-        }
-    )
-
-    return {
-        _type: 'UMLPackage',
-        _id: releaseInfoPkgId,
-        _parent: {
-            $ref: root._id
-        },
-        name: String(releaseInfoPkg.name),
-        documentation: String(releaseInfoPkg.documentation),
-        tags: buildPackageTagList(releaseInfoPkg.tags, releaseInfoPkgId),
-        ownedElements: ownedElements
-    }
-}
-
-/**
- * 
- * @param {Project} root 
  * @returns {GitLabCommitAction}
  */
 function prepCommitGenericSourceDataToRepo(root) {
@@ -659,14 +605,6 @@ function prepCommitSpecificSourceDataToRepo(root) {
     return trans.getSpecificSourceDataActions(getSpecificSourceData(root))
 }
 
-/**
- * 
- * @param {Project} root 
- * @returns {GitLabCommitAction}
- */
-function prepCommitReleaseInfoSourceDataToRepo(root) {
-    return trans.getReleaseInfoSourceDataActions(getReleaseInfoData(root))
-}
 
 /**
  * Prepares commit actions for storing the source data to the repository
@@ -678,7 +616,6 @@ function prepCommitActions(root) {
         prepCommitRootSourceDataToRepo(root),
         prepCommitGenericSourceDataToRepo(root),
         prepCommitSpecificSourceDataToRepo(root),
-        prepCommitReleaseInfoSourceDataToRepo(root),
     ]
 }
 

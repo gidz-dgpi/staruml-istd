@@ -9,11 +9,27 @@ en dit project conformeert aan [Semantic Versioning](https://semver.org/spec/v2.
 
 ### Added
 
+### Fixed
+
 ### Changed
 
 ### Deprecated
 
 ### Removed
+
+## [0.14.3] - 2025-03-28
+
+### Added
+
+### Fixed
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+- `release-info.json` will be managed through the GitLab UI
 
 ## [0.14.2] - 2025-03-28
 
