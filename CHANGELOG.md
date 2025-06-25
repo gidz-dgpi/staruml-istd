@@ -17,6 +17,20 @@ en dit project conformeert aan [Semantic Versioning](https://semver.org/spec/v2.
 
 ### Removed
 
+## [0.14.4] - 2025-06-25
+
+### Added
+
+### Fixed
+
+- Association changes are only saved for the "second" end. Now they are saved for both ends.
+
+### Changed
+
+### Deprecated
+
+### Removed
+
 ## [0.14.3] - 2025-03-28
 
 ### Added

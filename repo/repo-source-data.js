@@ -177,6 +177,7 @@ function retrieveSourceDataFromRepo() {
  * @returns 
  */
 function buildAttributeDataList(attributes) {
+    console.log('buildAttributeDataList')
     const attributDataList = []
 
     for (let i = 0; i < attributes.length; i++) {
@@ -336,6 +337,7 @@ function buildCodeLijstDataList(ownedElements) {
  * @returns 
  */
 function buildBerichtClassAssociationDataList(ownedElements) {
+    console.log('buildBerichtClassAssociationDataList')
     const associationDataList = []
     const associationList = ownedElements.filter(element => element instanceof type.UMLAssociation)
 
@@ -358,6 +360,7 @@ function buildBerichtClassAssociationDataList(ownedElements) {
                 reference: {
                     $ref: String(association.end1.reference._id)
                 },
+                multiplicity: String(association.end1.multiplicity),
                 aggregation: String(association.end1.aggregation)
             },
             end2: {
@@ -369,8 +372,15 @@ function buildBerichtClassAssociationDataList(ownedElements) {
                 reference: {
                     $ref: String(association.end2.reference._id)
                 },
-                multiplicity: String(association.end2.multiplicity)
+                multiplicity: String(association.end2.multiplicity),
+                aggregation: String(association.end2.aggregation)
             },
+        }
+        if (association.name === 'Bemiddeling') {
+            console.log(association.end1)
+            console.log(associationData.end1)
+            console.log(association.end2)
+            console.log(associationData.end2)
         }
         associationDataList.push(associationData)
     }
@@ -384,6 +394,7 @@ function buildBerichtClassAssociationDataList(ownedElements) {
  * @returns 
  */
 function buildBerichtClassDataList(ownedElements) {
+    console.log('buildBerichtClassDataList')
     const berichtClassDataList = []
     const berichtClassList = ownedElements.filter(element => element instanceof type.UMLClass)
 
@@ -409,6 +420,7 @@ function buildBerichtClassDataList(ownedElements) {
 
         berichtClassDataList.push(berichtClassData)
     }
+    console.log(berichtClassDataList)
 
     return berichtClassDataList
 }
@@ -442,6 +454,7 @@ function buildPackageTagList(tags, parentId) {
  * @returns 
  */
 function buildBerichtPkgDataList(ownedElements) {
+    console.log('buildBerichtPkgDataList')
     const berichtPkgDataList = []
     const berichtPkgList = ownedElements.filter(element => element instanceof type.UMLPackage)
 
@@ -549,6 +562,8 @@ function getRootSourceData(root) {
  */
 function getSpecificSourceData(root) {
     // build bericht model data
+    console.log('repo-source-data::getSpecificSourceData')
+
     const specificPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.SPECIFIC_MODEL_PACKAGE.name)
     const specificPkgId = String(specificPkg._id)
     const berichtenModelPkg = utils.getUMLPackagElementByName(specificPkg.ownedElements, istGlobals.BERICHTEN_PACKAGE.name)
@@ -564,6 +579,7 @@ function getSpecificSourceData(root) {
         documentation: istGlobals.BERICHTEN_PACKAGE.documentation,
         ownedElements: buildBerichtPkgDataList(berichtenModelPkg.ownedElements)
     }
+    console.log(berichtenModelPkgData)
 
     // build specific model data
     return {
