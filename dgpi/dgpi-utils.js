@@ -188,12 +188,28 @@ function getXsdMetaData(xsAppinfo) {
 }
 
 /**
+ * @deprecated
  * Encode Base64 String with JSON to a JavaScript Object
  * @param {String} base64JsonStr as JavaScript
  * @returns {Object}
  */
 function encodeBase64JsonStrToObj(base64JsonStr) {
     return JSON.parse(atob(base64JsonStr))
+}
+
+/**
+ * Decodes base64 encoded JSON string into a Javascript Object
+ * 
+ * https://stackoverflow.com/a/30106551
+ * 
+ * @param {String} encoded 
+ * @returns {Object}
+ */
+function decodeBase64(encoded) {
+    // Going backwards: from bytestream, to percent-encoding, to original string.
+    return JSON.parse(decodeURIComponent(atob(encoded).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join('')));
 }
 
 /**
@@ -220,3 +236,4 @@ exports.getXsdMetaData = getXsdMetaData
 exports.buildUMLMultiplicityFromXsOccursAttr = buildUMLMultiplicityFromXsOccursAttr
 exports.encodeBase64JsonStrToObj = encodeBase64JsonStrToObj
 exports.jsonToString = jsonToString
+exports.decodeBase64 = decodeBase64

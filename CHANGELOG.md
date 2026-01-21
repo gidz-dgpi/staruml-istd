@@ -17,6 +17,23 @@ en dit project conformeert aan [Semantic Versioning](https://semver.org/spec/v2.
 
 ### Removed
 
+## [0.14.5] - 2026-01-21
+
+### Fixed
+
+- Diacritic marks are garbled when loaded from the git repository
+
+### Added
+
+### Changed
+
+### Deprecated
+
+- utils.encodeBase64JsonStrToObj  
+  Base64 decoding using only atob, which cannot handle multi-byte characters leading to garbled diacritic marks.
+
+### Removed
+
 ## [0.14.4] - 2025-06-25
 
 ### Added
