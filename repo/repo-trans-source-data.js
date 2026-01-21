@@ -45,7 +45,7 @@ function getWorkBranches(projectId) {
  * @returns {UMLPackage}
  */
 function addMetaDataToRoot(root, content) {
-    return app.project.importFromJson(root, utils.encodeBase64JsonStrToObj(content))
+    return app.project.importFromJson(root, utils.decodeBase64(content))
 }
 
 /**
@@ -79,7 +79,7 @@ function getMetaDataGenericModel(projectId, branche) {
  */
 function createMetaDataRoot(rootDataContent, projectId, branch) {
     // create new application root object
-    const root = app.project.loadFromJson(utils.encodeBase64JsonStrToObj(rootDataContent))
+    const root = app.project.loadFromJson(utils.decodeBase64(rootDataContent))
     // add Tags that are used to keep repository storage locations info
     utils.addStringTag(root, 'projectId', projectId)
     utils.addStringTag(root, 'branch', branch)
