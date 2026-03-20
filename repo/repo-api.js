@@ -32,7 +32,7 @@ function init() {
  */
 function listRepoBranches(projectId) {
     const id = encodeURIComponent(projectId)
-    const url = `/projects/${id}/repository/branches`
+    const url = `/projects/${id}/repository/branches?per_page=100`
     return gitLabApi.get(url)
 }
 

@@ -17,6 +17,23 @@ en dit project conformeert aan [Semantic Versioning](https://semver.org/spec/v2.
 
 ### Removed
 
+## [0.14.6] - 2026-03-20
+
+### Fixed
+
+- Fetch more than 20 branches. Now 100 branches are fetched.
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+- utils.encodeBase64JsonStrToObj  
+  Base64 decoding using only atob, which cannot handle multi-byte characters leading to garbled diacritic marks.
+
 ## [0.14.5] - 2026-01-21
 
 ### Fixed
