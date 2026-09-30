@@ -17,30 +17,30 @@ const GitLabCommitAction = require('./gitlab-commit-action.js')
 function getRepoOptions(repoList) {
     const repoOptions = []
 
-    for (let i = 0; i < repoList.length; i++) {
+    repoList.forEach(repoItem => {
         repoOptions.push({
-            text: String(repoList[i].name),
-            value: String(repoList[i].id)
+            text: String(repoItem.name),
+            value: String(repoItem.id)
         })
-    }
+    })
 
     return repoOptions
 }
 
 /**
  * Get Branche Options from Branche List
- * @param {String[]} brancheList 
+ * @param {String[]} branchList 
  */
-function getBrancheOptions(brancheList) {
+function getBrancheOptions(branchList) {
     const brancheOptions = []
 
-    for (let i = 0; i < brancheList.length; i++) {
-        const branchName = String(brancheList[i].name)
+    branchList.forEach(branch => {
+        const branchName = String(branch.name)
         brancheOptions.push({
             text: branchName,
             value: branchName
         })
-    }
+    })
 
     return brancheOptions
 }
@@ -180,8 +180,7 @@ function buildAttributeDataList(attributes) {
     console.log('buildAttributeDataList')
     const attributDataList = []
 
-    for (let i = 0; i < attributes.length; i++) {
-        const attribute = attributes[i]
+    attributes.forEach(attribute => {
         const attributeData = {
             _type: 'UMLAttribute',
             _id: String(attribute._id),
@@ -206,7 +205,7 @@ function buildAttributeDataList(attributes) {
         }
 
         attributDataList.push(attributeData)
-    }
+    })
 
     return attributDataList.length > 0 ? attributDataList : undefined
 }
@@ -220,8 +219,7 @@ function buildDependencyDataList(ownedElements) {
     const dependencyeDataList = []
     const dependencyList = ownedElements.filter(element => element instanceof type.UMLDependency)
 
-    for (let i = 0; i < dependencyList.length; i++) {
-        const dependency = dependencyList[i]
+    dependencyList.forEach(dependency => {
         const dependencyeData = {
             _type: 'UMLDependency',
             _id: String(dependency._id),
@@ -236,7 +234,7 @@ function buildDependencyDataList(ownedElements) {
             },
         }
         dependencyeDataList.push(dependencyeData)
-    }
+    })
 
     return dependencyeDataList.length > 0 ? dependencyeDataList : undefined
 }
@@ -250,8 +248,7 @@ function buildDataTypeList(ownedElements) {
     const dataTypeDataList = []
     const dataTypeList = ownedElements.filter(element => element instanceof type.UMLDataType)
 
-    for (let i = 0; i < dataTypeList.length; i++) {
-        const dataType = dataTypeList[i]
+    dataTypeList.forEach(dataType => {
         const dataTypeData = {
             _type: 'UMLDataType',
             _id: String(dataType._id),
@@ -275,7 +272,7 @@ function buildDataTypeList(ownedElements) {
 
         // add element with the relevant data for the standaard
         dataTypeDataList.push(dataTypeData)
-    }
+    })
 
     return dataTypeDataList
 }
@@ -289,8 +286,7 @@ function buildPrimitieveTypesDataList(ownedElements) {
     const primitieveTypeDataList = []
     const primitieveTypeList = ownedElements.filter(element => element instanceof type.UMLPrimitiveType)
 
-    for (let i = 0; i < primitieveTypeList.length; i++) {
-        const primitieveType = primitieveTypeList[i]
+    primitieveTypeDataList.forEach(primitieveType => {
         const primitieveTypeData = {
             _type: 'UMLPrimitiveType',
             _id: String(primitieveType._id),
@@ -300,7 +296,7 @@ function buildPrimitieveTypesDataList(ownedElements) {
             name: String(primitieveType.name),
         }
         primitieveTypeDataList.push(primitieveTypeData)
-    }
+    })
 
     return primitieveTypeDataList
 }
@@ -314,8 +310,7 @@ function buildCodeLijstDataList(ownedElements) {
     const codeLijstDataList = []
     const codeLijstList = ownedElements.filter(element => element instanceof type.UMLEnumeration)
 
-    for (let i = 0; i < codeLijstList.length; i++) {
-        const codeLijst = codeLijstList[i]
+    codeLijstList.forEach(codeLijst => {
         const codeLijstData = {
             _type: 'UMLEnumeration',
             _id: String(codeLijst._id),
@@ -326,7 +321,7 @@ function buildCodeLijstDataList(ownedElements) {
             documentation: String(codeLijst.documentation),
         }
         codeLijstDataList.push(codeLijstData)
-    }
+    })
 
     return codeLijstDataList
 }
@@ -341,9 +336,7 @@ function buildBerichtClassAssociationDataList(ownedElements) {
     const associationDataList = []
     const associationList = ownedElements.filter(element => element instanceof type.UMLAssociation)
 
-
-    for (let i = 0; i < associationList.length; i++) {
-        const association = associationList[i]
+    associationList.forEach(association => {
         const associationData = {
             _type: 'UMLAssociation',
             _id: String(association._id),
@@ -383,7 +376,7 @@ function buildBerichtClassAssociationDataList(ownedElements) {
             console.log(associationData.end2)
         }
         associationDataList.push(associationData)
-    }
+    })
 
     return associationDataList
 }
@@ -398,8 +391,7 @@ function buildBerichtClassDataList(ownedElements) {
     const berichtClassDataList = []
     const berichtClassList = ownedElements.filter(element => element instanceof type.UMLClass)
 
-    for (let i = 0; i < berichtClassList.length; i++) {
-        const berichtClass = berichtClassList[i]
+    berichtClassList.forEach(berichtClass => {
         const berichtClassData = {
             _type: 'UMLClass',
             _id: String(berichtClass._id),
@@ -419,7 +411,7 @@ function buildBerichtClassDataList(ownedElements) {
         }
 
         berichtClassDataList.push(berichtClassData)
-    }
+    })
     console.log(berichtClassDataList)
 
     return berichtClassDataList
@@ -483,9 +475,9 @@ function buildBerichtPkgDataList(ownedElements) {
  */
 function getGenericSourceData(root) {
     // build gegevens model data
-    const genericPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.GENERIC_MODEL_PACKAGE.name)
+    const genericPkg = utils.getUMLPackageElementByname(root.ownedElements, istGlobals.GENERIC_MODEL_PACKAGE.name)
     const genericPkgId = String(genericPkg._id)
-    const gegevensModelPkg = utils.getUMLPackagElementByName(genericPkg.ownedElements, istGlobals.GEGEVENS_MODEL_PACKAGE.name)
+    const gegevensModelPkg = utils.getUMLPackageElementByname(genericPkg.ownedElements, istGlobals.GEGEVENS_MODEL_PACKAGE.name)
     const gegevensModelPkgId = String(gegevensModelPkg._id)
     const gegevensModelPkgData = {
         _type: 'UMLPackage',
@@ -564,9 +556,9 @@ function getSpecificSourceData(root) {
     // build bericht model data
     console.log('repo-source-data::getSpecificSourceData')
 
-    const specificPkg = utils.getUMLPackagElementByName(root.ownedElements, istGlobals.SPECIFIC_MODEL_PACKAGE.name)
+    const specificPkg = utils.getUMLPackageElementByname(root.ownedElements, istGlobals.SPECIFIC_MODEL_PACKAGE.name)
     const specificPkgId = String(specificPkg._id)
-    const berichtenModelPkg = utils.getUMLPackagElementByName(specificPkg.ownedElements, istGlobals.BERICHTEN_PACKAGE.name)
+    const berichtenModelPkg = utils.getUMLPackageElementByname(specificPkg.ownedElements, istGlobals.BERICHTEN_PACKAGE.name)
     const berichtenModelPkgId = String(berichtenModelPkg._id)
 
     const berichtenModelPkgData = {
