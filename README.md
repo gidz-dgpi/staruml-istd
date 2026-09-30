@@ -4,7 +4,7 @@ Deze StarUML-extensie bevat momenteel functionaliteit voor:
 
 - de Migratie van huidige BizzDesign-outputs naar een StarUML-project met UML-modellen
   - [Import Functies Estafette Model](./docs/import-functies-estafette-model.md)
-- de Publicatie van de UML-modellen in een bewaar-formaat dat kan worden hergebruikt in de Leverstraat (en toekomstig te gebruiken modelleertooling)
+- de Publicatie van de UML-modellen in een bewaar-formaat dat kan worden hergebruikt in het Publicatieplatform (en toekomstig te gebruiken modelleertooling)
   - [JSON Export Functies](./docs/json-export-functies.md)
 
 
@@ -14,7 +14,7 @@ Deze StarUML-extensie bevat momenteel functionaliteit voor:
 
 StarUML:
 
-- [Developing StarUML Extensiions](https://docs.staruml.io/developing-extensions)
+- [Developing StarUML Extensions](https://docs.staruml.io/developing-extensions)
   - Locatie Extensie ZIN-laptop `C:\Users\<ZIN-user>\AppData\Roaming\StarUML\extensions\user`
 - [StarUML Open API Reference](https://files.staruml.io/api-docs/6.0.0/api/index.html)
 

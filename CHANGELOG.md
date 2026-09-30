@@ -17,6 +17,32 @@ en dit project conformeert aan [Semantic Versioning](https://semver.org/spec/v2.
 
 ### Removed
 
+## [0.15.0] - 2025-10-31
+
+### Fixed
+
+- Linked data context:
+  - Het string basetype is van type `xs:boolean`.
+  - Het gegenereerde linked data context object is niet herkenbaar als context.
+  - `relaties` heeft ongeldig UML type
+  - `dataType` is niet correct gespecificeerd om een referentie te zijn
+  - `target` is niet correct gespecificeerd om een referentie te zijn
+- Specific metadata file:
+  - Relaties:
+    - Relaties hebben geen unieke `@id`
+    - Relatie einden hebben geen unieke `@id`
+    - Relatie einden hebben geen `@type`
+    - Verwijzing naar object opnemen in `target` attribute van `parent` en `child` attributten van een `relatie`
+- Optimalisatie: gebruik `forEach` methode van array in plaats van loop.
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
 ## [0.14.6] - 2026-03-20
 
 ### Fixed
