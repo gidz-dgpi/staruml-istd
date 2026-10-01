@@ -13,77 +13,68 @@ const globals = require('./istd-globals')
 const primitiveTypesPkgId = require('./istd-primitive-types').primitiveTypesPkgId
 const codelijstenPkgId = require('./istd-codelijsten').codelijstenPkgId
 const _jsonLdContext = {
-    '@context': {
-        schema: 'https://schema.org',
-        xs: 'http://www.w3.org/2001/XMLSchema#',
-        uml: 'https://www.omg.org/spec/UML/20161101/UML.xmi#',
-        ns: 'https://www.w3.org/TR/xml-names/',
-        istd: 'https://www.istandaarden.nl/over-istandaarden/istandaarden/begrippenlijst#',
-        model: 'https://www.istandaarden.nl/',
-        name: 'schema:name',
-        documentation: 'schema:description',
-        version: 'schema:version',
-        multiplicity: 'uml:multiplicity',
-        aggregation: 'uml:Aggregation',
-        isID: 'uml:isID',
-        dataType: {
-            '@id': 'uml:DataType',
-            '@type': '@id'
-        },
-        primitiveType: 'uml:PrimitiveType',
-        target: {
-            '@id': 'uml:target',
-            '@type': '@id'
-        },
-        dependency: 'uml:Dependency',
-        parent: {
-            '@id': 'istd:BerichtKlasseRelatieParentEnd',
-            '@type': 'uml:AssociationEnd'
-        },
-        child: {
-            '@id': 'istd:BerichtKlasseRelatieChildEnd',
-            '@type': 'uml:AssociationEnd'
-        },
-        berichten: {
-            '@id': 'istd:berichten',
-            '@type': 'uml:Package',
-            '@container': '@list'
-        },
-        klassen: {
-            '@id': 'istd:berichtklassen',
-            '@type': 'uml:Package',
-            '@container': '@list'
-        },
-        elementen: {
-            '@id': 'istd:elementen',
-            '@type': 'uml:Attributes',
-            '@container': '@list'
-        },
-        relaties: {
-            '@id': 'istd:relaties',
-            '@type': 'uml:Association',
-            '@container': '@list'
-        },
-        gegevens: {
-            '@id': 'istd:gegevensmodel',
-            '@type': 'uml:Package',
-            '@container': '@list'
-        },
-        primitieveDataTypen: {
-            '@id': 'istd:primitieveDataTypen',
-            '@type': 'uml:Package',
-            '@container': '@list'
-        },
-        codelijsten: {
-            '@id': 'istd:codelijsten',
-            '@type': 'uml:Enumeration',
-            '@container': '@list'
-        },
-        dataWaarden: {
-            '@id': 'istd:dataWaarden',
-            '@type': 'uml:Dependency',
-            '@container': '@list'
-        }
+    schema: 'https://schema.org',
+    xs: 'http://www.w3.org/2001/XMLSchema#',
+    uml: 'https://www.omg.org/spec/UML/20161101/UML.xmi#',
+    istd: 'https://www.istandaarden.nl/over-istandaarden/istandaarden/begrippenlijst#',
+    model: 'https://www.istandaarden.nl/',
+    name: 'schema:name',
+    documentation: 'schema:description',
+    version: 'schema:version',
+    multiplicity: 'uml:multiplicity',
+    aggregation: 'uml:Aggregation',
+    isID: 'uml:isID',
+    dataType: 'uml:DataType',
+    primitiveType: 'uml:PrimitiveType',
+    target: 'uml:target',
+    dependency: 'uml:Dependency',
+    parent: {
+        '@id': 'istd:BerichtKlasseRelatieParentEnd',
+        '@type': 'uml:AssociationEnd'
+    },
+    child: {
+        '@id': 'istd:BerichtKlasseRelatieChildEnd',
+        '@type': 'uml:AssociationEnd'
+    },
+    berichten: {
+        '@id': 'istd:berichten',
+        '@type': 'uml:Package',
+        '@container': '@list'
+    },
+    klassen: {
+        '@id': 'istd:berichtklassen',
+        '@type': 'uml:Package',
+        '@container': '@list'
+    },
+    elementen: {
+        '@id': 'istd:elementen',
+        '@type': 'uml:Attributes',
+        '@container': '@list'
+    },
+    relaties: {
+        '@id': 'istd:relaties',
+        '@type': 'uml:Associations',
+        '@container': '@list'
+    },
+    gegevens: {
+        '@id': 'istd:gegevensmodel',
+        '@type': 'uml:Package',
+        '@container': '@list'
+    },
+    primitieveDataTypen: {
+        '@id': 'istd:primitieveDataTypen',
+        '@type': 'uml:Package',
+        '@container': '@list'
+    },
+    codelijsten: {
+        '@id': 'istd:codelijsten',
+        '@type': 'uml:Package',
+        '@container': '@list'
+    },
+    dataWaarden: {
+        '@id': 'istd:dataWaarden',
+        '@type': 'uml:Dependencies',
+        '@container': '@list'
     }
 }
 
@@ -97,13 +88,12 @@ const _jsonLdType = {
     Class: 'uml:Class',
     Property: 'uml:Property',
     Association: 'uml:Association',
-    AssociationEnd: 'uml:AssociationEnd',
     DataType: 'uml:DataType',
     SimpleType: 'xs:simpleType',
     Enumeration: 'uml:Enumeration',
     Dependency: 'uml:Dependency',
     boolean: 'xs:boolean',
-    string: 'xs:string',
+    string: 'xs:boolean',
     date: 'xs:date',
     time: 'xs:time',
     integer: 'xs:integer'
@@ -113,40 +103,6 @@ function jsonLdType() {
     return _jsonLdType
 }
 
-/**
- * The name of the project
- */
-var projectName
-/**
- * The name of the project
- * @param {*} project 
- */
-function setProjectName(project) {
-    projectName = project.name
-}
-/**
- * The name of the project
- * @returns String
- */
-function getProjectName() { return projectName }
-
-/**
- * The version of the project
- */
-var projectVersion
-/**
- * The version of the project
- * @param {*} project 
- */
-function setProjectVersion(project) {
-    projectVersion = project.projectVersion
-}
-/**
- * The version of the project
- * @returns String
- */
-function getProjectVersion() { return projectVersion }
-
 var specificModelId
 /**
  * Set Specific Model Identifier from project info
@@ -154,7 +110,7 @@ var specificModelId
  * @returns {String}
  */
 function setSpecificModelId(project) {
-    specificModelId = `model:${getProjectName}/${getProjectVersion}/specific`
+    specificModelId = `model:${project.name}/${project.version}/specific`
 }
 /**
  * Get Specific Model Identifier
@@ -169,39 +125,13 @@ var genericModelId
  * @returns {String}
  */
 function setGenericModelId(project) {
-    genericModelId = `model:${getProjectName}/${getProjectVersion}/generic` 
+    genericModelId = `model:${project.name}/${project.version}/generic` 
 }
 /**
  * Get Generic Model Identifier
  * @returns {String}
  */
 function getGenericModelId() { return genericModelId }
-
-/**
- * Generate the base namespace value for this project
- * @returns String
- */
-function getBaseNamespace() {
-    return `http://www.istandaarden.nl/${getProjectName().toLowerCase()}/${getProjectVersion().replace(/[.]/g, "_")}/`
-}
-
-/**
- * Generate the generic namespace for this project
- * @returns String
- */
-function getGenericNamespace() {
-    return {
-        prefix: `${getProjectName}`,
-        namespace: `${getBaseNamespace()}/basisschema/schema`
-    }
-}
-
-function getSpecificNamespace(bericht) {
-    return {
-        prefix: `${getProjectName}`,
-        namespace: `${getBaseNamespace()}/${bericht}/schema`
-    }
-}
 
 /**
  * Get UML Element Documentation (when available)
@@ -221,25 +151,26 @@ function buildRelatiesJson(berichtId, berichtKlasse) {
     var json = []
     const relaties = berichtKlasse.ownedElements.filter(element => element instanceof type.UMLAssociation)
 
-    relaties.forEach(relatie => {
+    for (let i = 0; i < relaties.length; i++) {
+        const relatie = relaties[i]
+        const associationId = berichtId + "/relaties/" + relatie.name
         json.push({
+            "@id": associationId,
             "@type": jsonLdType.Association,
             name: relatie.name,
             documentation: buildDocumentation(relatie),
             parent: {
-                target: berichtId + "/klassen/" + relatie.end1.reference.name,
-                "@type": jsonLdType.AssociationEnd,
+                "@id": berichtId + "/klassen/" + relatie.end1.reference.name,
                 aggregation: relatie.end1.aggregation,
                 multiplicity: relatie.end1.multiplicity
             },
             child: {
-                target: berichtId + "/klassen/" + relatie.end2.reference.name,
-                "@type": jsonLdType.AssociationEnd,
+                "@id": berichtId + "/klassen/" + relatie.end2.reference.name,
                 aggregation: relatie.end2.aggregation,
                 multiplicity: relatie.end2.multiplicity
             }
         })
-    })
+    }
 
     return (json.length > 0) ? json : undefined
 }
@@ -277,10 +208,11 @@ function buildElementenJson(elementId, elementOwner) {
     var json = []
     const elementenId = elementId + "/elementen"
 
-    elementOwner.attributes.forEach(attribute => {
+    for (let i = 0; i < elementOwner.attributes.length; i++) {
+        const attribute = elementOwner.attributes[i]
         var elementJson = buildElementJson(elementenId, attribute)
         json.push(elementJson)
-    })
+    }
 
     return (json.length > 0) ? json : undefined 
 }
@@ -297,7 +229,8 @@ function buildBerichtKlassenJson(berichtId, berichtPkg) {
     const berichtKlassen = berichtPkg.ownedElements.filter(element => element instanceof type.UMLClass)
     const berichtKlassenId = berichtId + "/klassen"
 
-    berichtKlasse.forEach(berichtKlasse => {
+    for (let i = 0; i < berichtKlassen.length; i++) { 
+        const berichtKlasse = berichtKlassen[i]
         const elementId = berichtKlassenId + "/" + berichtKlasse.name
         json.push({
             "@id": elementId,
@@ -307,7 +240,7 @@ function buildBerichtKlassenJson(berichtId, berichtPkg) {
             elementen: buildElementenJson(elementId, berichtKlasse),
             relaties: buildRelatiesJson(berichtId, berichtKlasse),
         })
-    })
+    }
 
     return json
 }
@@ -323,16 +256,17 @@ function buildBerichtenPkgJson(berichtenPkg) {
     const berichtPkgs = berichtenPkg.ownedElements.filter(element => element instanceof type.UMLPackage)
     const berichtPkgsId = getSpecificModelId() + "/berichten"
 
-    berichtPkgs.forEach(berichtPkg => {
+    for (let i = 0; i < berichtPkgs.length; i++) {
+        const berichtPkg = berichtPkgs[i]
         const berichtId = berichtPkgsId + "/" + berichtPkg.name
         json.push({
             "@id": berichtId,
             "@type": jsonLdType.Package,
             name: berichtPkg.name,
             documentation: buildDocumentation(berichtPkg),
-            klassen: buildBerichtKlassenJson(berichtId, berichtPkg),
+            klassen: buildBerichtKlassenJson(berichtId, berichtPkg)
         })
-    })
+    }
 
     return json
 }
@@ -348,28 +282,29 @@ function buildBerichtenPkgJson(berichtenPkg) {
 function buildDataWaardenJson(dataTypeId, primitieveDataTypen, codelijsten, dataType) {
     var json = []
     const dependencies = dataType.ownedElements.filter(element => element instanceof type.UMLDependency)
-    const dataWaardenId = dataTypeId + "/dataWaarden"
+    const dataWaardebId = dataTypeId + "/dataWaarden"
 
-    dependencies.forEach(dependency => {
-        const dependencyTarget = dependency.target
+    for (let i = 0; i < dependencies.length; i++) {
+        const dependencyTarget = dependencies[i].target
         
         if (dependencyTarget instanceof type.UMLPrimitiveType) {
             const primitieveDataType = primitieveDataTypen.find(element => element.name == dependencyTarget.name)
             json.push({
-                "@id": dataWaardenId + "/primitieveDataType",
+                "@id": dataWaardebId + "/primitieveDataType",
                 "@type": jsonLdType.Dependency,
                 target: primitieveDataType['@id']
             })
         } else if (dependencyTarget instanceof type.UMLEnumeration) {
             const codelijst = codelijsten.find(element => element.name == dependencyTarget.name)
             json.push({
-                "@id": dataWaardenId + "/codelijst",
+                "@id": dataWaardebId + "/codelijst",
                 "@type": jsonLdType.Dependency,
                 target: codelijst['@id']
             })
 
         }
-    })
+
+    }
 
     return (json.length > 0) ? json : undefined
 }
@@ -386,7 +321,8 @@ function buildGegegevensJson(primitieveDataTypenPkg, codelijstenPkg, gegevensPkg
     const dataTypen = gegevensPkg.ownedElements.filter(element => element instanceof type.UMLDataType)
     const gegevensId = getGenericModelId() + "/gegevens"
 
-    dataTypen.forEach(dataType => {
+    for (let i = 0; i < dataTypen.length; i++) {
+        const dataType = dataTypen[i]
         const name = String(dataType.name)
         const dataTypeId = gegevensId + "/" + name
         json.push({
@@ -397,7 +333,7 @@ function buildGegegevensJson(primitieveDataTypenPkg, codelijstenPkg, gegevensPkg
             dataWaarden: buildDataWaardenJson(dataTypeId, primitieveDataTypenPkg, codelijstenPkg, dataType),
             elementen: buildElementenJson(gegevensId, dataType),
         })
-    })
+    }
 
     return json
 }
@@ -413,7 +349,8 @@ function buildPrimitieveDataTypenJson(genericPkg) {
     const primitieveTypen = primitieveTypenPkg.ownedElements.filter(element => element instanceof type.UMLPrimitiveType)
     const primitieveTypenId = getGenericModelId() + "/primitieveTypen"
     
-    primitieveTypen.forEach(primitieveType => {
+    for (let i = 0; i < primitieveTypen.length; i++) {
+        const primitieveType = primitieveTypen[i]
         const name = String(primitieveType.name)
         json.push({
             "@id": primitieveTypenId + "/" + name,
@@ -421,7 +358,7 @@ function buildPrimitieveDataTypenJson(genericPkg) {
             name: name,
             documentation: buildDocumentation(primitieveType)
         })
-    })
+    }
 
     return json
 }
@@ -437,7 +374,8 @@ function buildCodelijstenJson(genericPkg) {
     const codelijsten = codelijstenPkg.ownedElements.filter(element => element instanceof type.UMLEnumeration)
     const codelijstenId = getGenericModelId() + "/codelijsten" 
     
-    codelijsten.forEach(codelijst => {
+    for (let i = 0; i < codelijsten.length; i++) {
+        const codelijst = codelijsten[i]
         const name = String(codelijst.name)
         json.push({
             "@id": codelijstenId + "/" + name,
@@ -445,7 +383,7 @@ function buildCodelijstenJson(genericPkg) {
             name: name,
             documentation: buildDocumentation(codelijst)
         })
-    })
+    }
 
     return json
 }
@@ -459,15 +397,13 @@ function buildCodelijstenJson(genericPkg) {
 function buildSpecificMetaDataJson(project) {
     setGenericModelId(project)
     setSpecificModelId(project) 
-    setProjectName(project)
-    setProjectVersion(project)
     const berichtenPkg = getSpecificBerichtenPackage(project)
     const json = {
         "@context": globals.jsonLdContextFileName,
         "@id": getSpecificModelId(),
         "@type": jsonLdType.Model,
-        name: String(getProjectName()),
-        version: String(getProjectVersion()),
+        name: String(project.name),
+        version: String(project.version),
         berichten: buildBerichtenPkgJson(berichtenPkg)
     }
 
@@ -479,8 +415,8 @@ function buildSpecificMetaDataJson(project) {
  * @param {Project} project 
  */
 function getSpecificBerichtenPackage(project) {
-    return utils.getUMLPackageElementByName(
-        utils.getUMLPackageElementByname(
+    return utils.getUMLPackagElementByName(
+        utils.getUMLPackagElementByName(
             project.ownedElements, globals.SPECIFIC_MODEL_PACKAGE.name
         ).ownedElements, globals.BERICHTEN_PACKAGE.name
     )
@@ -536,8 +472,8 @@ function buildBerichtenTitleAndReply(root) {
  */
 function buildGenericMetaDataJson(project) {
     setGenericModelId(project)
-    const genericPkg = utils.getUMLPackageElementByname(project.ownedElements, globals.GENERIC_MODEL_PACKAGE.name)
-    const gegevensPkg = utils.getUMLPackageElementByname(genericPkg.ownedElements, globals.GEGEVENS_MODEL_PACKAGE.name)
+    const genericPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.GENERIC_MODEL_PACKAGE.name)
+    const gegevensPkg = utils.getUMLPackagElementByName(genericPkg.ownedElements, globals.GEGEVENS_MODEL_PACKAGE.name)
     const primitieveDataTypen = buildPrimitieveDataTypenJson(genericPkg)
     const codelijsten = buildCodelijstenJson(genericPkg)
     const gegevens = buildGegegevensJson(primitieveDataTypen, codelijsten, gegevensPkg)
@@ -545,8 +481,8 @@ function buildGenericMetaDataJson(project) {
         "@context": globals.jsonLdContextFileName,
         "@id": getGenericModelId(),
         "@type": jsonLdType.Model,
-        name: String(getProjectName()),
-        version: String(getProjectVersion()),
+        name: String(project.name),
+        version: String(project.version),
         gegevens: gegevens,
         primitieveDataTypen: primitieveDataTypen,
         codelijsten: codelijsten

@@ -107,14 +107,15 @@ function addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, standaardId,
     const complexDataType = gegevensModelPkg.ownedElements.find(element => element._type = 'UMLDataType' && element.name == dataTypeName)
     const seqElems = complexType.elements.find(element => element.name == 'xs:sequence').elements
 
-    seqElems.forEach(seqElem => {
+    for (let i = 0; i < seqElems.length; i++) {
+        const seqElem = seqElems[i]
         const attrName = seqElem.attributes.name
         const attrTypeName = utils.getDataTypeName(seqElem.attributes.type)
         const attrType = utils.getUMLDataType(gegevensModelPkg, attrTypeName)
         const attrMultiplicity = utils.buildUMLMultiplicityFromXsOccursAttr(seqElem.attributes.minOccurs, seqElem.attributes.maxOccurs)
         const  attrDocumentation = utils.getXsAnnotationDocumentationText(seqElem)
         utils.addUMLAttribute(complexDataType, attrName, attrType, attrMultiplicity, attrDocumentation)
-    })
+    }
 
     app.modelExplorer.collapse(complexDataType)
 }
@@ -150,15 +151,18 @@ function importDataTypes(gegevensModelPkg, codelijstenPkg, basisSchema) {
     console.log(xsdMetaData)
 
     const simpleTypes = modelElements.filter(element => element.name == 'xs:simpleType')
-    simpleTypes.forEach(simpleType => {
-        addSimpleType(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, simpleType)
-    })
+    for (let i = 0; i < simpleTypes.length; i++) {
+        addSimpleType(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, simpleTypes[i])
+    }
 
     const complexTypes = modelElements.filter(element => element.name == 'xs:complexType')
-    complexTypes.forEach(complexType => {
-        addComplexType(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, complexType)
-        addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, complexType)
-    })   
+    for (let i = 0; i < complexTypes.length; i++) {
+        addComplexType(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, complexTypes[i])
+    }
+    for (let i = 0; i < complexTypes.length; i++) {
+        addComplexTypeAttributes(gegevensModelPkg, codelijstenPkg, xsdMetaData.standaard, complexTypes[i])
+    }
+    
 }
 
 /**

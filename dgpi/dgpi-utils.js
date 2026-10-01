@@ -4,7 +4,7 @@
  * @param {String} name 
  * @returns {UMLPackage | undefined}
  */
-function getUMLPackageElementByName(elements, name) {
+function getUMLPackagElementByName(elements, name) {
     return elements.find(element => (element.name == name) && (element instanceof type.UMLPackage))
 }
 
@@ -211,7 +211,7 @@ function jsonToString(json) {
     return JSON.stringify(json, null, '\t')
 }
 
-exports.getUMLPackageElementByName = getUMLPackageElementByName
+exports.getUMLPackagElementByName = getUMLPackagElementByName
 exports.getUMLClassElementByName = getUMLClassElementByName
 exports.getXsAnnotation = getXsAnnotation
 exports.getXsAnnotationDocumentationText = getXsAnnotationDocumentationText

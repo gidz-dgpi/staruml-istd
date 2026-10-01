@@ -46,7 +46,7 @@ function importRegelRapport(berichtenPkg, workbook) {
                             const sleutelId = `${bericht} / ${berichtKlasse} / ${berichtKlasseElement}`
 
                             if (sleutelId != lastSleutelId) {
-                                const berichtPkg = utils.getUMLPackageElementByname(berichtenPkg.ownedElements, nextBericht)
+                                const berichtPkg = utils.getUMLPackagElementByName(berichtenPkg.ownedElements, nextBericht)
 
                                 if (berichtPkg) {
                                     const berichtClass = utils.getUMLClassElementByName(berichtPkg.ownedElements, berichtKlasse)
@@ -91,8 +91,8 @@ function importRegelRapportXlsxFile(regelRapportFile) {
             const workbook = XLSX.read(regelSheet)
             try {
                 const project = app.project.getProject()
-                const specificPkg = utils.getUMLPackageElementByname(project.ownedElements, globals.SPECIFIC_MODEL_PACKAGE.name) 
-                const berichtenPkg = utils.getUMLPackageElementByname(specificPkg.ownedElements, globals.BERICHTEN_PACKAGE.name)
+                const specificPkg = utils.getUMLPackagElementByName(project.ownedElements, globals.SPECIFIC_MODEL_PACKAGE.name) 
+                const berichtenPkg = utils.getUMLPackagElementByName(specificPkg.ownedElements, globals.BERICHTEN_PACKAGE.name)
 
                 if (berichtenPkg) {
                     console.log(berichtenPkg)
